@@ -18,8 +18,12 @@ struct ContentView: View {
                 ForEach(items) { item in
                     NavigationLink {
                         Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                            .foregroundStyle(Color.accentColor)
+                            .font(.AppLogo)
                     } label: {
                         Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                            .foregroundStyle(Color.text)
+                            .font(.pretendardBold24)
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -37,6 +41,7 @@ struct ContentView: View {
         } detail: {
             Text("Select an item")
         }
+        
     }
 
     private func addItem() {

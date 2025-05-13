@@ -104,4 +104,10 @@ xcuserdata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
+# Custom
+.DS_Store
+/.DS_Store
+keyContainer.plist
+
 # End of https://www.toptal.com/developers/gitignore/api/xcode,swift,swiftpackagemanager
+
