@@ -12,8 +12,13 @@ struct DietaryView: View {
     @StateObject private var ViewModel = DietaryViewModel()
     
     @State private var newfood : String = ""
-    @State private var recommand : CGFloat = 0
-    @State private var myRefrigerlator : CGFloat = 0
+    
+    @State private var recommandflowlayout : CGFloat = 0
+    @State private var recommandHeight : CGFloat = 60
+    
+    @State private var myRefrigerlatorflowlayout : CGFloat = 0
+    @State private var myRefrigerlatorHeight : CGFloat = 60
+    @State private var isFoldmyRefrigerlator : Bool = false
     
     var body: some View {
         ZStack{
@@ -77,38 +82,26 @@ struct DietaryView: View {
                     Spacer().frame(height: 20)
                     
                     //MARK: - 식단에 사용 될 식재료
-                    ContainerView(paddingSize: 16, height: recommand + 60) {
+                    ContainerView(paddingSize: 16, height: recommandflowlayout + recommandHeight) {
                         HStack{
                             VStack{
-                                Text("추천 레시피에 적용할 재료")
+                                Text("추천 레시피에 적용할 재료가 표시됩니다.")
                                     .font(.pretendardSemiBold10)
                                     .foregroundStyle(.textFieldGray)
-                                    .padding(.top, 8)
+//                                    .padding(.top, 3)
                                 
                                 Spacer()
                                 
-                                FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $recommand) {
-                                    ForEach(ViewModel.presentIngredients) { ingredient in
-                                        PillText(text: ingredient.name, onDelete: {
-                                            ViewModel.removepresentIngredients(ingredient)
-                                        })
-                                        .border(.black)
+                                    FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $recommandflowlayout) {
+                                        ForEach(ViewModel.presentIngredients) { ingredient in
+                                            PillText(text: ingredient.name, onDelete: {
+                                                ViewModel.removepresentIngredients(ingredient)
+                                            })
+                                        }
                                     }
-                                }
-                                .border(.black)
                                 
                                 
                                 Spacer()
-                                
-                                
-                                Button{
-                                    print("+ 버튼 클릭")
-                                }label: {
-                                    Image(systemName: "chevron.down")
-                                        .frame(width: 10, height: 10)
-                                        .font(.pretendardBold20)
-                                }
-                                .padding(.bottom, 8)
                             }
                         }
                         .padding()
@@ -126,7 +119,7 @@ struct DietaryView: View {
                     .padding(.horizontal, 16)
                     
                     
-                    ContainerView(paddingSize: 16, height: myRefrigerlator + 60) {
+                    ContainerView(paddingSize: 16, height: isFoldmyRefrigerlator ? myRefrigerlatorHeight : myRefrigerlatorflowlayout + myRefrigerlatorHeight) {
                         HStack{
                             VStack{
                                 Text("과거에 사용된 식재료들은 여기에 저장됩니다.")
@@ -136,22 +129,25 @@ struct DietaryView: View {
                                 
                                 Spacer()
                                 
-                                FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $myRefrigerlator) {
-                                    
-                                    ForEach(ViewModel.pastIngredients) { ingredient in
-                                        PillText(text: ingredient.name, onDelete: {
-                                            ViewModel.removepastIngredients(ingredient)
-                                        })
+                                if !isFoldmyRefrigerlator{
+                                    FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $myRefrigerlatorflowlayout) {
+                                        
+                                        ForEach(ViewModel.pastIngredients) { ingredient in
+                                            PillText(text: ingredient.name, onDelete: {
+                                                ViewModel.removepastIngredients(ingredient)
+                                            })
+                                        }
                                     }
                                 }
-                                .border(.black)
                                 
                                 
                                 Spacer()
                                 
                                 
                                 Button{
-                                    print("+ 버튼 클릭")
+                                    withAnimation {
+                                        isFoldmyRefrigerlator.toggle()
+                                    }
                                 }label: {
                                     Image(systemName: "chevron.down")
                                         .frame(width: 10, height: 10)

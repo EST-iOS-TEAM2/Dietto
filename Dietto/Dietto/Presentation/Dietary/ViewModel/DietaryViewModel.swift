@@ -21,22 +21,7 @@ class DietaryViewModel: ObservableObject {
         Ingredient(name: "재료2"),
         Ingredient(name: "재료3"),
         Ingredient(name: "재료4"),
-        Ingredient(name: "재료5"),
-        Ingredient(name: "재료6"),
-        Ingredient(name: "재료7"),
-        Ingredient(name: "재료8"),
-        Ingredient(name: "재료9"),
-        Ingredient(name: "재료10"),
-        Ingredient(name: "재료11"),
-        Ingredient(name: "재료12"),
-        Ingredient(name: "재료13"),
-        Ingredient(name: "재료14"),
-        Ingredient(name: "재료15"),
-        Ingredient(name: "재료16"),
-        Ingredient(name: "재료17"),
-        Ingredient(name: "재료18"),
-        Ingredient(name: "재료19"),
-        Ingredient(name: "재료20")
+        Ingredient(name: "재료5")
     ]
     
     @Published var pastIngredients : [Ingredient] = [
