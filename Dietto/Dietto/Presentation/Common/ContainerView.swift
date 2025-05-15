@@ -32,7 +32,7 @@ struct ContainerView <content : View> : View {
             }
             .frame(width: geometry.size.width, height: height)
         }
-        .frame(height: height) // 외부에서도 고정 높이 유지
+        .frame(height: height)
     }
 }
 
