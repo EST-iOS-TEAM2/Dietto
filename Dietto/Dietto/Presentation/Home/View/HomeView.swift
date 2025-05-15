@@ -6,12 +6,28 @@
 //
 
 import SwiftUI
+import Charts
 
 struct HomeView: View {
     var body: some View {
         VStack {
             HomeHeader()
-            bodyScaleTable()
+            bodyScaleTable(startBodyScale: 70, targetBodyScale: 65, currentBodyScale: 68)
+            
+            //            bodyScaleTable()
+            GeometryReader { proxy in
+                ZStack {
+                    RingShape()
+                        .stroke(style: StrokeStyle(lineWidth: 50, lineCap: .round))
+                        .fill(Color.textFieldGray)
+                    RingShape(percent: 60, startAngle: -90, drawnClockwise: false)
+                        .stroke(style: StrokeStyle(lineWidth: 50, lineCap: .round))
+                        .fill(Color.accent)
+                }
+                
+            }
+            .padding(50 / 2)
+            
             
         }
         .background(Color.backGround)
@@ -100,7 +116,7 @@ struct bodyScaleTable: View {
             RoundedRectangle(cornerRadius: 21)
                 .stroke(Color.accent, lineWidth: 1)
         )
-        .shadow(radius: 8, x: 2, y: 4)
+        .shadow(radius: 8, x: 2, y: 10)
         .padding()
     }
 }
