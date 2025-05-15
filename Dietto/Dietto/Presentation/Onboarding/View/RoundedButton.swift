@@ -7,32 +7,31 @@
 import SwiftUI
 
 struct RoundedButton: View{
+    //알약버튼 부분
+    @State private var isSelected = false
     
-    let color: Color
     let text: String
-    let fontSize: CGFloat
-    let action: () -> Void
 
-    init(color: Color,
-         text: String,
-         fontSize: CGFloat,
-         action: @escaping () -> Void){
-        self.color = color
+    init(text: String){
         self.text = text
-        self.fontSize = fontSize
-        self.action = action
     }
     
     var body: some View {
-        Button(action: { action() }){
+        Button(action: {
+            isSelected.toggle()
+        }){
             Text(text)
-                .font(.system(size: fontSize, weight: .medium))
-                .foregroundColor(color)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(isSelected ? Color.white : Color.accentColor)
         }
         .padding(5)
         .padding(.horizontal, 8)
+        .background(isSelected ? Color.accentColor : Color.white)
+        .cornerRadius(100)
         .overlay(
             RoundedRectangle(cornerRadius: 100)
                 .stroke(Color(.accent), lineWidth: 1))
     }
 }
+
+

@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct TutorialView: View {
+    @State var weigt: String = ""
+    @State var distance: String = ""
     @State var selectWeight = 60
+    
     let items: [Int] = Array(20...100).reversed()
     
     var nickName = "lee"
@@ -30,8 +33,9 @@ struct TutorialView: View {
         
         VStack { //목표 몸무게 입력 부분
             HStack{
-                //텍스트 필드
-                Text("70")
+                TextField("목표 체중", text: $weigt)
+                    .textFieldStyle(.roundedBorder)
+                    .border(Color.accentColor)
 //                Picker(selection: $selectWeight) {
 //                    ForEach(items, id: \.self) { item in
 //                        Text("\(item)")
@@ -43,23 +47,31 @@ struct TutorialView: View {
                 
                 Text("kg")
                     .foregroundColor(.accent)
+                    .font(.AppLogo)
             }
+            .frame(width: 150)
+            
         }
         .padding()
         
-        VStack{ //기능 추가가 예상됨,, - 거리 라든지 운동이라던지 그런거
+        VStack{
             //목표 거리 입력하는 부분
             HStack{
-                //텍스트 필드
-                Text("2.3")
+                TextField("목표 거리", text: $distance)
+                    .textFieldStyle(.roundedBorder)
+                    .border(Color.accentColor)
+                
                 Text("km")
                     .foregroundColor(.accent)
+                    .font(.AppLogo)
             }
+            .frame(width: 150)
             
         }
+        .padding()
         
         VStack{ //버튼 위의 페이징 부분
-            Text("123page")
+            
         }.offset(y:180)
         
         VStack{ //하단 버튼 부분

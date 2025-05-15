@@ -25,15 +25,16 @@ struct ButtonView: View {
         .padding()
         
         //버튼에 효과를 해야될듯 - 특히 누를떄
+        
         VStack(alignment: .leading){
             VStack(alignment: .leading){
                 Text("운동")
                 HStack {
-                    RoundedButton(color: .accentColor, text: "근육략 증가", fontSize: 13, action: { print("first button click") })
+                    RoundedButton(text: "근육략 증가")
                     
-                    RoundedButton(color: .accentColor, text: "규칙적인 운동", fontSize: 13, action: { })
+                    RoundedButton(text: "규칙적인 운동")
                     
-                    RoundedButton(color: .accentColor, text: "체지방률 감소", fontSize: 13, action: { })
+                    RoundedButton(text: "체지방률 감소")
                 }
             }
             .padding()
@@ -41,15 +42,15 @@ struct ButtonView: View {
             VStack(alignment: .leading, spacing: 10){
                 Text("식습관 계선")
                 HStack {
-                    RoundedButton(color: .accentColor, text: "음식 섭취 패턴 안정화", fontSize: 13, action: { print("first button click") })
+                    RoundedButton(text: "음식 섭취 패턴 안정화")
                     
-                    RoundedButton(color: .accentColor, text: "안정된 양양소 섭취", fontSize: 13, action: { })
+                    RoundedButton(text: "안정된 양양소 섭취")
                     
                 }
                 HStack {
-                    RoundedButton(color: .accentColor, text: "수분 섭취", fontSize: 13, action: { })
+                    RoundedButton(text: "수분 섭취")
                     
-                    RoundedButton(color: .accentColor, text: "외식 줄이기", fontSize: 13, action: { })
+                    RoundedButton(text: "외식 줄이기")
                     
                 }
             }
@@ -58,13 +59,13 @@ struct ButtonView: View {
             VStack(alignment: .leading){
                 Text("건강 관리")
                 HStack {
-                    RoundedButton(color: .accentColor, text: "금연/금주", fontSize: 13, action: { })
+                    RoundedButton(text: "금연/금주")
                     
-                    RoundedButton(color: .accentColor, text: "혈당 안정화", fontSize: 13, action: { })
+                    RoundedButton(text: "혈당 안정화")
                     
-                    RoundedButton(color: .accentColor, text: "음식 일기", fontSize: 13, action: { })
+                    RoundedButton(text: "음식 일기")
                     
-                    RoundedButton(color: .accentColor, text: "피부", fontSize: 13, action: { })
+                    RoundedButton(text: "피부")
                 }
             }
             .padding()
@@ -72,9 +73,9 @@ struct ButtonView: View {
             VStack(alignment: .leading){
                 Text("수면 및 스트레스")
                 HStack {
-                    RoundedButton(color: .accentColor, text: "수면 개선", fontSize: 13, action: { })
+                    RoundedButton(text: "수면 개선")
                     
-                    RoundedButton(color: .accentColor, text: "스트레스", fontSize: 13, action: { })
+                    RoundedButton(text: "스트레스")
                 }
             }
             .padding()
@@ -84,8 +85,9 @@ struct ButtonView: View {
         
         
         VStack{ //버튼 위의 페이징 부분
-            Text("123page")
+           
         }
+        .padding()
         
         VStack{ //하단 버튼 부분
             Button {
