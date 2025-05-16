@@ -27,8 +27,7 @@ struct ProfileView: View {
                                 isEditActive = true
                             }) {
                                 Text("edit")
-                                    .font(.system(size: 16, weight: .bold))
-                                    .font(.pretendardMedium12)
+                                    .font(.pretendardMedium16)
                                     .foregroundColor(.white)
                                     .padding(.vertical, 5)
                                     .padding(.horizontal, 20)
@@ -53,7 +52,7 @@ struct ProfileView: View {
 //MARK: 사용자 이름, 키 몸무게
                         Text("이규현")
                             .font(.title)
-                            .font(.pretendardBold12)
+                            .font(.pretendardBold20)
                             .fontWeight(.bold)
                         Text("180cm 70kg")
                             .font(.pretendardMedium20)
