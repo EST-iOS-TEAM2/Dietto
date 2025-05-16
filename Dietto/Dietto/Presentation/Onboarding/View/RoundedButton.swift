@@ -21,7 +21,7 @@ struct RoundedButton: View{
             isSelected.toggle()
         }){
             Text(text)
-                .font(.system(size: 13, weight: .medium))
+                .font(.pretendardMedium12)
                 .foregroundColor(isSelected ? Color.white : Color.accentColor)
         }
         .padding(5)

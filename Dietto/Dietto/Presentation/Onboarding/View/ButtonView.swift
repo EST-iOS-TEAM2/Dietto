@@ -4,8 +4,7 @@
 //
 //  Created by InTak Han on 5/14/25.
 //
-//com.justhm.Dietto
-//번들 id
+
 import SwiftUI
 
 struct ButtonView: View {
@@ -20,12 +19,13 @@ struct ButtonView: View {
                     .foregroundColor(.accent)
                 Text("알려주세요")
             }
+            .font(.pretendardBold28)
         }
         .font(.title)
         .padding()
         
         //버튼에 효과를 해야될듯 - 특히 누를떄
-        
+        //스크롤을 할지 말지 고민해야 될듯...
         VStack(alignment: .leading){
             VStack(alignment: .leading){
                 Text("운동")
@@ -100,19 +100,20 @@ struct ButtonView: View {
         .background(.accent)
         .foregroundColor(.white)
         .cornerRadius(13)
+        .font(.pretendardMedium16)
         
-        VStack{ //하단 버튼 부분 - 이전화면으로 가기
-            Button {
-                dismiss()
-            } label: {
-                Text("이전화면")
-            }
-        }
-        .frame(width: 300, height: 50)
-        .foregroundColor(.white)
-        .background(.gray)
-        .cornerRadius(13)
-        .padding()
+//        VStack{ //하단 버튼 부분 - 이전화면으로 가기
+//            Button {
+//                dismiss()
+//            } label: {
+//                Text("이전화면")
+//            }
+//        }
+//        .frame(width: 300, height: 50)
+//        .foregroundColor(.white)
+//        .background(.gray)
+//        .cornerRadius(13)
+//        .padding()
     }
 }
 

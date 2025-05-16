@@ -27,7 +27,7 @@ struct TutorialView: View {
                 Text("알려주세요")
             }
         }
-        .font(.title)
+        .font(.pretendardBold28)
         .padding()
         
         
@@ -82,6 +82,7 @@ struct TutorialView: View {
             .background(.accent)
             .foregroundColor(.white)
         .cornerRadius(13)
+        .font(.pretendardMedium16)
         .offset(y:180)
         .padding()
     }
