@@ -62,10 +62,11 @@ struct ProfileEditView: View {
 // MARK: - 이름 및 이름 입력란
                     VStack(alignment: .leading, spacing: 6) {
                         Text("이름")
-                            .font(.system(size: 17, weight: .bold))
-                            .padding(.leading, 12) // 보기 좋게 12pt로 고정
+                            .font(.pretendardBold16)
+                            .padding(.leading, 12)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         TextField("이름을 입력해주세요", text: $name)
+                            .font(.pretendardMedium16)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 15)
                             .background(
@@ -79,10 +80,11 @@ struct ProfileEditView: View {
 //MARK: 생년월일
                     VStack(alignment: .leading, spacing: 6) {
                         Text("생년월일")
-                            .font(.system(size: 17, weight: .bold))
+                            .font(.pretendardBold16)
                             .padding(.leading, 12)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         TextField("2002.04.12", text: $birth)
+                            .font(.pretendardMedium16)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 15)
                             .background(
@@ -96,7 +98,7 @@ struct ProfileEditView: View {
 //MARK: 성별 선택란
                     VStack(alignment: .leading, spacing: 6) {
                         Text("성별")
-                            .font(.system(size: 17, weight: .bold))
+                            .font(.pretendardBold16)
                             .padding(.leading, 12)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         Button(action: {
@@ -104,6 +106,7 @@ struct ProfileEditView: View {
                         }) {
                             HStack {
                                 Text(gender.isEmpty ? "성별" : gender)
+                                    .font(.pretendardMedium16)
                                     .foregroundColor(gender.isEmpty ? .gray : .primary)
                                     .padding(.leading, 4)
                                 Spacer()
@@ -128,7 +131,7 @@ struct ProfileEditView: View {
                         TextField("170", text: $height)
                             .keyboardType(.numberPad)
                             .multilineTextAlignment(.center)
-                            .font(.system(size: 22))
+                            .font(.pretendardMedium20)
                             .foregroundColor(.primary)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 15)
@@ -149,7 +152,7 @@ struct ProfileEditView: View {
                         TextField("66", text: $weight)
                             .keyboardType(.numberPad)
                             .multilineTextAlignment(.center)
-                            .font(.system(size: 22))
+                            .font(.pretendardMedium20)
                             .foregroundColor(.primary)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 15)
@@ -170,7 +173,7 @@ struct ProfileEditView: View {
                     dismiss()
                 }) {
                     Text("저장")
-                        .font(.system(size: 24, weight: .bold))
+                        .font(.pretendardBold20)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 15)
