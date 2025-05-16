@@ -9,7 +9,6 @@
 import SwiftUI
 
 /// iOS 16+ ㅇㅇ
-
 struct FlowLayout: Layout {
     var spacing: CGFloat? = nil
     var lineSpacing: CGFloat = 10.0
@@ -65,7 +64,10 @@ struct FlowLayout: Layout {
         totalHeight += lineHeight
         
         DispatchQueue.main.async {
-            self.contentHeight = totalHeight
+            withAnimation(.bouncy) {
+                self.contentHeight = totalHeight
+            }
+            //            self.contentHeight = totalHeight
         }
         
         return CGSize(width: maxWidth, height: totalHeight)
