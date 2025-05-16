@@ -1,0 +1,206 @@
+//
+//  ProfileEditView.swift
+//  Dietto
+//
+//  Created by kyuhyeon Lee on 5/15/25.
+//
+
+import SwiftUI
+
+struct ProfileEditView: View {
+    @State private var showPhotoSheet = false
+    @State private var name: String = ""
+    @State private var birth: String = ""
+    @State private var gender: String = ""
+    @State private var showGenderSheet = false
+    @State private var height: String = ""
+    @State private var weight: String = ""
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        ZStack {
+//MARK: 배경 색상
+            Color(red: 1.0, green: 0.976, blue: 0.976)
+                .ignoresSafeArea()
+            
+            ScrollView {
+                VStack {
+// MARK: - 프로필 이미지 / 카메라 버튼
+                    ZStack(alignment: .bottomTrailing) {
+                        Button(action: {
+                            showPhotoSheet = true
+                        }) {
+                            Circle()
+                                .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                                .frame(width: 180, height: 180)
+                                .background(
+                                    Image(systemName: "person.crop.circle.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundColor(Color(.systemGray4))
+                                        .frame(width: 180, height: 180)
+                                )
+                        }
+//MARK: 카메라 버튼 - 버튼
+                        Button(action: {
+                            showPhotoSheet = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.black)
+                                    .frame(width: 45, height: 45)
+                                Image(systemName: "camera")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 20, weight: .bold))
+                            }
+                        }
+                        .offset(x: -1, y: -1)
+                    }
+                    .frame(width: 180, height: 180)
+                    .padding(.top, 16)
+                    
+// MARK: - 이름 및 이름 입력란
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("이름")
+                            .font(.system(size: 17, weight: .bold))
+                            .padding(.leading, 12) // 보기 좋게 12pt로 고정
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        TextField("이름을 입력해주세요", text: $name)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 15)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                            )
+                    }
+                    .padding(.top, 25)
+                    .padding(.horizontal, 20)
+                    
+//MARK: 생년월일
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("생년월일")
+                            .font(.system(size: 17, weight: .bold))
+                            .padding(.leading, 12)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        TextField("2002.04.12", text: $birth)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 15)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                            )
+                    }
+                    .padding(.top, 20)
+                    .padding(.horizontal, 20)
+                    
+//MARK: 성별 선택란
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("성별")
+                            .font(.system(size: 17, weight: .bold))
+                            .padding(.leading, 12)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Button(action: {
+                            showGenderSheet = true
+                        }) {
+                            HStack {
+                                Text(gender.isEmpty ? "성별" : gender)
+                                    .foregroundColor(gender.isEmpty ? .gray : .primary)
+                                    .padding(.leading, 4)
+                                Spacer()
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 15)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                            )
+                        }
+                    }
+                    .padding(.top, 20)
+                    .padding(.horizontal, 20)
+                    .confirmationDialog("성별", isPresented: $showGenderSheet, titleVisibility: .visible) {
+                        Button("남성") { gender = " 남성 "}
+                        Button("여성") { gender = " 여성 "}
+                        Button("취소", role: .cancel){}
+                    }
+//MARK: 키 수정
+                    HStack(spacing: 0) {
+                        TextField("170", text: $height)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.center)
+                            .font(.system(size: 22))
+                            .foregroundColor(.primary)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 15)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                            )
+                        Text("cm")
+                            .font(.custom("NerkoOne-regular", size: 50))
+                            .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                            .padding(.leading, 12)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 24)
+                    
+//MARK: 몸무게 수정
+                    HStack(spacing: 0) {
+                        TextField("66", text: $weight)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.center)
+                            .font(.system(size: 22))
+                            .foregroundColor(.primary)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 15)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                            )
+                        Text("kg")
+                            .font(.custom("NerkoOne-regular", size: 50))
+                            .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                            .padding(.leading, 12)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, -5)
+                }
+//MARK: 저장 버튼
+                Button(action: {
+                    dismiss()
+                }) {
+                    Text("저장")
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 15)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color(red: 0.925, green: 0.463, blue: 0.463))
+                        )
+                }
+                .padding(.horizontal, 20)
+                .padding(.top,-10)
+                .padding(.bottom, 40)
+            }
+            Spacer()
+        }
+//MARK: 프로필 사진 변경
+        .navigationTitle("프로필 수정")
+        .navigationBarTitleDisplayMode(.inline)
+        .confirmationDialog(
+            "프로필 사진 선택",
+            isPresented: $showPhotoSheet,
+            titleVisibility: .visible
+        ) {
+            Button("카메라") {}
+            Button("갤러리") {}
+            Button("취소", role: .cancel) {}
+        }
+    }
+}
+
+
+#Preview {
+    ProfileEditView()
+}
