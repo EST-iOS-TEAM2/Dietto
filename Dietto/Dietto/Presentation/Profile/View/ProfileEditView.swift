@@ -105,7 +105,7 @@ struct ProfileEditView: View {
                             showGenderSheet = true
                         }) {
                             HStack {
-                                Text(gender.isEmpty ? "성별" : gender)
+                                Text(gender.isEmpty ? "남성" : gender)
                                     .font(.pretendardMedium16)
                                     .foregroundColor(gender.isEmpty ? .gray : .primary)
                                     .padding(.leading, 4)
