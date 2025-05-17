@@ -58,18 +58,73 @@ struct ProfileView: View {
                             .font(.pretendardMedium20)
                             .font(.title3)
                     }
-                    .padding(.top, 24)
+                    mealsCard()
+                    .padding(.top, -5)
 
                     Spacer()
                 }
             }
+//MARK: edit 누르면 ProfileEditView로 이동
             .navigationDestination(isPresented: $isEditActive) {
                 ProfileEditView()
             }
         }
     }
 }
-
+//MARK: 내가 먹었던 음식
+struct mealsCard: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            // 타이틀 & 칼로리
+            HStack {
+                Text("내 식사")
+                    .font(.pretendardMedium24)
+                Spacer()
+                Text("1350kcal")
+                    .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                    .font(.pretendardMedium20)
+            }
+            // 아침
+            VStack(alignment: .leading, spacing: 2) {
+                Text("아침")
+                    .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                    .font(.pretendardBold24)
+                Text("오트밀과 과일")
+                    .font(.pretendardBold20)
+                Text("350kcal 08:30")
+                    .font(.pretendardMedium16)
+            }
+            // 점심
+            VStack(alignment: .leading, spacing: 2) {
+                Text("점심")
+                    .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                    .font(.pretendardBold24)
+                Text("닭가슴살 샐러드")
+                    .font(.pretendardBold20)
+                Text("450kcal 12:30")
+                    .font(.pretendardMedium16)
+            }
+            // 저녁
+            VStack(alignment: .leading, spacing: 2) {
+                Text("저녁")
+                    .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                    .font(.pretendardBold24)
+                Text("연어스테이크")
+                    .font(.pretendardBold20)
+                Text("550kcal 18:30")
+                    .font(.pretendardMedium16)
+            }
+        }
+        .padding(22)
+        .background(
+            RoundedRectangle(cornerRadius: 32)
+                .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                .background(Color.clear.clipShape(RoundedRectangle(cornerRadius: 32)))
+        )
+        .padding(.horizontal, 12)
+        .padding(.top, 16)
+    }
+}
 
 #Preview {
     ProfileView()
