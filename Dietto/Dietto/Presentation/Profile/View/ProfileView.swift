@@ -71,11 +71,11 @@ struct ProfileView: View {
         }
     }
 }
+
 //MARK: 내가 먹었던 음식
 struct mealsCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            // 타이틀 & 칼로리
             HStack {
                 Text("내 식사")
                     .font(.pretendardMedium24)
@@ -84,7 +84,6 @@ struct mealsCard: View {
                     .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
                     .font(.pretendardMedium20)
             }
-            // 아침
             VStack(alignment: .leading, spacing: 2) {
                 Text("아침")
                     .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
@@ -94,7 +93,6 @@ struct mealsCard: View {
                 Text("350kcal 08:30")
                     .font(.pretendardMedium16)
             }
-            // 점심
             VStack(alignment: .leading, spacing: 2) {
                 Text("점심")
                     .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
@@ -104,7 +102,6 @@ struct mealsCard: View {
                 Text("450kcal 12:30")
                     .font(.pretendardMedium16)
             }
-            // 저녁
             VStack(alignment: .leading, spacing: 2) {
                 Text("저녁")
                     .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
