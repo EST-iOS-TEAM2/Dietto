@@ -8,27 +8,43 @@
 import SwiftUI
 import Charts
 
+struct BodyScale: Hashable {
+    var date: Date
+    var scale: Int
+    // 차트 애니메이션 용
+    var isAnimated: Bool = false
+}
+
 struct HomeView: View {
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HomeHeader()
-            bodyScaleTable(startBodyScale: 70, targetBodyScale: 65, currentBodyScale: 68)
-            
-            //            bodyScaleTable()
-            GeometryReader { proxy in
-                ZStack {
-                    RingShape()
-                        .stroke(style: StrokeStyle(lineWidth: 50, lineCap: .round))
-                        .fill(Color.textFieldGray)
-                    RingShape(percent: 60, startAngle: -90, drawnClockwise: false)
-                        .stroke(style: StrokeStyle(lineWidth: 50, lineCap: .round))
-                        .fill(Color.accent)
-                }
+            ScrollView {
+                bodyScaleTable()
+
+                BodyScaleHistoryView()
                 
+                ActivityTable()
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 21)
+                            .fill(.ultraThinMaterial)
+                            .foregroundStyle(.white)
+                            .opacity(0.98)
+                            .padding()
+                            .overlay {
+                                VStack {
+                                    Text("건강 앱 권한이 필요합니다.")
+                                        .font(.pretendardBold16)
+                                        .foregroundStyle(.text)
+                                    Button("설정") {
+                                        print("Move to Settings")
+                                    }
+                                }
+                            }
+                    }
             }
-            .padding(50 / 2)
-            
-            
+        
         }
         .background(Color.backGround)
     }
@@ -38,85 +54,92 @@ struct HomeView: View {
     HomeView()
 }
 
-struct HomeHeader: View {
-    var body: some View {
-        HStack {
-            Text("Dietto")
-                .font(.NerkoOne40)
-                .foregroundStyle(.text)
-            Spacer()
-            Button {
-                print("Profile Clicked")
-            } label: {
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 38, height: 38)
-                    .foregroundStyle(.textFieldGray)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle().stroke(Color.accentColor, lineWidth: 1)
-                    )
-            }
-        }
-        .padding([.leading, .trailing], 16)
-    }
+enum ChartTimeType: String,CaseIterable {
+    case weekly = "주간"
+    case monthly = "월간"
+    case yearly = "연간"
 }
 
-struct bodyScaleTable: View {
-    @State var startBodyScale: Int = 68
-    @State var targetBodyScale: Int = 64
-    @State var currentBodyScale: Int = 68
+struct BodyScaleHistoryView: View {
+    @State private var trigger: Bool = false
+    @State private var isAnimated: Bool = false
+    @State var bodyScaleHistory: [BodyScale] = [
+        BodyScale(date: Date()-(86400*3), scale: 70),
+        BodyScale(date: Date()-(86400*2), scale: 65),
+        BodyScale(date: Date()-86400, scale: 55),
+        BodyScale(date: Date(), scale: 50),
+        BodyScale(date: Date()+86400, scale: 55),
+        BodyScale(date: Date()+(86400*2), scale: 62),
+        BodyScale(date: Date()+(86400*3), scale: 72),
+        BodyScale(date: Date()+(86400*4), scale: 82),
+        BodyScale(date: Date()+(86400*5), scale: 72),
+        BodyScale(date: Date()+(86400*6), scale: 62),
+        BodyScale(date: Date()+(86400*7), scale: 52),
+        BodyScale(date: Date()+(86400*8), scale: 52),
+        BodyScale(date: Date()+(86400*9), scale: 52),
+        BodyScale(date: Date()+(86400*10), scale: 52),
+        BodyScale(date: Date()+(86400*11), scale: 52)
+    ]
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("몸무게").font(.pretendardBold20).foregroundStyle(.text)
+                Text("몸무게 히스토리").font(.pretendardBold20).foregroundStyle(.text)
                 Spacer()
-                Text(Date().formattedString()).font(.pretendardBold20).foregroundStyle(.text)
-            }.padding()
-            HStack {
-                VStack(alignment: .center) {
-                    Text("시작 몸무게").font(.pretendardBold16).foregroundStyle(.text)
-                    HStack(spacing: 4) {
-                        Text("\(startBodyScale)").font(.pretendardBold32).foregroundStyle(.text)
-                        Text("kg").font(.pretendardBold16).foregroundStyle(.text)
+                Menu {
+                    ForEach(ChartTimeType.allCases, id: \.self) { type in
+                        Button(type.rawValue) {
+                            
+                        }
+                    }
+                } label: {
+                    HStack(spacing: 2) {
+                        Text("주간").font(.pretendardBold20)
+                        Image(systemName: "chevron.down")
+                            .font(.pretendardBold16)
                     }
                 }
-                Spacer()
-                VStack(alignment: .center) {
-                    Text("목표 몸무게").font(.pretendardBold16).foregroundStyle(.text)
-                    HStack(spacing: 4) {
-                        Text("\(targetBodyScale)").font(.pretendardBold32).foregroundStyle(.text)
-                        Text("kg").font(.pretendardBold16).foregroundStyle(.text)
+            }
+            ZStack {
+                Chart(bodyScaleHistory, id: \.date) { item in
+                    LineMark(
+                        x: .value("Date", item.date, unit: .day),
+                        y: .value("Scale", item.isAnimated ? item.scale : 0)
+                    )
+                    .symbol(.circle)
+                }
+                
+                RoundedRectangle(cornerRadius: 21)
+                    .fill(.ultraThinMaterial)
+                    .foregroundStyle(.white)
+                    .opacity(0.95)
+                    .overlay {
+                        Text("데이터가 부족해 히스토리를 볼 수 없습니다.")
+                            .font(.pretendardBold16)
+                            .foregroundStyle(.text)
                     }
-                }
-            }.padding([.leading, .trailing])
-            
-            Divider().foregroundStyle(.text).padding([.leading, .trailing])
-            
-            HStack(alignment: .top) {
-                VStack(alignment: .center) {
-                    Text("최근 몸무게").font(.pretendardBold16).foregroundStyle(.text)
-                    HStack(spacing: 4) {
-                        Text("\(currentBodyScale)").font(.pretendardBold32).foregroundStyle(.text)
-                        Text("kg").font(.pretendardBold16).foregroundStyle(.text)
-                    }
-                }
-                Spacer()
-                Button("수정") {
-                    print("")
-                }
-            }.padding()//.padding([.leading, .trailing])
+                    .padding(.vertical, -8)
+                    .padding(.horizontal, -5)
+            }
+        }
+        .padding()
+        .onAppear(perform: chartAnimate)
+        .onChange(of: trigger, initial: false) { oldValue, newValue in
             
         }
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 21))
-        .overlay(
-            RoundedRectangle(cornerRadius: 21)
-                .stroke(Color.accent, lineWidth: 1)
-        )
-        .shadow(radius: 8, x: 2, y: 10)
-        .padding()
+    }
+    
+    private func chartAnimate() {
+        guard !isAnimated else { return }
+        isAnimated = true
+        
+        $bodyScaleHistory.enumerated().forEach { index, item in
+            let delay = Double(index) * 0.05
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                withAnimation(.bouncy) {
+                    item.wrappedValue.isAnimated = true
+                }
+            }
+        }
     }
 }
