@@ -11,7 +11,6 @@ import SwiftUI
 extension Font {
     static let AppLogo: Font = .custom("NerkoOne-regular", size: 32)
     static let NerkoOne40: Font = .custom("NerkoOne-regular", size: 40)
-//    static let NerkoOne32: Font = .custom("NerkoOne-regular", size: 32)
     
     static let pretendardBlack32: Font = .custom("Pretendard-Black", size: 32)
     static let pretendardBlack28: Font = .custom("Pretendard-Black", size: 28)

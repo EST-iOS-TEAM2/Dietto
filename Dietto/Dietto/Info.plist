@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen.storyboard</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NerkoOne-regular.otf</string>
@@ -17,5 +15,14 @@
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Thin.otf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>AccentColor</string>
+		<key>UIImageName</key>
+		<string>Splash</string>
+		<key>UILaunchScreen</key>
+		<dict/>
+	</dict>
 </dict>
 </plist>
