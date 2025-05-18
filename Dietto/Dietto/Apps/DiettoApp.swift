@@ -12,10 +12,7 @@ import SwiftData
 struct DiettoApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
-            //            AppCoordinator{
-            //                HomeView()
-            //            }
+            DietaryView()
         }
     }
 }

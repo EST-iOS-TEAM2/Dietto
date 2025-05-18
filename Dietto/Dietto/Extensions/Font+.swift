@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Font {
     static let AppLogo: Font = .custom("NerkoOne-regular", size: 32)
-//    static let NerkoOne32: Font = .custom("NerkoOne-regular", size: 32)
+    static let NerkoOne40: Font = .custom("NerkoOne-regular", size: 40)
     
     static let pretendardBlack32: Font = .custom("Pretendard-Black", size: 32)
     static let pretendardBlack28: Font = .custom("Pretendard-Black", size: 28)
@@ -24,6 +24,7 @@ extension Font {
     static let pretendardBold24: Font = .custom("Pretendard-Bold", size: 24)
     static let pretendardBold20: Font = .custom("Pretendard-Bold", size: 20)
     static let pretendardBold16: Font = .custom("Pretendard-Bold", size: 16)
+    static let pretendardBold14: Font = .custom("Pretendard-Bold", size: 14) //알약모양텍스트때문에생성
     static let pretendardBold12: Font = .custom("Pretendard-Bold", size: 12)
     
     static let pretendardExtraBold32: Font = .custom("Pretendard-ExtraBold", size: 32)
@@ -67,6 +68,7 @@ extension Font {
     static let pretendardSemiBold20: Font = .custom("Pretendard-SemiBold", size: 20)
     static let pretendardSemiBold16: Font = .custom("Pretendard-SemiBold", size: 16)
     static let pretendardSemiBold12: Font = .custom("Pretendard-SemiBold", size: 12)
+    static let pretendardSemiBold10: Font = .custom("Pretendard-SemiBold", size: 10)
     
     static let pretendardThin32: Font = .custom("Pretendard-Thin", size: 32)
     static let pretendardThin28: Font = .custom("Pretendard-Thin", size: 28)
