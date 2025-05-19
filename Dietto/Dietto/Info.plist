@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>활동을 확인하기위해 권한을 허용해주세요</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>활동을 확인하기위해 권한을 허용해주세요</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NerkoOne-regular.otf</string>
