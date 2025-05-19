@@ -127,46 +127,60 @@ struct ProfileEditView: View {
                         Button("취소", role: .cancel){}
                     }
 //MARK: 키 수정
-                    HStack(spacing: 0) {
-                        TextField("170", text: $height)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.center)
-                            .font(.pretendardMedium20)
-                            .foregroundColor(.primary)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 15)
-                            .background(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
-                            )
-                        Text("cm")
-                            .font(.custom("NerkoOne-regular", size: 50))
-                            .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
-                            .padding(.leading, 12)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("키")
+                            .font(.pretendardBold16)
+                            .padding(.leading, 15)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        HStack(spacing: 0) {
+                            TextField("170", text: $height)
+                                .keyboardType(.numberPad)
+                                .multilineTextAlignment(.center)
+                                .font(.pretendardMedium20)
+                                .foregroundColor(.primary)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 15)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                                )
+                            Text("cm")
+                                .font(.custom("NerkoOne-regular", size: 50))
+                                .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                                .padding(.leading, 12)
+                        }
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 24)
+                    .padding(.horizontal, 25)
+                    .padding(.top, 20)
                     
 //MARK: 몸무게 수정
-                    HStack(spacing: 0) {
-                        TextField("66", text: $weight)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.center)
-                            .font(.pretendardMedium20)
-                            .foregroundColor(.primary)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 15)
-                            .background(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
-                            )
-                        Text("kg")
-                            .font(.custom("NerkoOne-regular", size: 50))
-                            .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
-                            .padding(.leading, 12)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("몸무게")
+                            .font(.pretendardBold16)
+                            .padding(.leading, 15)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        HStack(spacing: 0) {
+                            TextField("66", text: $weight)
+                                .keyboardType(.numberPad)
+                                .multilineTextAlignment(.center)
+                                .font(.pretendardMedium20)
+                                .foregroundColor(.primary)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 15)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                                )
+                            Text("kg")
+                                .font(.custom("NerkoOne-regular", size: 50))
+                                .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                                .padding(.leading, 12)
+                        }
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.top, -5)
+                    .padding(.horizontal, 25)
+                    .padding(.top, -10)
                 }
 //MARK: 저장 버튼
                 Button(action: {
