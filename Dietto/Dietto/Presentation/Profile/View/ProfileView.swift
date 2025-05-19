@@ -75,43 +75,50 @@ struct ProfileView: View {
 
 //#MARK: 관심사
 struct InterestsView: View {
-    let interests = ["근육량 증가", "영양소 섭취", "혈당 안정화"]
+    let interests = [
+        "근육량 증가", "영양소 섭취", "혈당 안정화", "안녕하세요", "반갑습니다", "칼로리 조절", "운동 습관", "수분 섭취", "스트레스 관리"
+    ]
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("관심사")
+                .font(.pretendardBold20)
+                .foregroundColor(.black)
+                .padding(.top, 10)
+
+            FlexibleTagWrapView(tags: interests)
+                .padding(.top, 6)
+        }
+        .padding(30)
+        .background(
             RoundedRectangle(cornerRadius: 32)
                 .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
                 .background(Color.clear.clipShape(RoundedRectangle(cornerRadius: 32)))
-            VStack(alignment: .leading, spacing: 22) {
-                Text("관심사")
-                    .font(.pretendardBold20)
-                    .foregroundColor(.black)
-                    .padding(.top, 10)
-                VStack(alignment: .leading, spacing: 22) {
-                    HStack(spacing: 20) {
-                        ForEach(0..<min(2, interests.count), id: \.self) { idx in
-                            InterestTag(title: interests[idx])
-                        }
-                    }
-                    if interests.count > 2 {
-                        HStack(spacing: 20) {
-                            ForEach(2..<interests.count, id: \.self) { idx in
-                                InterestTag(title: interests[idx])
-                            }
-                        }
-                    }
-                }
-            }
-            .padding(.horizontal, 30)
-            .padding(.top, 10)
-            .padding(.bottom, 40)
-        }
+        )
         .padding(.horizontal, 20)
         .padding(.top, 20)
     }
 }
 
-// 관심사 태그 버튼 모양
+//MARK: 줄이 바뀌면 세로로 내려감
+struct FlexibleTagWrapView: View {
+    let tags: [String]
+    let spacing: CGFloat = 16
+
+    private var columns: [GridItem] {
+        Array(repeating: .init(.flexible(), spacing: spacing), count: 2)
+    }
+
+    var body: some View {
+        LazyVGrid(columns: columns, alignment: .center, spacing: spacing) {
+            ForEach(tags, id: \.self) { tag in
+                InterestTag(title: tag)
+            }
+        }
+    }
+}
+
+//MARK: 관심사 태그 버튼 모양
 struct InterestTag: View {
     let title: String
     var body: some View {
@@ -126,6 +133,9 @@ struct InterestTag: View {
             )
     }
 }
+
+
+
 
 #Preview {
     ProfileView()
