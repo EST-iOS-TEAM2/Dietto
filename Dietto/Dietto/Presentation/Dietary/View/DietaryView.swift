@@ -102,7 +102,7 @@ struct DietaryView: View {
                                             
                                         }
                                     }
-
+                                    
                                     Spacer()
                                 }
                             }

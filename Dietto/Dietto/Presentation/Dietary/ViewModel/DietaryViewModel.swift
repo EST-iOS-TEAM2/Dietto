@@ -7,42 +7,35 @@
 
 import SwiftUI
 
-
-//MARK: - 임시 Entity
-struct Ingredient: Identifiable, Hashable {
-    let id = UUID()
-    let name: String
-}
-
 class DietaryViewModel: ObservableObject {
     
-    @Published var presentIngredients: [Ingredient] = [
-        Ingredient(name: "재료1"),
-        Ingredient(name: "재료2"),
-        Ingredient(name: "재료3"),
-        Ingredient(name: "재료4"),
-        Ingredient(name: "재료5")
+    @Published var presentIngredients: [IngredientEntity] = [
+        IngredientEntity(name: "재료1"),
+        IngredientEntity(name: "재료2"),
+        IngredientEntity(name: "재료3"),
+        IngredientEntity(name: "재료4"),
+        IngredientEntity(name: "재료5")
     ]
     
-    @Published var pastIngredients : [Ingredient] = [
-        Ingredient(name: "재료21"),
-        Ingredient(name: "재료22"),
-        Ingredient(name: "재료23"),
-        Ingredient(name: "재료24"),
-        Ingredient(name: "재료25"),
-        Ingredient(name: "재료26"),
-        Ingredient(name: "재료27"),
-        Ingredient(name: "재료28"),
-        Ingredient(name: "재료29"),
-        Ingredient(name: "재료30"),
-        Ingredient(name: "재료31"),
-        Ingredient(name: "재료32"),
-        Ingredient(name: "재료33"),
-        Ingredient(name: "재료34"),
-        Ingredient(name: "재료35"),
-        Ingredient(name: "재료36"),
-        Ingredient(name: "재료37"),
-        Ingredient(name: "재료38")
+    @Published var pastIngredients : [IngredientEntity] = [
+        IngredientEntity(name: "재료21"),
+        IngredientEntity(name: "재료22"),
+        IngredientEntity(name: "재료23"),
+        IngredientEntity(name: "재료24"),
+        IngredientEntity(name: "재료25"),
+        IngredientEntity(name: "재료26"),
+        IngredientEntity(name: "재료27"),
+        IngredientEntity(name: "재료28"),
+        IngredientEntity(name: "재료29"),
+        IngredientEntity(name: "재료30"),
+        IngredientEntity(name: "재료31"),
+        IngredientEntity(name: "재료32"),
+        IngredientEntity(name: "재료33"),
+        IngredientEntity(name: "재료34"),
+        IngredientEntity(name: "재료35"),
+        IngredientEntity(name: "재료36"),
+        IngredientEntity(name: "재료37"),
+        IngredientEntity(name: "재료38")
     ]
     
     //MARK: - 지금 식단에 있는거 생성 / 삭제
@@ -51,15 +44,15 @@ class DietaryViewModel: ObservableObject {
         guard !trimmed.isEmpty,
               !presentIngredients.contains(where: { $0.name == trimmed }) else { return }
         
-        presentIngredients.append(Ingredient(name: trimmed))
+        presentIngredients.append(IngredientEntity(name: trimmed))
     }
     
-    func removepresentIngredients(_ ingredient: Ingredient) {
+    func removepresentIngredients(_ ingredient: IngredientEntity) {
         presentIngredients.removeAll { $0.id == ingredient.id }
     }
     
     //MARK: - 과거 식단에 있던거 삭제
-    func removepastIngredients(_ ingredient: Ingredient) {
+    func removepastIngredients(_ ingredient: IngredientEntity) {
         pastIngredients.removeAll { $0.id == ingredient.id }
     }
     
