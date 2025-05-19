@@ -95,37 +95,51 @@ struct ProfileEditView: View {
                     .padding(.top, 20)
                     .padding(.horizontal, 20)
                     
-//MARK: 성별 선택란
+//MARK: 성별 선택
                     VStack(alignment: .leading, spacing: 6) {
                         Text("성별")
                             .font(.pretendardBold16)
                             .padding(.leading, 12)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        Button(action: {
-                            showGenderSheet = true
-                        }) {
+
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+
                             HStack {
                                 Text(gender.isEmpty ? "남성" : gender)
                                     .font(.pretendardMedium16)
                                     .foregroundColor(gender.isEmpty ? .gray : .primary)
-                                    .padding(.leading, 4)
+                                    .padding(.leading, 20)
+
                                 Spacer()
+
+                                Menu {
+                                    Button {
+                                        gender = "남성"
+                                    } label: {
+                                        Text("남성")
+                                    }
+
+                                    Button {
+                                        gender = "여성"
+                                    } label: {
+                                        Text("여성")
+                                    }
+                                } label: {
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(.gray)
+                                        .padding(.trailing, 12)
+                                }
+                                .menuStyle(.automatic)
                             }
-                            .padding(.horizontal, 20)
                             .padding(.vertical, 15)
-                            .background(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
-                            )
                         }
+                        .frame(maxWidth: .infinity)
                     }
                     .padding(.top, 20)
                     .padding(.horizontal, 20)
-                    .confirmationDialog("성별", isPresented: $showGenderSheet, titleVisibility: .visible) {
-                        Button("남성") { gender = " 남성 "}
-                        Button("여성") { gender = " 여성 "}
-                        Button("취소", role: .cancel){}
-                    }
+                    
 //MARK: 키 수정
                     VStack(alignment: .leading, spacing: 6) {
                         Text("키")
@@ -205,6 +219,8 @@ struct ProfileEditView: View {
 //MARK: 프로필 사진 변경
         .navigationTitle("프로필 수정")
         .navigationBarTitleDisplayMode(.inline)
+        
+// MARK: - 프로필 사진 변경 시트
         .confirmationDialog(
             "프로필 사진 선택",
             isPresented: $showPhotoSheet,
@@ -212,7 +228,7 @@ struct ProfileEditView: View {
         ) {
             Button("카메라") {}
             Button("갤러리") {}
-            Button("취소", role: .cancel) {}
+            Button("취소") {}
         }
     }
 }
