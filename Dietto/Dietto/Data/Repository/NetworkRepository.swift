@@ -7,9 +7,12 @@
 
 import Foundation
 
+//MARK: - Alan Protocol
 protocol NetworkRepository {
-    func NetWorkToAlan(content : String) async throws -> AlanResponse
+    func NetWorkToAlan(content : String) async throws -> AlanResponse //alan이랑 데이트하기.
 }
+
+//MARK: - Implement Alan
 
 final class NetworkRepositoryImpl: NetworkRepository {
     
@@ -29,7 +32,7 @@ final class NetworkRepositoryImpl: NetworkRepository {
         let (data, response) = try await URLSession.shared.data(from: url)
         
         guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
-            throw URLError(.badServerResponse)
+            throw NetworkError.invalidResponse
         }
         
         decoder.dateDecodingStrategy = .iso8601

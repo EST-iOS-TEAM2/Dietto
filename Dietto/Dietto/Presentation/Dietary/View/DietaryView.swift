@@ -161,10 +161,20 @@ struct DietaryView: View {
                     }
                     HStack {
                         Button("식단 추천받기") {
-                            for ingredient in ViewModel.presentIngredients {
-                                print("id \(ingredient.id), name \(ingredient.name)")
+                            Task {
+                                do {
+                                    PushToRecommandView = true
+                                    
+                                    let ingredients = ViewModel.presentIngredients
+                                    
+                                    let useCase = NetworkUseCaseImpl(repository: NetworkRepositoryImpl())
+                                    let recommendations = try await useCase.fetchAlanRecommendDietary(ingredients: ingredients)
+                                    
+                                    print("추천 결과:", recommendations)
+                                } catch {
+                                    print("Error:", error)
+                                }
                             }
-                            PushToRecommandView = true
                         }
                         .font(.pretendardBold16)
                         .foregroundColor(.white)

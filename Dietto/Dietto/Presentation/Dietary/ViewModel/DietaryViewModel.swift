@@ -9,13 +9,7 @@ import SwiftUI
 
 class DietaryViewModel: ObservableObject {
     
-    @Published var presentIngredients: [IngredientEntity] = [
-        IngredientEntity(name: "재료1"),
-        IngredientEntity(name: "재료2"),
-        IngredientEntity(name: "재료3"),
-        IngredientEntity(name: "재료4"),
-        IngredientEntity(name: "재료5")
-    ]
+    @Published var presentIngredients: [IngredientEntity] = []
     
     @Published var pastIngredients : [IngredientEntity] = [
         IngredientEntity(name: "재료21"),
