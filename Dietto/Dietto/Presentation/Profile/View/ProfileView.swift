@@ -65,6 +65,7 @@ struct ProfileView: View {
                     }
                 }
             }
+            
 //MARK: edit 누르면 ProfileEditView로 이동
             .navigationDestination(isPresented: $isEditActive) {
                 ProfileEditView()
@@ -75,19 +76,32 @@ struct ProfileView: View {
 
 //#MARK: 관심사
 struct InterestsView: View {
-    let interests = [
-        "근육량 증가", "영양소 섭취", "혈당 안정화", "안녕하세요", "반갑습니다", "칼로리 조절", "운동 습관", "수분 섭취", "스트레스 관리"
-    ]
+    let interests = ["근육량 증가", "영양소 섭취", "혈당 안정화", "안녕하세요", "반갑습니다", "칼로리 조절", "운동 습관", "수분 섭취", "스트레스 관리"]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("관심사")
-                .font(.pretendardBold20)
-                .foregroundColor(.black)
-                .padding(.top, 10)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("관심사")
+                    .font(.pretendardBold20)
+                    .foregroundColor(.black)
+
+                Spacer()
+
+                Button(action: {
+                }) {
+                    Text("edit")
+                        .font(.pretendardMedium16)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 14)
+                        .background(Color(red: 0.925, green: 0.463, blue: 0.463))
+                        .clipShape(Capsule())
+                }
+            }
+            .padding(.top, -5)
 
             FlexibleTagWrapView(tags: interests)
-                .padding(.top, 6)
+                .padding(.top, 25)
         }
         .padding(30)
         .background(
@@ -95,8 +109,8 @@ struct InterestsView: View {
                 .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
                 .background(Color.clear.clipShape(RoundedRectangle(cornerRadius: 32)))
         )
-        .padding(.horizontal, 20)
-        .padding(.top, 20)
+        .padding(.horizontal, 10)
+        .padding(.top, 10)
     }
 }
 
@@ -125,8 +139,8 @@ struct InterestTag: View {
         Text(title)
             .font(.pretendardMedium16)
             .foregroundColor(.white)
-            .padding(.vertical, 14)
-            .padding(.horizontal, 32)
+            .padding(.vertical, 10)
+            .padding(.horizontal, 25)
             .background(
                 Capsule()
                     .fill(Color(red: 0.925, green: 0.463, blue: 0.463))
