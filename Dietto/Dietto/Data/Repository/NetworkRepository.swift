@@ -13,7 +13,6 @@ protocol NetworkRepository {
 }
 
 //MARK: - Implement Alan
-
 final class NetworkRepositoryImpl: NetworkRepository {
     
     public func NetWorkToAlan(content : String) async throws -> AlanResponse {
@@ -37,8 +36,6 @@ final class NetworkRepositoryImpl: NetworkRepository {
         
         decoder.dateDecodingStrategy = .iso8601
         let result = try decoder.decode(AlanResponse.self, from: data)
-        
-        print(#function,#line,#file,result)
         
         return result
     }

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct DietaryView: View {
     
-    @StateObject private var ViewModel = DietaryViewModel()
+    @StateObject private var dietartViewModel = DietaryViewModel()
+    @StateObject private var recommendViewModel = RecommendViewModel()
     
     @State private var newfood : String = ""
     
@@ -65,7 +66,7 @@ struct DietaryView: View {
                             
                             Button("추가"){
                                 if newfood != ""{
-                                    ViewModel.addpresentIngredients(newfood)
+                                    dietartViewModel.addpresentIngredients(newfood)
                                     newfood = ""
                                 }
                                 
@@ -95,9 +96,9 @@ struct DietaryView: View {
                                     Spacer()
                                     
                                     FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $recommandflowlayout) {
-                                        ForEach(ViewModel.presentIngredients) { ingredient in
+                                        ForEach(dietartViewModel.presentIngredients) { ingredient in
                                             PillText(text: ingredient.name, onDelete: {
-                                                ViewModel.removepresentIngredients(ingredient)
+                                                dietartViewModel.removepresentIngredients(ingredient)
                                             })
                                             
                                         }
@@ -133,9 +134,9 @@ struct DietaryView: View {
                                     
                                     if !isFoldMyRefrigerlator{
                                         FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $myRefrigerlatorflowlayout) {
-                                            ForEach(ViewModel.pastIngredients) { ingredient in
+                                            ForEach(dietartViewModel.pastIngredients) { ingredient in
                                                 PillText(text: ingredient.name, onDelete: {
-                                                    ViewModel.removepastIngredients(ingredient)
+                                                    dietartViewModel.removepastIngredients(ingredient)
                                                 })
                                             }
                                         }
@@ -161,19 +162,14 @@ struct DietaryView: View {
                     }
                     HStack {
                         Button("식단 추천받기") {
-                            Task {
-                                do {
+                            print("Button was Tapped by mom")
+                            if !dietartViewModel.presentIngredients.isEmpty {
+                                Task {
+                                    await recommendViewModel.fetchRecommendations(ingredients: dietartViewModel.presentIngredients)
                                     PushToRecommandView = true
-                                    
-                                    let ingredients = ViewModel.presentIngredients
-                                    
-                                    let useCase = NetworkUseCaseImpl(repository: NetworkRepositoryImpl())
-                                    let recommendations = try await useCase.fetchAlanRecommendDietary(ingredients: ingredients)
-                                    
-                                    print("추천 결과:", recommendations)
-                                } catch {
-                                    print("Error:", error)
                                 }
+                            }else{
+                                print("비어있음 현재 식재료가 ")
                             }
                         }
                         .font(.pretendardBold16)
@@ -191,7 +187,7 @@ struct DietaryView: View {
                 }
             }
             .navigationDestination(isPresented: $PushToRecommandView) {
-                RecommendView()
+                RecommendView().environmentObject(recommendViewModel)
             }
         }
     }

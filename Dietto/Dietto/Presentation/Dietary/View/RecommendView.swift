@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecommendView: View {
     
-    @StateObject private var viewModel = RecommendViewModel()
+    @EnvironmentObject private var viewModel : RecommendViewModel
     
     @State private var isFoldRecommand : Bool = false  // true : 펼친상태로 시작 , false: 가려진 채로 시작.
     
@@ -27,18 +27,17 @@ struct RecommendView: View {
                                     .padding(.top, 8)
                                 
                                 //MARK: - 안에 컨텐츠.
-                                List(viewModel.recommendList) { item in
+                                List(viewModel.recommendList, id: \.self) { item in
                                     VStack(alignment: .leading, spacing: 8){
                                         Text(item.title)
                                             .font(.pretendardBold24)
-                                        
                                         
                                         Text(item.description)
                                             .font(.pretendardSemiBold16)
                                     }
                                 }
                                 .listStyle(.plain)
-                                .frame(height: isFoldRecommand ? 400 : CGFloat(viewModel.recommendList.count) * 44 + 10)
+                                .frame(height: isFoldRecommand ? 300 : CGFloat(viewModel.recommendList.count) * 44 + 10)
                                 .padding(.top, 8)
                                 
                                 Spacer()
@@ -48,7 +47,7 @@ struct RecommendView: View {
                                         isFoldRecommand.toggle()
                                     }
                                 }label: {
-                                    Image(systemName: isFoldRecommand ? "chevron.down" : "chevron.up")
+                                    Image(systemName: isFoldRecommand ? "chevron.up" : "chevron.down")
                                         .frame(width: 10, height: 10)
                                         .font(.pretendardBold20)
                                 }
