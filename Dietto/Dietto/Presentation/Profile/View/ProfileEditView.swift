@@ -20,8 +20,7 @@ struct ProfileEditView: View {
     var body: some View {
         ZStack {
 //MARK: 배경 색상
-            Color(red: 1.0, green: 0.976, blue: 0.976)
-                .ignoresSafeArea()
+            Color(.backGround).ignoresSafeArea()
             
             ScrollView {
                 VStack {
@@ -31,7 +30,7 @@ struct ProfileEditView: View {
                             showPhotoSheet = true
                         }) {
                             Circle()
-                                .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                                .stroke(Color.accent, lineWidth: 2)
                                 .frame(width: 180, height: 180)
                                 .background(
                                     Image(systemName: "person.crop.circle.fill")
@@ -71,7 +70,7 @@ struct ProfileEditView: View {
                             .padding(.vertical, 15)
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                                    .stroke(Color.accent, lineWidth: 2)
                             )
                     }
                     .padding(.top, 25)
@@ -89,7 +88,7 @@ struct ProfileEditView: View {
                             .padding(.vertical, 15)
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                                    .stroke(Color.accent, lineWidth: 2)
                             )
                     }
                     .padding(.top, 20)
@@ -104,7 +103,7 @@ struct ProfileEditView: View {
 
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                                .stroke(Color.accent, lineWidth: 2)
 
                             HStack {
                                 Text(gender.isEmpty ? "남성" : gender)
@@ -127,7 +126,7 @@ struct ProfileEditView: View {
                                         Text("여성")
                                     }
                                 } label: {
-                                    Image(systemName: "chevron.down")
+                                    Image(systemName: "chevron.up.chevron.down")
                                         .foregroundColor(.gray)
                                         .padding(.trailing, 12)
                                 }
@@ -141,10 +140,10 @@ struct ProfileEditView: View {
                     .padding(.horizontal, 20)
                     
 //MARK: 키 수정
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: 1) {
                         Text("키")
                             .font(.pretendardBold16)
-                            .padding(.leading, 15)
+                            .padding(.leading, 12)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         HStack(spacing: 0) {
@@ -154,14 +153,14 @@ struct ProfileEditView: View {
                                 .font(.pretendardMedium20)
                                 .foregroundColor(.primary)
                                 .padding(.horizontal, 20)
-                                .padding(.vertical, 15)
+                                .padding(.vertical, 12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                                        .stroke(Color.accent, lineWidth: 2)
                                 )
                             Text("cm")
                                 .font(.custom("NerkoOne-regular", size: 50))
-                                .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                                .foregroundColor(Color.accent)
                                 .padding(.leading, 12)
                         }
                     }
@@ -169,10 +168,10 @@ struct ProfileEditView: View {
                     .padding(.top, 20)
                     
 //MARK: 몸무게 수정
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: 1) {
                         Text("몸무게")
                             .font(.pretendardBold16)
-                            .padding(.leading, 15)
+                            .padding(.leading, 12)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         HStack(spacing: 0) {
@@ -182,14 +181,14 @@ struct ProfileEditView: View {
                                 .font(.pretendardMedium20)
                                 .foregroundColor(.primary)
                                 .padding(.horizontal, 20)
-                                .padding(.vertical, 15)
+                                .padding(.vertical, 12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color(red: 0.925, green: 0.463, blue: 0.463), lineWidth: 2)
+                                        .stroke(Color.accent, lineWidth: 2)
                                 )
                             Text("kg")
                                 .font(.custom("NerkoOne-regular", size: 50))
-                                .foregroundColor(Color(red: 0.925, green: 0.463, blue: 0.463))
+                                .foregroundColor(Color.accent)
                                 .padding(.leading, 12)
                         }
                     }
@@ -207,7 +206,7 @@ struct ProfileEditView: View {
                         .padding(.vertical, 15)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(Color(red: 0.925, green: 0.463, blue: 0.463))
+                                .fill(Color.accent)
                         )
                 }
                 .padding(.horizontal, 20)
