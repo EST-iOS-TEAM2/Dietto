@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftData
+
 
 struct User {
     var name: String

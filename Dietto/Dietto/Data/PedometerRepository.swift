@@ -17,11 +17,14 @@ protocol PedometerRepository {
 }
 
 final class PedometerRepositoryImpl: PedometerRepository {
-    private let pedometer = CMPedometer()
+    private let pedometer: CMPedometer
     private var querySubject = PassthroughSubject<CMPedometerData, Error>()
     private var liveSubject = PassthroughSubject<CMPedometerData, Error>()
     var authorizationStatus: CMAuthorizationStatus { CMPedometer.authorizationStatus() }
     
+    init(pedometer: CMPedometer = CMPedometer()) {
+        self.pedometer = pedometer
+    }
     
     func startPedometer() -> AnyPublisher<CMPedometerData, any Error> {
         pedometer.startUpdates(from: Calendar.current.startOfDay(for: Date())) { [weak self] data, error in
