@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecommendView: View {
     
-    @StateObject private var viewModel = RecommendViewModel()
+    @EnvironmentObject private var viewModel : RecommendViewModel
     
     @State private var isFoldRecommand : Bool = false  // true : 펼친상태로 시작 , false: 가려진 채로 시작.
     
@@ -17,8 +17,8 @@ struct RecommendView: View {
         ZStack {
             Color(.backGround).ignoresSafeArea(edges: .all)
             ScrollView {
-                VStack {
-                    ContainerView(paddingSize: 16, height: isFoldRecommand ? 500 : CGFloat(viewModel.recommendList.count) * 44 + 100) {
+                VStack {//컨테이너 뷰의 높이
+                    ContainerView(paddingSize: 16, height: isFoldRecommand ? 400 : CGFloat(viewModel.recommendList.count) * 44 + 500) {
                         HStack{
                             VStack{
                                 Text("추천 레시피에 등록된 재료를 이용해 식사를 추천합니다.")
@@ -27,18 +27,18 @@ struct RecommendView: View {
                                     .padding(.top, 8)
                                 
                                 //MARK: - 안에 컨텐츠.
-                                List(viewModel.recommendList) { item in
+                                List(viewModel.recommendList, id: \.self) { item in
                                     VStack(alignment: .leading, spacing: 8){
                                         Text(item.title)
                                             .font(.pretendardBold24)
-                                        
                                         
                                         Text(item.description)
                                             .font(.pretendardSemiBold16)
                                     }
                                 }
                                 .listStyle(.plain)
-                                .frame(height: isFoldRecommand ? 400 : CGFloat(viewModel.recommendList.count) * 44 + 10)
+                                //안에 리스트 높이
+                                .frame(height: isFoldRecommand ? 300 : CGFloat(viewModel.recommendList.count) * 44 + 400)
                                 .padding(.top, 8)
                                 
                                 Spacer()
