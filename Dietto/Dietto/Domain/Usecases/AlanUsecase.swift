@@ -29,7 +29,6 @@ final class AlanUsecaseImpl : AlanUsecase {
         let names = ingredients.map { $0.name }
         
         /// 퓨샷(few-shot) 프롬프팅 기법은 프롬프트에서 데모를 제공하여 모델이 더 나은 성능을 발휘하도록 유도하는 문맥 내 학습을 가능하게 하는 기술
-        /// 레게노 ㄷㄷ
         
         let prompt = """
             당신은 영양사입니다. 다음 재료로 만들 수 있는 건강한 식단을 추천해 주세요. 응답은 JSON 배열 형태로 제공해 주세요.
