@@ -8,20 +8,22 @@
 import SwiftUI
 
 struct TutorialView: View {
-    @State var weigt: String = ""
+    //@State var weigt: String = ""
     @State var distance: String = ""
     
-    @State var selectWeight = 60
+    @State var targetWeight = 60 //목표 몸무게 기본값
+    @State var targetDistance = 1 //목표 거리 기본값
     
-    let items: [Int] = Array(20...100).reversed()
+    let weights: [Int] = Array(20...100).reversed() //무게 범위
+    let distances: [Int] = Array(1...10).reversed() //거리 범위
     
-    var nickName = "lee"
+    var name = "lee"
     
     
     
     var body: some View {
         VStack(alignment: .leading){ //상단 텍스트
-            Text("\(nickName)님의")
+            Text("\(name)님의")
             HStack{
                 Text("목표를")
                     .foregroundColor(.accent)
@@ -29,19 +31,23 @@ struct TutorialView: View {
             }
             
         }
+        .offset(y:-150)
         .font(.pretendardBold28)
-        .padding()
         
         
         
         VStack { //목표 몸무게 입력 부분
             HStack{
-                TextField("목표체중", text: $weigt)
-                    .keyboardType(.numberPad)
+                Picker("Select Weight",selection: $targetWeight) {
+                    ForEach(weights, id: \.self) { item in
+                        Text("\(item)")
+                        
+                    }
+                }
                     .multilineTextAlignment(.center)
                     .font(.pretendardMedium20)
                     .foregroundColor(.primary)
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 40)
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -52,20 +58,25 @@ struct TutorialView: View {
                     .foregroundColor(.accent)
                     .font(.AppLogo)
             }
-            .frame(width: 200)
+            .frame(width: 250)
             
         }
-        .padding()
+        .offset(y:-150)
+        .padding(.vertical, 30)
         
-        VStack{
-            //목표 거리 입력하는 부분
+        VStack{//목표 거리 입력하는 부분
+            
             HStack{
-                TextField("거리", text: $distance)
-                    .keyboardType(.numberPad)
+                Picker("Select Distance",selection: $targetDistance) {
+                    ForEach(distances, id: \.self) { item in
+                        Text("\(item)")
+                        
+                    }
+                }
                     .multilineTextAlignment(.center)
                     .font(.pretendardMedium20)
                     .foregroundColor(.primary)
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 47)
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -76,25 +87,26 @@ struct TutorialView: View {
                     .foregroundColor(.accent)
                     .font(.AppLogo)
             }
-            .frame(width: 200)
+            .frame(width: 250)
             
         }
-        .padding()
         
         VStack{ //버튼 위의 페이징 부분
-            
-        }.offset(y:180)
+            //Text("123")
+        }.offset(y:160)
         
         VStack{ //하단 버튼 부분 - 관심사 클릭 부분
             Button("다음") {
                 
             }
-        }.frame(width: 300, height: 50)
+        }
+        
+        .frame(width: 300, height: 50)
             .background(.accent)
             .foregroundColor(.white)
         .cornerRadius(13)
         .font(.pretendardMedium16)
-        .offset(y:180)
+        .offset(y:160)
         .padding()
     }
 }

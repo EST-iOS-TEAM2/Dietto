@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ButtonView: View {
-    @Environment(\.dismiss) var dismiss //이전화면 버튼 누를때 로직
-    var nickName = "lee"
+    //@Environment(\.dismiss) var dismiss //이전화면 버튼 누를때 로직
+    var name = "lee"
+    
     
     var body: some View {
         VStack(alignment: .leading){ //상단 텍스트
-            Text("\(nickName)님의")
+            Text("\(name)님의")
             HStack{
                 Text("관심사를")
                     .foregroundColor(.accent)
@@ -79,7 +80,7 @@ struct ButtonView: View {
                 }
             }
             .padding()
-            
+             
             
         }.padding()
         
@@ -91,7 +92,7 @@ struct ButtonView: View {
         
         VStack{ //하단 버튼 부분
             Button {
-                
+               // print(RoundedButton(favorite))
             } label: {
                 Text("다음")
             }
