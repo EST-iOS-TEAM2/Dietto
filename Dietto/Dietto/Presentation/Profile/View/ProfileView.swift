@@ -7,13 +7,20 @@
 
 import SwiftUI
 
-struct ProfileView: View {
-    @State private var isEditActive = false
+//MARK: 내 프로필 데이터 뷰 모델에서 관리한다.
+class ProfileViewModel: ObservableObject {
+    @Published var isEditActive: Bool = false
+    @Published var name: String = "이규현"
+    @Published var height: Int = 180
+    @Published var weight: Int = 70
+    @Published var interests: [String] = ["근육량 증가", "영양소 섭취", "혈당 안정화", "안녕하세요", "반갑습니다", "칼로리 조절", "운동 습관", "수분 섭취", "스트레스 관리"]
+}
 
+struct ProfileView: View {
+    @StateObject private var viewModel = ProfileViewModel()
     var body: some View {
         NavigationStack {
             ZStack {
-//MARK: 전체 배경
                 Color(.backGround).ignoresSafeArea()
                 ScrollView {
                     VStack {
@@ -25,7 +32,7 @@ struct ProfileView: View {
                             HStack {
                                 Spacer()
                                 Button(action: {
-                                    isEditActive = true
+                                    viewModel.isEditActive = true
                                 }) {
                                     Text("edit")
                                         .font(.pretendardMedium16)
@@ -51,32 +58,31 @@ struct ProfileView: View {
                                     .frame(width: 180, height: 180)
                             }
 //MARK: 사용자 이름, 키 몸무게
-                            Text("이규현")
+                            Text(viewModel.name)
                                 .font(.title)
                                 .font(.pretendardBold20)
                                 .fontWeight(.bold)
-                            Text("180cm 70kg")
+                            Text("\(viewModel.height)cm \(viewModel.weight)kg")
                                 .font(.pretendardMedium20)
                                 .font(.title3)
                         }
-                        InterestsView()
-
+                        InterestsView(interests: viewModel.interests)
                         Spacer()
                     }
                 }
             }
             
 //MARK: edit 누르면 ProfileEditView로 이동
-            .navigationDestination(isPresented: $isEditActive) {
+            .navigationDestination(isPresented: $viewModel.isEditActive) {
                 ProfileEditView()
             }
         }
     }
 }
 
-//#MARK: 관심사
+//#MARK: - 관심사
 struct InterestsView: View {
-    let interests = ["근육량 증가", "영양소 섭취", "혈당 안정화", "안녕하세요", "반갑습니다", "칼로리 조절", "운동 습관", "수분 섭취", "스트레스 관리"]
+    let interests: [String]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -113,8 +119,7 @@ struct InterestsView: View {
         .padding(.top, 10)
     }
 }
-
-//MARK: 줄이 바뀌면 세로로 내려감
+//MARK: - 두줄씩 세로로 내려감
 struct FlexibleTagWrapView: View {
     let tags: [String]
     let spacing: CGFloat = 16
@@ -131,8 +136,7 @@ struct FlexibleTagWrapView: View {
         }
     }
 }
-
-//MARK: 관심사 태그 버튼 모양
+//MARK: - 관심사 태그 버튼 모양
 struct InterestTag: View {
     let title: String
     var body: some View {
@@ -147,9 +151,6 @@ struct InterestTag: View {
             )
     }
 }
-
-
-
 
 #Preview {
     ProfileView()
