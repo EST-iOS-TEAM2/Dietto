@@ -1,15 +1,15 @@
 //
-//  bodyScaleTable.swift
+//  WeightTable.swift
 //  Dietto
 //
 //  Created by 안정흠 on 5/15/25.
 //
 import SwiftUI
 
-struct bodyScaleTable: View {
-    @State var startBodyScale: Int = 68
-    @State var targetBodyScale: Int = 64
-    @State var currentBodyScale: Int = 68
+struct WeightTable: View {
+    @State var startWeight: Int = 68
+    @State var targetWeight: Int = 64
+    @State var currentWeight: Int = 68
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -22,7 +22,7 @@ struct bodyScaleTable: View {
                 VStack(alignment: .center) {
                     Text("시작 몸무게").font(.pretendardBold16).foregroundStyle(.text)
                     HStack(spacing: 4) {
-                        Text("\(startBodyScale)").font(.pretendardBold32).foregroundStyle(.text)
+                        Text("\(startWeight)").font(.pretendardBold32).foregroundStyle(.text)
                         Text("kg").font(.pretendardBold16).foregroundStyle(.text)
                     }
                 }
@@ -30,7 +30,7 @@ struct bodyScaleTable: View {
                 VStack(alignment: .center) {
                     Text("목표 몸무게").font(.pretendardBold16).foregroundStyle(.text)
                     HStack(spacing: 4) {
-                        Text("\(targetBodyScale)").font(.pretendardBold32).foregroundStyle(.text)
+                        Text("\(targetWeight)").font(.pretendardBold32).foregroundStyle(.text)
                         Text("kg").font(.pretendardBold16).foregroundStyle(.text)
                     }
                 }
@@ -42,7 +42,7 @@ struct bodyScaleTable: View {
                 VStack(alignment: .center) {
                     Text("최근 몸무게").font(.pretendardBold16).foregroundStyle(.text)
                     HStack(spacing: 4) {
-                        Text("\(currentBodyScale)").font(.pretendardBold32).foregroundStyle(.text)
+                        Text("\(currentWeight)").font(.pretendardBold32).foregroundStyle(.text)
                         Text("kg").font(.pretendardBold16).foregroundStyle(.text)
                     }
                 }

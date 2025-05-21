@@ -9,55 +9,48 @@ import Foundation
 import SwiftData
 
 protocol StorageRepository {
-    func addUserData(data: UserDTO)
-    func updateUserData()
-    func getUserData() -> UserDTO?
-    func deleteUserData()
+    associatedtype T: PersistentModel
+    
+    func insertData(data: T)
+    func updateData() async throws
+    func fetchData() async throws -> [T]
+    func deleteData() async throws
 }
 
-final class StorageRepositoryImpl: StorageRepository {
-    //    var modelContainer: ModelContainer
-    var modelContext: ModelContext
+final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
+    var modelContainer: ModelContainer
 
     
     init(modelContainer: ModelContainer) {
-        modelContext = ModelContext(modelContainer)
+        self.modelContainer = modelContainer
     }
     
-    func addUserData(data: UserDTO) {
-        do {
+    func insertData(data: T) {
+        Task {
+            let modelContext = ModelContext(modelContainer)
             modelContext.insert(data)
-            try modelContext.save()
-        }
-        catch {
-            print("User Data Save ERROR")
+            do {
+                try modelContext.save()
+            }
+            catch {
+                print("Data Save ERROR: \(error.localizedDescription)")
+            }
         }
     }
     
-    func updateUserData() {
+    func updateData() {
         
     }
     
-    func getUserData() -> UserDTO? {
-        do {
-            let user = try modelContext.fetch(FetchDescriptor<UserDTO>())
-            return user.first
-        } catch {
-            print("Learner 데이터를 찾을 수 없습니다.")
-            return nil
-        }
+    func fetchData() async throws -> [T] {
+        let descriptor = FetchDescriptor<T>(predicate: nil)
+        let context = ModelContext(modelContainer)
+        let data = try context.fetch(descriptor)
+        return data
     }
     
-    func deleteUserData() {
-        do {
-            if let user = getUserData() {
-                modelContext.delete(user)
-                try modelContext.save()
-            }
-        }
-        catch {
-            print("User Data Delete ERROR")
-        }
+    func deleteData() {
+        
     }
     
     

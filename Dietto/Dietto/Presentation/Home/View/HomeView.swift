@@ -8,22 +8,15 @@
 import SwiftUI
 import Charts
 
-struct BodyScale: Hashable {
-    var date: Date
-    var scale: Int
-    // 차트 애니메이션 용
-    var isAnimated: Bool = false
-}
-
 struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 0) {
             HomeHeader()
             ScrollView {
-                bodyScaleTable()
+                WeightTable()
 
-                BodyScaleHistoryView()
+                WeightHistoryView()
                 
                 ActivityTable()
                     .overlay {
@@ -60,25 +53,25 @@ enum ChartTimeType: String,CaseIterable {
     case yearly = "연간"
 }
 
-struct BodyScaleHistoryView: View {
+struct WeightHistoryView: View {
     @State private var trigger: Bool = false
     @State private var isAnimated: Bool = false
-    @State var bodyScaleHistory: [BodyScale] = [
-        BodyScale(date: Date()-(86400*3), scale: 70),
-        BodyScale(date: Date()-(86400*2), scale: 65),
-        BodyScale(date: Date()-86400, scale: 55),
-        BodyScale(date: Date(), scale: 50),
-        BodyScale(date: Date()+86400, scale: 55),
-        BodyScale(date: Date()+(86400*2), scale: 62),
-        BodyScale(date: Date()+(86400*3), scale: 72),
-        BodyScale(date: Date()+(86400*4), scale: 82),
-        BodyScale(date: Date()+(86400*5), scale: 72),
-        BodyScale(date: Date()+(86400*6), scale: 62),
-        BodyScale(date: Date()+(86400*7), scale: 52),
-        BodyScale(date: Date()+(86400*8), scale: 52),
-        BodyScale(date: Date()+(86400*9), scale: 52),
-        BodyScale(date: Date()+(86400*10), scale: 52),
-        BodyScale(date: Date()+(86400*11), scale: 52)
+    @State var weightHistory: [WeightEntity] = [
+        WeightEntity(date: Date()-(86400*3), scale: 70),
+        WeightEntity(date: Date()-(86400*2), scale: 65),
+        WeightEntity(date: Date()-86400, scale: 55),
+        WeightEntity(date: Date(), scale: 50),
+        WeightEntity(date: Date()+86400, scale: 55),
+        WeightEntity(date: Date()+(86400*2), scale: 62),
+        WeightEntity(date: Date()+(86400*3), scale: 72),
+        WeightEntity(date: Date()+(86400*4), scale: 82),
+        WeightEntity(date: Date()+(86400*5), scale: 72),
+        WeightEntity(date: Date()+(86400*6), scale: 62),
+        WeightEntity(date: Date()+(86400*7), scale: 52),
+        WeightEntity(date: Date()+(86400*8), scale: 52),
+        WeightEntity(date: Date()+(86400*9), scale: 52),
+        WeightEntity(date: Date()+(86400*10), scale: 52),
+        WeightEntity(date: Date()+(86400*11), scale: 52)
     ]
     
     var body: some View {
@@ -101,7 +94,7 @@ struct BodyScaleHistoryView: View {
                 }
             }
             ZStack {
-                Chart(bodyScaleHistory, id: \.date) { item in
+                Chart(weightHistory, id: \.date) { item in
                     LineMark(
                         x: .value("Date", item.date, unit: .day),
                         y: .value("Scale", item.isAnimated ? item.scale : 0)
@@ -133,7 +126,7 @@ struct BodyScaleHistoryView: View {
         guard !isAnimated else { return }
         isAnimated = true
         
-        $bodyScaleHistory.enumerated().forEach { index, item in
+        $weightHistory.enumerated().forEach { index, item in
             let delay = Double(index) * 0.05
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 withAnimation(.bouncy) {

@@ -14,7 +14,7 @@ final class HomeViewModel {
     var currentBodyScale: Int = 0
     var startBodyScale: Int = 0
     var targetBodyScale: Int = 0
-    var bodyScaleHistory: [BodyScale] = []
+    var bodyScaleHistory: [WeightEntity] = []
     
     var pedometerData: PedometerModel?
     
