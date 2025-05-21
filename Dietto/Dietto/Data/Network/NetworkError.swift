@@ -34,13 +34,13 @@ public enum NetworkError: LocalizedError {
         case .invalidResponse:
             return "서버 응답이 유효하지 않습니다."
         case .decodingFailed(let error):
-            return "디코딩 오류: \(error.localizedDescription)"
+            return "잠시 후 다시 시도해주세요."
         case .requestCancelled:
             return "요청이 취소되었습니다."
         case .unknown(let error):
-            return "알 수 없는 네트워크 오류: \(error.localizedDescription)"
+            return "알 수 없는 에러가 발생했습니다. 관리자에게 문의하세요."
         case .unacceptableStatusCode:
-            return "알 수 없는 오류"
+            return "에러가 발생했습니다. 잠시후 다시 시도하세요."
         }
     }
 }

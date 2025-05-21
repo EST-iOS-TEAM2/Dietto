@@ -12,7 +12,7 @@ protocol NetworkRepository {
     func NetWorkToAlan(content : String) async throws -> AlanResponse //alan이랑 데이트하기.
 }
 
-//MARK: - Implement Alan
+//MARK: - Alan Protocol Implment
 final class NetworkRepositoryImpl: NetworkRepository {
     
     public func NetWorkToAlan(content: String) async throws -> AlanResponse {
@@ -22,7 +22,6 @@ final class NetworkRepositoryImpl: NetworkRepository {
             URLQueryItem(name: "client_id", value: Bundle.AlanKey),
             URLQueryItem(name: "content", value: content)
         ]
-        
         //에러 처리
         do {
             guard let url = components?.url else {

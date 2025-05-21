@@ -32,7 +32,9 @@ class DietaryViewModel: ObservableObject {
         IngredientEntity(name: "배추")
     ]
     
-    //MARK: - 지금 식단에 있는거 생성 / 삭제
+    //MARK: - Usecase로 옮겨야함요.
+    
+    //MARK: - 현재 식단에 있는거 생성
     func addpresentIngredients(_ ingredient: String) {
         let trimmed = ingredient.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty,
@@ -40,15 +42,26 @@ class DietaryViewModel: ObservableObject {
         
         presentIngredients.append(IngredientEntity(name: trimmed))
     }
-    
+    //MARK: - 현재 식단에 있는거 삭제
     func removepresentIngredients(_ ingredient: IngredientEntity) {
         presentIngredients.removeAll { $0.id == ingredient.id }
     }
+    
+    //MARK: - 과거 식단으로 추가
+    //    func addpastIngredients(ingredients: [IngredientEntity]) {
+    //        for ingredient in ingredients {
+    //            if let index = presentIngredients.firstIndex(where: { $0.name == ingredient.name }) {
+    //                let removed = presentIngredients.remove(at: index)
+    //                if !pastIngredients.contains(where: { $0.name == removed.name }) {
+    //                    pastIngredients.append(removed)
+    //                }
+    //            }
+    //        }
+    //    }
     
     //MARK: - 과거 식단에 있던거 삭제
     func removepastIngredients(_ ingredient: IngredientEntity) {
         pastIngredients.removeAll { $0.id == ingredient.id }
     }
-    
     
 }

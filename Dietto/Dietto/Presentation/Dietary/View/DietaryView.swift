@@ -172,8 +172,9 @@ struct DietaryView: View {
                     }
                     HStack {
                         Button("식단 추천받기") {
-                            print("Button was Tapped by mom")
+                            print("식단 추천 받기 버튼이 클릭댐")
                             if !dietartViewModel.presentIngredients.isEmpty {
+                                //                                dietartViewModel.addpastIngredients(ingredients: dietartViewModel.presentIngredients)
                                 Task {
                                     await recommendViewModel.fetchRecommendations(ingredients: dietartViewModel.presentIngredients)
                                     PushToRecommandView = true

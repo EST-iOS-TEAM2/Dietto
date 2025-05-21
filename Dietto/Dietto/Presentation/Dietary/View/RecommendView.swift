@@ -17,8 +17,8 @@ struct RecommendView: View {
         ZStack {
             Color(.backGround).ignoresSafeArea(edges: .all)
             ScrollView {
-                VStack {
-                    ContainerView(paddingSize: 16, height: isFoldRecommand ? 500 : CGFloat(viewModel.recommendList.count) * 44 + 500) {
+                VStack {//컨테이너 뷰의 높이
+                    ContainerView(paddingSize: 16, height: isFoldRecommand ? 400 : CGFloat(viewModel.recommendList.count) * 44 + 500) {
                         HStack{
                             VStack{
                                 Text("추천 레시피에 등록된 재료를 이용해 식사를 추천합니다.")
@@ -37,7 +37,8 @@ struct RecommendView: View {
                                     }
                                 }
                                 .listStyle(.plain)
-                                .frame(height: isFoldRecommand ? 300 : CGFloat(viewModel.recommendList.count) * 44 + 125)
+                                //안에 리스트 높이
+                                .frame(height: isFoldRecommand ? 300 : CGFloat(viewModel.recommendList.count) * 44 + 400)
                                 .padding(.top, 8)
                                 
                                 Spacer()
@@ -47,7 +48,7 @@ struct RecommendView: View {
                                         isFoldRecommand.toggle()
                                     }
                                 }label: {
-                                    Image(systemName: isFoldRecommand ? "chevron.up" : "chevron.down")
+                                    Image(systemName: isFoldRecommand ? "chevron.down" : "chevron.up")
                                         .frame(width: 10, height: 10)
                                         .font(.pretendardBold20)
                                 }
