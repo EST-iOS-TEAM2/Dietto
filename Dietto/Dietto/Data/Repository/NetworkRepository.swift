@@ -9,13 +9,13 @@ import Foundation
 
 //MARK: - Alan Protocol
 protocol NetworkRepository {
-    func NetWorkToAlan(content : String) async throws -> AlanResponse //alan이랑 데이트하기.
+    func requestToAlan(content : String) async throws -> AlanResponse //alan이랑 데이트하기.
 }
 
 //MARK: - Alan Protocol Implment
 final class NetworkRepositoryImpl: NetworkRepository {
     
-    public func NetWorkToAlan(content: String) async throws -> AlanResponse {
+    public func requestToAlan(content: String) async throws -> AlanResponse {
         var components = URLComponents(url: URL(string: "https://kdt-api-function.azurewebsites.net")!.appendingPathComponent("/api/v1/question"), resolvingAgainstBaseURL: false)
         
         components?.queryItems = [

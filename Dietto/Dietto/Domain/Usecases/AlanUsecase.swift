@@ -62,7 +62,7 @@ final class AlanUsecaseImpl : AlanUsecase {
             재료: \(names.joined(separator: ", "))
             """
         
-        let alanResponse = try await repository.NetWorkToAlan(content: prompt)
+        let alanResponse = try await repository.requestToAlan(content: prompt)
         let raw = alanResponse.content
         
         let cleaned = raw

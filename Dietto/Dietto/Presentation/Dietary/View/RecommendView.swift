@@ -16,6 +16,7 @@ struct RecommendView: View {
     var body: some View {
         ZStack {
             Color(.backGround).ignoresSafeArea(edges: .all)
+            
             ScrollView {
                 VStack {//컨테이너 뷰의 높이
                     ContainerView(paddingSize: 16, height: isFoldRecommand ? 400 : CGFloat(viewModel.recommendList.count) * 44 + 500) {

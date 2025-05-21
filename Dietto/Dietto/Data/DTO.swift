@@ -11,13 +11,6 @@ import Foundation
 //Decodable : Json -> Swift객체
 //Codable : Encodable + Decodable
 
-//MARK: - Request
-
-struct AlanRequest : Encodable {
-    let client_id : String
-    let content : String
-}
-
 //MARK: - Response
 
 struct AlanResponse: Decodable {
