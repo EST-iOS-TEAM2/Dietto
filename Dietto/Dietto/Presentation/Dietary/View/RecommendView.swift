@@ -18,7 +18,7 @@ struct RecommendView: View {
             Color(.backGround).ignoresSafeArea(edges: .all)
             ScrollView {
                 VStack {
-                    ContainerView(paddingSize: 16, height: isFoldRecommand ? 500 : CGFloat(viewModel.recommendList.count) * 44 + 100) {
+                    ContainerView(paddingSize: 16, height: isFoldRecommand ? 500 : CGFloat(viewModel.recommendList.count) * 44 + 500) {
                         HStack{
                             VStack{
                                 Text("추천 레시피에 등록된 재료를 이용해 식사를 추천합니다.")
@@ -37,7 +37,7 @@ struct RecommendView: View {
                                     }
                                 }
                                 .listStyle(.plain)
-                                .frame(height: isFoldRecommand ? 300 : CGFloat(viewModel.recommendList.count) * 44 + 10)
+                                .frame(height: isFoldRecommand ? 300 : CGFloat(viewModel.recommendList.count) * 44 + 125)
                                 .padding(.top, 8)
                                 
                                 Spacer()

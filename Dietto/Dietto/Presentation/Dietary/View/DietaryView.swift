@@ -98,9 +98,11 @@ struct DietaryView: View {
                                     FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $recommandflowlayout) {
                                         ForEach(dietartViewModel.presentIngredients) { ingredient in
                                             PillText(text: ingredient.name, onDelete: {
-                                                dietartViewModel.removepresentIngredients(ingredient)
+                                                withAnimation(.easeInOut) {
+                                                    dietartViewModel.removepresentIngredients(ingredient)
+                                                    
+                                                }
                                             })
-                                            
                                         }
                                     }
                                     
@@ -134,9 +136,17 @@ struct DietaryView: View {
                                     
                                     if !isFoldMyRefrigerlator{
                                         FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $myRefrigerlatorflowlayout) {
+                                            
                                             ForEach(dietartViewModel.pastIngredients) { ingredient in
-                                                PillText(text: ingredient.name, onDelete: {
-                                                    dietartViewModel.removepastIngredients(ingredient)
+                                                PillText(text: ingredient.name,
+                                                         onAdd:{
+                                                    withAnimation(.bouncy){
+                                                        dietartViewModel.addpresentIngredients(ingredient.name)
+                                                    }
+                                                }, onDelete: {
+                                                    withAnimation(.easeInOut) {
+                                                        dietartViewModel.removepastIngredients(ingredient)
+                                                    }
                                                 })
                                             }
                                         }

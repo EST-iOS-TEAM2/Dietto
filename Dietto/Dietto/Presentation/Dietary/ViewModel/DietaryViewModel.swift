@@ -12,24 +12,24 @@ class DietaryViewModel: ObservableObject {
     @Published var presentIngredients: [IngredientEntity] = []
     
     @Published var pastIngredients : [IngredientEntity] = [
-        IngredientEntity(name: "재료21"),
-        IngredientEntity(name: "재료22"),
-        IngredientEntity(name: "재료23"),
-        IngredientEntity(name: "재료24"),
-        IngredientEntity(name: "재료25"),
-        IngredientEntity(name: "재료26"),
-        IngredientEntity(name: "재료27"),
-        IngredientEntity(name: "재료28"),
-        IngredientEntity(name: "재료29"),
-        IngredientEntity(name: "재료30"),
-        IngredientEntity(name: "재료31"),
-        IngredientEntity(name: "재료32"),
-        IngredientEntity(name: "재료33"),
-        IngredientEntity(name: "재료34"),
-        IngredientEntity(name: "재료35"),
-        IngredientEntity(name: "재료36"),
-        IngredientEntity(name: "재료37"),
-        IngredientEntity(name: "재료38")
+        IngredientEntity(name: "오징어"),
+        IngredientEntity(name: "꼴뚜기"),
+        IngredientEntity(name: "홍합"),
+        IngredientEntity(name: "닭다리"),
+        IngredientEntity(name: "연어머리"),
+        IngredientEntity(name: "마늘"),
+        IngredientEntity(name: "올리브유"),
+        IngredientEntity(name: "양파"),
+        IngredientEntity(name: "국간장"),
+        IngredientEntity(name: "밀가루"),
+        IngredientEntity(name: "참기름"),
+        IngredientEntity(name: "들기름"),
+        IngredientEntity(name: "통후추"),
+        IngredientEntity(name: "미역"),
+        IngredientEntity(name: "감자"),
+        IngredientEntity(name: "와인"),
+        IngredientEntity(name: "당근"),
+        IngredientEntity(name: "배추")
     ]
     
     //MARK: - 지금 식단에 있는거 생성 / 삭제

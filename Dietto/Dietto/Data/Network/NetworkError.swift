@@ -7,18 +7,40 @@
 
 import Foundation
 
-public enum NetworkError: Error {
+public enum NetworkError: LocalizedError {
+    case badRequest           // 400
+    case unauthorized         // 401
+    case forbidden            // 403
+    case notFound             // 404
+    case serverError(Int)     // 500+
     case invalidResponse
-    case unacceptableStatusCode(Int)
     case decodingFailed(Error)
     case requestCancelled
+    case unknown(Error)
+    case unacceptableStatusCode
     
     public var errorDescription: String? {
-        switch self{
-        case .invalidResponse: return "Invalid Response"
-        case .unacceptableStatusCode(let code): return "\(code)"
-        case .decodingFailed(let error): return ""
-        case .requestCancelled: return ""
+        switch self {
+        case .badRequest:
+            return "요청이 잘못되었습니다."
+        case .unauthorized:
+            return "인증에 실패했습니다."
+        case .forbidden:
+            return "접근이 거부되었습니다."
+        case .notFound:
+            return "요청한 자원을 찾을 수 없습니다."
+        case .serverError(let code):
+            return "서버 오류가 발생했습니다. (\(code))"
+        case .invalidResponse:
+            return "서버 응답이 유효하지 않습니다."
+        case .decodingFailed(let error):
+            return "디코딩 오류: \(error.localizedDescription)"
+        case .requestCancelled:
+            return "요청이 취소되었습니다."
+        case .unknown(let error):
+            return "알 수 없는 네트워크 오류: \(error.localizedDescription)"
+        case .unacceptableStatusCode:
+            return "알 수 없는 오류"
         }
     }
 }
