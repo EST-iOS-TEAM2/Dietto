@@ -6,28 +6,38 @@
 //
 
 import SwiftUI
+import Foundation
+//MARK: - 뷰
+class ProfileEditViewModel: ObservableObject {
+    @Published var name: String = ""
+    @Published var birth: String = ""
+    @Published var gender: String = ""
+    @Published var height: String = ""
+    @Published var weight: String = ""
+    @Published var showPhotoSheet: Bool = false
+    
+    func saveProfile() {
+        print("프로필이 저장되었습니다.")
+    }
+    
+    func selectGender(_ gender: String) {
+        self.gender = gender
+    }
+}
 
 struct ProfileEditView: View {
-    @State private var showPhotoSheet = false
-    @State private var name: String = ""
-    @State private var birth: String = ""
-    @State private var gender: String = ""
-    @State private var showGenderSheet = false
-    @State private var height: String = ""
-    @State private var weight: String = ""
+    @StateObject private var viewModel = ProfileEditViewModel()
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack {
-//MARK: 배경 색상
             Color(.backGround).ignoresSafeArea()
-            
             ScrollView {
                 VStack {
-// MARK: - 프로필 이미지 / 카메라 버튼
+// MARK: - 프로필 이미지 - 버튼
                     ZStack(alignment: .bottomTrailing) {
                         Button(action: {
-                            showPhotoSheet = true
+                            viewModel.showPhotoSheet = true
                         }) {
                             Circle()
                                 .stroke(Color.accent, lineWidth: 2)
@@ -40,9 +50,9 @@ struct ProfileEditView: View {
                                         .frame(width: 180, height: 180)
                                 )
                         }
-//MARK: 카메라 버튼 - 버튼
+//MARK: - 카메라 버튼 - 버튼
                         Button(action: {
-                            showPhotoSheet = true
+                            viewModel.showPhotoSheet = true
                         }) {
                             ZStack {
                                 Circle()
@@ -64,7 +74,7 @@ struct ProfileEditView: View {
                             .font(.pretendardBold16)
                             .padding(.leading, 12)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        TextField("이름을 입력해주세요", text: $name)
+                        TextField("이름을 입력해주세요", text: $viewModel.name)
                             .font(.pretendardMedium16)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 15)
@@ -76,13 +86,13 @@ struct ProfileEditView: View {
                     .padding(.top, 25)
                     .padding(.horizontal, 20)
                     
-//MARK: 생년월일
+//MARK: - 생년월일
                     VStack(alignment: .leading, spacing: 6) {
                         Text("생년월일")
                             .font(.pretendardBold16)
                             .padding(.leading, 12)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        TextField("2002.04.12", text: $birth)
+                        TextField("2002.04.12", text: $viewModel.birth)
                             .font(.pretendardMedium16)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 15)
@@ -94,7 +104,7 @@ struct ProfileEditView: View {
                     .padding(.top, 20)
                     .padding(.horizontal, 20)
                     
-//MARK: 성별 선택
+//MARK: - 성별 선택
                     VStack(alignment: .leading, spacing: 6) {
                         Text("성별")
                             .font(.pretendardBold16)
@@ -106,22 +116,22 @@ struct ProfileEditView: View {
                                 .stroke(Color.accent, lineWidth: 2)
 
                             HStack {
-                                Text(gender.isEmpty ? "남성" : gender)
+                                Text(viewModel.gender.isEmpty ? "남성" : viewModel.gender)
                                     .font(.pretendardMedium16)
-                                    .foregroundColor(gender.isEmpty ? .gray : .primary)
+                                    .foregroundColor(viewModel.gender.isEmpty ? .gray : .primary)
                                     .padding(.leading, 20)
 
                                 Spacer()
 
                                 Menu {
                                     Button {
-                                        gender = "남성"
+                                        viewModel.selectGender("남성")
                                     } label: {
                                         Text("남성")
                                     }
 
                                     Button {
-                                        gender = "여성"
+                                        viewModel.selectGender("여성")
                                     } label: {
                                         Text("여성")
                                     }
@@ -139,7 +149,7 @@ struct ProfileEditView: View {
                     .padding(.top, 20)
                     .padding(.horizontal, 20)
                     
-//MARK: 키 수정
+//MARK: - 키 수정
                     VStack(alignment: .leading, spacing: 1) {
                         Text("키")
                             .font(.pretendardBold16)
@@ -147,7 +157,7 @@ struct ProfileEditView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         HStack(spacing: 0) {
-                            TextField("170", text: $height)
+                            TextField("170", text: $viewModel.height)
                                 .keyboardType(.numberPad)
                                 .multilineTextAlignment(.center)
                                 .font(.pretendardMedium20)
@@ -167,7 +177,7 @@ struct ProfileEditView: View {
                     .padding(.horizontal, 25)
                     .padding(.top, 20)
                     
-//MARK: 몸무게 수정
+//MARK: - 몸무게 수정
                     VStack(alignment: .leading, spacing: 1) {
                         Text("몸무게")
                             .font(.pretendardBold16)
@@ -175,7 +185,7 @@ struct ProfileEditView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         HStack(spacing: 0) {
-                            TextField("66", text: $weight)
+                            TextField("66", text: $viewModel.weight)
                                 .keyboardType(.numberPad)
                                 .multilineTextAlignment(.center)
                                 .font(.pretendardMedium20)
@@ -195,7 +205,7 @@ struct ProfileEditView: View {
                     .padding(.horizontal, 25)
                     .padding(.top, -10)
                 }
-//MARK: 저장 버튼
+//MARK:  - 저장 버튼
                 Button(action: {
                     dismiss()
                 }) {
@@ -215,19 +225,19 @@ struct ProfileEditView: View {
             }
             Spacer()
         }
-//MARK: 프로필 사진 변경
+//MARK: - 프로필 사진 변경
         .navigationTitle("프로필 수정")
         .navigationBarTitleDisplayMode(.inline)
         
 // MARK: - 프로필 사진 변경 시트
         .confirmationDialog(
             "프로필 사진 선택",
-            isPresented: $showPhotoSheet,
+            isPresented: $viewModel.showPhotoSheet,
             titleVisibility: .visible
         ) {
-            Button("카메라") {}
+            Button("카메라", role: .destructive) {}
             Button("갤러리") {}
-            Button("취소") {}
+            Button("취소",role: .cancel) {}
         }
     }
 }
