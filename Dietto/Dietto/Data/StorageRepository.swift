@@ -26,6 +26,20 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
         self.modelContainer = modelContainer
     }
     
+    /*
+     합쳐서 전역으로 앱단에서 주입할지
+     https://www.hackingwithswift.com/quick-start/swiftdata/how-to-add-multiple-configurations-to-a-modelcontainer
+     아니면 아래와 같이 따로따로 컨테이너를 사용할때 생성되게 할지..
+     */
+    init() {
+        let configure = ModelConfiguration("\(T.self)") // 이름 지정 
+        do {
+            self.modelContainer = try ModelContainer(for: T.self, configurations: configure)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
     func insertData(data: T) {
         Task {
             let modelContext = ModelContext(modelContainer)
@@ -62,21 +76,3 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
         try context.save()
     }
 }
-
-
-//    var modelContainer: ModelContainer = {
-//
-//        // 1. Schema 생성
-//        let schema = Schema([UserDTO.self])
-//
-//        // 2. Model 관리 규칙을 위한 ModelConfiguration 생성
-//        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-//
-//        // 3. ModelContainer 생성
-//        do {
-//            let container = try ModelContainer(for: schema, configurations: [configuration])
-//            return container
-//        } catch {
-//            fatalError("ModelContainer 생성 실패!!!: \(error)")
-//        }
-//    }()

@@ -7,9 +7,9 @@
 import SwiftUI
 
 struct ActivityTable: View {
-    @State var currentSteps: Int = 68
-    @State var currentDistance: Float = 2.0
-    @State var targetDistance: Float = 5.0
+    let currentSteps: Int
+    let currentDistance: Float
+    let targetDistance: Float 
     
     var body: some View {
         VStack(alignment: .center) {
@@ -34,11 +34,11 @@ struct ActivityTable: View {
                 
                 VStack(alignment: .leading) {
                     HStack(spacing: 4) {
-                        Text("\(currentSteps)").font(.pretendardBold32).foregroundStyle(.text)
+                        Text("\(currentSteps)").font(.pretendardBold20).foregroundStyle(.text)
                         Text("Steps").font(.pretendardBold16).foregroundStyle(.text)
                     }
                     HStack(spacing: 4) {
-                        Text("\(currentDistance)").font(.pretendardBold32).foregroundStyle(.text)
+                        Text(String(format: "%.2f", currentDistance)).font(.pretendardBold20).foregroundStyle(.text)
                         Text("km").font(.pretendardBold16).foregroundStyle(.text)
                     }
                 }

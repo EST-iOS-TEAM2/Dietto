@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 
 struct HomeView: View {
+    @Bindable var viewModel = HomeViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -18,28 +19,50 @@ struct HomeView: View {
 
                 WeightHistoryView()
                 
-                ActivityTable()
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 21)
-                            .fill(.ultraThinMaterial)
-                            .foregroundStyle(.white)
-                            .opacity(0.98)
-                            .padding()
-                            .overlay {
-                                VStack {
-                                    Text("건강 앱 권한이 필요합니다.")
-                                        .font(.pretendardBold16)
-                                        .foregroundStyle(.text)
-                                    Button("설정") {
-                                        print("Move to Settings")
+                if let pedometer = viewModel.pedometerData {
+                    ActivityTable(
+                        currentSteps: pedometer.steps,
+                        currentDistance: pedometer.distance,
+                        targetDistance: 100
+                    ) 
+                }
+                else {
+                    ActivityTable(currentSteps: 10, currentDistance: 10, targetDistance: 20)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 21)
+                                .fill(.ultraThinMaterial)
+                                .foregroundStyle(.white)
+                                .opacity(0.98)
+                                .padding()
+                                .overlay {
+                                    VStack {
+                                        Text("건강 앱 권한이 필요합니다.")
+                                            .font(.pretendardBold16)
+                                            .foregroundStyle(.text)
+                                        Button("설정") {
+                                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                                if UIApplication.shared.canOpenURL(url) {
+                                                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                                }
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                    }
+                        }
+//                    ActivityTable(
+//                        currentSteps: viewModel.pedometerData?.steps,
+//                        currentDistance: viewModel.pedometerData?.distance,
+//                        targetDistance: 100
+//                    )
+                }
+                
             }
         
         }
         .background(Color.backGround)
+        .onAppear {
+            viewModel.fetchPedometer()
+        }
     }
 }
 

@@ -8,32 +8,43 @@
 import Foundation
 import CoreMotion
 import Observation
+import Combine
 
 @Observable
 final class HomeViewModel {
     var currentBodyScale: Int = 0
     var startBodyScale: Int = 0
     var targetBodyScale: Int = 0
-    var bodyScaleHistory: [WeightEntity] = []
     
+    var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
+    var userData: User = User(name: "홍길동", birth: Date(), gender: "남", height: 170, weight: 68, targetWeight: 62, targetDistance: 5, favorite: [])
+    
     
     private let pedometerUsecase: PedometerUsecase
+    private let weightHistroyUsecase: WeightHistoryUsecase
+    private var bag = Set<AnyCancellable>()
+//    private let userUsecase: UserUsecase
     
-    init(pedometerUsecase: PedometerUsecase) {
+    init(
+        pedometerUsecase: PedometerUsecase = PedometerUsecaseImpl(pedometer: PedometerRepositoryImpl()),
+        weightHistroyUsecase: WeightHistoryUsecase = WeightHistoryUsecaseImpl(repository: StorageRepositoryImpl<WeightDTO>())
+    ) {
         self.pedometerUsecase = pedometerUsecase
+        self.weightHistroyUsecase = weightHistroyUsecase
     }
     
-    func requestCoreMotionAuthorization() {
-        
-    }
-    
-    func fetchStepCount() {
-        
-    }
-    
-    func fetchDistance() {
-        
+    func fetchPedometer() {
+        pedometerUsecase.startLivePedometerData()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] pedometer in
+                if let pedometer {
+                    self?.pedometerData = PedometerModel(steps: pedometer.steps, distance: pedometer.distance)
+                    print(self?.pedometerData)
+                }
+                else { self?.pedometerData = nil }
+            }
+            .store(in: &bag)
     }
     
     func updateCurrentBodyScale(_ value: Int) {

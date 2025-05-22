@@ -33,7 +33,7 @@ final class PedometerUsecaseImpl: PedometerUsecase {
             .map {
                 PedometerModel(
                     steps: $0.numberOfSteps.intValue,
-                    distance: $0.distance?.floatValue ?? 0
+                    distance: ($0.distance?.floatValue ?? 0) / 1000
                 )
             }
             .catch({ err in
@@ -51,7 +51,7 @@ final class PedometerUsecaseImpl: PedometerUsecase {
             .map {
                 PedometerModel(
                     steps: $0.numberOfSteps.intValue,
-                    distance: $0.distance?.floatValue ?? 0
+                    distance: ($0.distance?.floatValue ?? 0) / 1000
                 )
             }
             .catch({ err in
