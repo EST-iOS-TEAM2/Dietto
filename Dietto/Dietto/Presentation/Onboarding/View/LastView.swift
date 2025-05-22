@@ -17,7 +17,7 @@ struct LastView: View {
                     .foregroundColor(.accent)
                     .font(.system(size: 28, weight: .bold, design: .rounded))
             }
-        }
+        }.padding(.vertical, 250)
         
         VStack{
             Button {
@@ -25,10 +25,17 @@ struct LastView: View {
                 
             } label: {
                 Text("시작하기")
-            }.frame(width: 300, height: 50)
-                .background(.accent)
-                .foregroundColor(.white)
-                .cornerRadius(13)
+                    .font(.pretendardBold20)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.accent)
+                    )
+            }.padding(.horizontal, 20)
+                .padding(.top,-10)
+                .padding(.bottom, 40)
         }
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 struct RoundedButton: View{
     //알약버튼 부분
     @State private var isSelected = false
-    @State var favorite: [String] = []
+//    @State var favorite: [String] = []
     let text: String
 
     init(text: String){
@@ -20,17 +20,17 @@ struct RoundedButton: View{
         Button(action: {
             isSelected.toggle()
             
-            if isSelected {
-                favorite.append(text)
-                
-            }
+//            if isSelected {
+//                favorite.append(text)
+//                
+//            }
 //            else{
 //                if let index = favorite.firstIndex(where: { $0 == text }) {
 //                    favorite.remove(at: index)
 //                }
 //            }
             
-            print(favorite)
+//            print(favorite)
         }){
             Text(text)
                 .font(.pretendardMedium12)
@@ -47,3 +47,16 @@ struct RoundedButton: View{
 }
 
 
+/*
+ struct GrowingButton: ButtonStyle {
+     func makeBody(configuration: Configuration) -> some View {
+         configuration.label
+             .padding()
+             .background(.blue)
+             .foregroundStyle(.white)
+             .clipShape(Capsule())
+             .scaleEffect(configuration.isPressed ? 1.2 : 1)
+             .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+     }
+ }
+ */

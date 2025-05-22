@@ -4,17 +4,15 @@
 //
 //  Created by InTak Han on 5/14/25.
 //
-
 import SwiftUI
 
 struct ButtonView: View {
     //@Environment(\.dismiss) var dismiss //이전화면 버튼 누를때 로직
-    var name = "lee"
-    
+    @StateObject var viewModel = FavoriteViewModel()
     
     var body: some View {
         VStack(alignment: .leading){ //상단 텍스트
-            Text("\(name)님의")
+            Text("\(viewModel.name)님의")
             HStack{
                 Text("관심사를")
                     .foregroundColor(.accent)
@@ -25,7 +23,6 @@ struct ButtonView: View {
         .font(.title)
         .padding()
         
-        //버튼에 효과를 해야될듯 - 특히 누를떄
         //스크롤을 할지 말지 고민해야 될듯...
         VStack(alignment: .leading){
             VStack(alignment: .leading){
@@ -95,13 +92,19 @@ struct ButtonView: View {
                // print(RoundedButton(favorite))
             } label: {
                 Text("다음")
+                    .font(.pretendardBold20)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.accent)
+                    )
             }
         }
-        .frame(width: 300, height: 50)
-        .background(.accent)
-        .foregroundColor(.white)
-        .cornerRadius(13)
-        .font(.pretendardMedium16)
+        .padding(.horizontal, 20)
+        .padding(.top,-10)
+        .padding(.bottom, 40)
         
 //        VStack{ //하단 버튼 부분 - 이전화면으로 가기
 //            Button {

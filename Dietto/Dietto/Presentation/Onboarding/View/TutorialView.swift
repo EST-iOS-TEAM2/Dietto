@@ -8,22 +8,14 @@
 import SwiftUI
 
 struct TutorialView: View {
-    //@State var weigt: String = ""
-    @State var distance: String = ""
+    @StateObject var viewModel = TutorialViewModel()
     
     @State var targetWeight = 60 //목표 몸무게 기본값
     @State var targetDistance = 1 //목표 거리 기본값
-    
-    let weights: [Int] = Array(20...100).reversed() //무게 범위
-    let distances: [Int] = Array(1...10).reversed() //거리 범위
-    
-    var name = "lee"
-    
-    
-    
+
     var body: some View {
         VStack(alignment: .leading){ //상단 텍스트
-            Text("\(name)님의")
+            Text("\(viewModel.name)님의")
             HStack{
                 Text("목표를")
                     .foregroundColor(.accent)
@@ -31,17 +23,14 @@ struct TutorialView: View {
             }
             
         }
-        .offset(y:-150)
         .font(.pretendardBold28)
-        
-        
-        
+        .padding(.vertical, 50)
+
         VStack { //목표 몸무게 입력 부분
             HStack{
                 Picker("Select Weight",selection: $targetWeight) {
-                    ForEach(weights, id: \.self) { item in
+                    ForEach(viewModel.weights, id: \.self) { item in
                         Text("\(item)")
-                        
                     }
                 }
                     .multilineTextAlignment(.center)
@@ -58,19 +47,15 @@ struct TutorialView: View {
                     .foregroundColor(.accent)
                     .font(.AppLogo)
             }
-            .frame(width: 250)
-            
         }
-        .offset(y:-150)
-        .padding(.vertical, 30)
+        .padding(.vertical, 50)
         
         VStack{//목표 거리 입력하는 부분
             
             HStack{
                 Picker("Select Distance",selection: $targetDistance) {
-                    ForEach(distances, id: \.self) { item in
+                    ForEach(viewModel.distances, id: \.self) { item in
                         Text("\(item)")
-                        
                     }
                 }
                     .multilineTextAlignment(.center)
@@ -87,27 +72,31 @@ struct TutorialView: View {
                     .foregroundColor(.accent)
                     .font(.AppLogo)
             }
-            .frame(width: 250)
-            
         }
+        .padding(.vertical, 50)
         
         VStack{ //버튼 위의 페이징 부분
             //Text("123")
-        }.offset(y:160)
+        }.padding()
         
         VStack{ //하단 버튼 부분 - 관심사 클릭 부분
-            Button("다음") {
+            Button {
                 
+            }label: {
+                Text("다음")
+                    .font(.pretendardBold20)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.accent)
+                    )
             }
         }
-        
-        .frame(width: 300, height: 50)
-            .background(.accent)
-            .foregroundColor(.white)
-        .cornerRadius(13)
-        .font(.pretendardMedium16)
-        .offset(y:160)
-        .padding()
+        .padding(.horizontal, 20)
+        .padding(.top,-10)
+        .padding(.bottom, 40)
     }
 }
 
