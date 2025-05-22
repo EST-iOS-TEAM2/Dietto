@@ -20,7 +20,7 @@ struct PillText: View {
             }) {
                 Text(text)
                     .font(.pretendardBold14)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
             }
             .buttonStyle(PlainButtonStyle())
             
@@ -30,7 +30,7 @@ struct PillText: View {
             }) {
                 Image(systemName: "xmark")
                     .font(.pretendardBold12)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .padding(4)
             }
             .buttonStyle(PlainButtonStyle())

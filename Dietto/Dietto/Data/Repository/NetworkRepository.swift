@@ -12,7 +12,7 @@ protocol NetworkRepository {
     func requestToAlan(content : String) async throws -> AlanResponse //alan이랑 데이트하기.
 }
 
-//MARK: - Alan Protocol Implment
+//MARK: - Alan Protocol Implement
 final class NetworkRepositoryImpl: NetworkRepository {
     
     public func requestToAlan(content: String) async throws -> AlanResponse {

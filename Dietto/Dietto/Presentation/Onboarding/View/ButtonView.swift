@@ -80,19 +80,19 @@ struct ButtonView: View {
                 }
             }
             .padding()
-             
+            
             
         }.padding()
         
         
         VStack{ //버튼 위의 페이징 부분
-           
+            
         }
         .padding()
         
         VStack{ //하단 버튼 부분
             Button {
-               // print(RoundedButton(favorite))
+                // print(RoundedButton(favorite))
             } label: {
                 Text("다음")
             }
@@ -103,18 +103,18 @@ struct ButtonView: View {
         .cornerRadius(13)
         .font(.pretendardMedium16)
         
-//        VStack{ //하단 버튼 부분 - 이전화면으로 가기
-//            Button {
-//                dismiss()
-//            } label: {
-//                Text("이전화면")
-//            }
-//        }
-//        .frame(width: 300, height: 50)
-//        .foregroundColor(.white)
-//        .background(.gray)
-//        .cornerRadius(13)
-//        .padding()
+        //        VStack{ //하단 버튼 부분 - 이전화면으로 가기
+        //            Button {
+        //                dismiss()
+        //            } label: {
+        //                Text("이전화면")
+        //            }
+        //        }
+        //        .frame(width: 300, height: 50)
+        //        .foregroundColor(.white)
+        //        .background(.gray)
+        //        .cornerRadius(13)
+        //        .padding()
     }
 }
 

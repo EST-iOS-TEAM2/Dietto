@@ -12,7 +12,6 @@ import Foundation
 //Codable : Encodable + Decodable
 
 //MARK: - Response
-
 struct AlanResponse: Decodable {
     let content: String
 }

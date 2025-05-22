@@ -10,7 +10,8 @@ import Foundation
 //MARK: - usecase
 
 protocol AlanUsecase {
-    func fetchAlanRecommendDietary(ingredients: [IngredientEntity]) async throws -> [RecommendEntity]
+    func fetchRecommend(ingredients: [IngredientEntity]) async throws -> [RecommendEntity]
+    //    func fetchAlanArticle() async throws -> []
 }
 
 //MARK: - usecaseimpl
@@ -24,9 +25,9 @@ final class AlanUsecaseImpl : AlanUsecase {
         self.encoder = encoder
     }
     
-    func fetchAlanRecommendDietary(ingredients: [IngredientEntity]) async throws -> [RecommendEntity] {
+    func fetchRecommend(ingredients: [IngredientEntity]) async throws -> [RecommendEntity] {
         
-        let names = ingredients.map { $0.name }
+        let names = ingredients.map(\.name) // { $0.name }
         
         /// 퓨샷(few-shot) 프롬프팅 기법은 프롬프트에서 데모를 제공하여 모델이 더 나은 성능을 발휘하도록 유도하는 문맥 내 학습을 가능하게 하는 기술
         
