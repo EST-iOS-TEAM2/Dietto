@@ -24,6 +24,7 @@ final class PedometerRepositoryImpl: PedometerRepository {
     
     init(pedometer: CMPedometer = CMPedometer()) {
         self.pedometer = pedometer
+        
     }
     
     func startPedometer() -> AnyPublisher<CMPedometerData, any Error> {

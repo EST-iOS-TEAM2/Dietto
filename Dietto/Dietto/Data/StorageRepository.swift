@@ -12,13 +12,14 @@ protocol StorageRepository {
     associatedtype T: PersistentModel
     
     func insertData(data: T)
-    func updateData() async throws
-    func fetchData() async throws -> [T]
-    func deleteData() async throws
+    func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) async throws
+    func fetchData(where predicate: Predicate<T>?,sort: [SortDescriptor<T>] ) async throws -> [T]
+    func deleteData(where predicate: Predicate<T>) async throws
 }
 
 final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
-    var modelContainer: ModelContainer
+    
+    private let modelContainer: ModelContainer
 
     
     init(modelContainer: ModelContainer) {
@@ -38,22 +39,28 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
         }
     }
     
-    func updateData() {
-        
+    func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) async throws {
+        let context = ModelContext(modelContainer)
+        let descriptor = FetchDescriptor<T>(predicate: predicate)
+        if let result = try context.fetch(descriptor).first {
+            updateBlock(result)
+            try context.save()
+        }
     }
     
-    func fetchData() async throws -> [T] {
-        let descriptor = FetchDescriptor<T>(predicate: nil)
+    @MainActor
+    func fetchData(where predicate: Predicate<T>? = nil, sort: [SortDescriptor<T>] = [] ) async throws -> [T] {
+        let descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
         let context = ModelContext(modelContainer)
         let data = try context.fetch(descriptor)
         return data
     }
     
-    func deleteData() {
-        
+    func deleteData(where predicate: Predicate<T>) async throws {
+        let context = ModelContext(modelContainer)
+        try context.delete(model: T.self, where: predicate)
+        try context.save()
     }
-    
-    
 }
 
 
