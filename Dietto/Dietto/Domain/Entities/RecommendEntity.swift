@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RecommendEntity : Hashable, Decodable {
+struct RecommendEntity : Decodable {
     let title : String
     let description : String
 }

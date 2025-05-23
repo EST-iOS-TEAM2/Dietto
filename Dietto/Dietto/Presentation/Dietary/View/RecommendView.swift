@@ -9,9 +9,9 @@ import SwiftUI
 
 struct RecommendView: View {
     
-    //    @EnvironmentObject private var viewModel : DietaryViewModel
+        @EnvironmentObject private var viewModel : DietaryViewModel
     
-    @StateObject private var viewModel = DietaryViewModel() //디버깅용
+//    @StateObject private var viewModel = DietaryViewModel() //디버깅용
     
     @State private var isFoldRecommand : Bool = false  // true : 펼친상태로 시작 , false: 가려진 채로 시작.
     @State private var contentHeight : CGFloat = 0
@@ -23,7 +23,8 @@ struct RecommendView: View {
             ScrollView {
                 VStack {//컨테이너 뷰의 높이
                     ContainerView(paddingSize: 16,
-                                  height: isFoldRecommand ? contentHeight + 24 : UIScreen.main.bounds.height * 0.3 //main 대신
+                                  height: isFoldRecommand ? contentHeight + 24 :
+                                    UIScreen.main.bounds.height * 0.3 //main 대신
                     ){
                         HStack{
                             VStack{
@@ -35,15 +36,15 @@ struct RecommendView: View {
                                 //MARK: - 안에 컨텐츠.
                                 ScrollView {
                                     LazyVStack(alignment: .leading, spacing: 16) {
-                                        ForEach(viewModel.recommendList, id: \.self) { item in
-                                            VStack(alignment: .leading, spacing: 8) {
-                                                Text(item.title)
-                                                    .font(.pretendardBold24)
-                                                Text(item.description)
-                                                    .font(.pretendardSemiBold16)
-                                            }
-                                            .border(.black)
-                                        }
+//                                        ForEach(viewModel.recommendList, id: \.self) { item in
+//                                            VStack(alignment: .leading, spacing: 8) {
+//                                                Text(item.title)
+//                                                    .font(.pretendardBold24)
+//                                                Text(item.description)
+//                                                    .font(.pretendardSemiBold16)
+//                                            }
+//                                            .border(.black)
+//                                        }
                                     }
                                     .background(
                                         GeometryReader { geo in

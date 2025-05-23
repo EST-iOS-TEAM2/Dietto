@@ -98,7 +98,7 @@ struct DietaryView: View {
                                     
                                     FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $recommandflowlayout) {
                                         ForEach(dietartViewModel.presentIngredients) { ingredient in
-                                            PillText(text: ingredient.name, onDelete: {
+                                            PillText(text: ingredient.ingredient, onDelete: {
                                                 withAnimation(.easeInOut) {
                                                     dietartViewModel.removepresentIngredients(ingredient)
                                                     
@@ -139,10 +139,10 @@ struct DietaryView: View {
                                         FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $myRefrigerlatorflowlayout) {
                                             
                                             ForEach(dietartViewModel.pastIngredients) { ingredient in
-                                                PillText(text: ingredient.name,
+                                                PillText(text: ingredient.ingredient,
                                                          onAdd:{
                                                     withAnimation(.bouncy){
-                                                        dietartViewModel.addpresentIngredients(ingredient.name)
+                                                        dietartViewModel.addpresentIngredients(ingredient.ingredient)
                                                     }
                                                 }, onDelete: {
                                                     withAnimation(.easeInOut) {

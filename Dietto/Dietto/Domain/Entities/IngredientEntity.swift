@@ -10,5 +10,5 @@ import Foundation
 //MARK: - 식재료는 저장합니다.
 struct IngredientEntity: Identifiable, Hashable {
     let id = UUID()
-    let name: String
+    let ingredient: String
 }
