@@ -38,7 +38,10 @@ struct WeightHistoryView: View {
                 Menu {
                     ForEach(ChartTimeType.allCases, id: \.self) { type in
                         Button(type.rawValue) {
-                            viewModel.bodyScaleHistoryFetch(type: type)
+                            if !viewModel.isAnimating {
+                                viewModel.bodyScaleHistoryFetch(type: type)
+                                viewModel.chartAnimate()
+                            }
                         }
                     }
                 } label: {
@@ -54,7 +57,7 @@ struct WeightHistoryView: View {
                     Chart(weightHistory, id: \.date) { item in
                         LineMark(
                             x: .value("Date", item.date, unit: .day),
-                            y: .value("Scale", item.isAnimated ? item.scale : 0)
+                            y: .value("Scale", item.isAnimated ? item.scale : 1)
                         )
                         .symbol(.circle)
                     }
@@ -85,22 +88,5 @@ struct WeightHistoryView: View {
         }
         .padding()
         .onAppear(perform: viewModel.chartAnimate)
-        .onChange(of: viewModel.bodyScaleHistory, { oldValue, newValue in
-            viewModel.chartAnimate()
-        })
     }
-
-//    private func chartAnimate() {
-//        guard !isAnimated else { return }
-//        isAnimated = true
-//        
-//        $weightHistory.enumerated().forEach { index, item in
-//            let delay = Double(index) * 0.05
-//            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-//                withAnimation(.bouncy) {
-//                    item.wrappedValue.isAnimated = true
-//                }
-//            }
-//        }
-//    }
 }

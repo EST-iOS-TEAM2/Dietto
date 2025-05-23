@@ -27,10 +27,7 @@ enum ChartTimeType: String, CaseIterable {
 
 @Observable
 final class HomeViewModel {
-    var currentBodyScale: Int = 0
-    var startBodyScale: Int = 0
-    var targetBodyScale: Int = 0
-    
+    var isAnimating: Bool = false
     var chartTimeType: ChartTimeType = .monthly
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
@@ -84,8 +81,6 @@ final class HomeViewModel {
     }
     
     func bodyScaleHistoryFetch(type: ChartTimeType) {
-        if !bodyScaleHistory.isEmpty, bodyScaleHistory.last?.isAnimated == false { return }
-        
         chartTimeType = type
         var result = weightHistroyUsecase.getWeightHistory(chartRange: type)
         
@@ -125,11 +120,15 @@ final class HomeViewModel {
     }
     
     func chartAnimate() {
+        isAnimating = true
         for (index, _) in bodyScaleHistory.enumerated() {
             let delay = Double(index) * 0.05
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 withAnimation(.bouncy) {
                     self.bodyScaleHistory[index].isAnimated = true
+                }
+                if index >= self.bodyScaleHistory.count - 1 {
+                    self.isAnimating = false
                 }
             }
         }
