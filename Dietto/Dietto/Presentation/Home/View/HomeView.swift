@@ -23,8 +23,8 @@ struct HomeView: View {
                     ActivityTable(
                         currentSteps: pedometer.steps,
                         currentDistance: pedometer.distance,
-                        targetDistance: 100
-                    ) 
+                        targetDistance: 5
+                    )
                 }
                 else {
                     ActivityTable(currentSteps: 10, currentDistance: 10, targetDistance: 20)
@@ -49,15 +49,8 @@ struct HomeView: View {
                                     }
                                 }
                         }
-//                    ActivityTable(
-//                        currentSteps: viewModel.pedometerData?.steps,
-//                        currentDistance: viewModel.pedometerData?.distance,
-//                        targetDistance: 100
-//                    )
                 }
-                
             }
-        
         }
         .background(Color.backGround)
         .onAppear {

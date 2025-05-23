@@ -13,13 +13,14 @@ protocol PedometerRepository {
     var authorizationStatus:  CMAuthorizationStatus { get }
     func startPedometer() -> AnyPublisher<CMPedometerData, Error>
     func stopPedometer()
-    func fetchPedometerFromDate(start: Date, end: Date) -> AnyPublisher<CMPedometerData, Error>
+//    func fetchPedometerFromDate(start: Date, end: Date) -> AnyPublisher<CMPedometerData, Error>
 }
 
 final class PedometerRepositoryImpl: PedometerRepository {
     private let pedometer: CMPedometer
-    private var querySubject = PassthroughSubject<CMPedometerData, Error>()
     private var liveSubject = PassthroughSubject<CMPedometerData, Error>()
+    private var isRunning = false
+    
     var authorizationStatus: CMAuthorizationStatus { CMPedometer.authorizationStatus() }
     
     init(pedometer: CMPedometer = CMPedometer()) {
@@ -27,6 +28,7 @@ final class PedometerRepositoryImpl: PedometerRepository {
     }
     
     func startPedometer() -> AnyPublisher<CMPedometerData, any Error> {
+        guard !isRunning else { return liveSubject.eraseToAnyPublisher() }
         pedometer.startUpdates(from: Calendar.current.startOfDay(for: Date())) { [weak self] data, error in
             if let data { self?.liveSubject.send(data) }
             else if let error { self?.liveSubject.send(completion: .failure(error)) }
@@ -36,13 +38,6 @@ final class PedometerRepositoryImpl: PedometerRepository {
     
     func stopPedometer() {
         pedometer.stopUpdates()
-    }
-    
-    func fetchPedometerFromDate(start: Date, end: Date) -> AnyPublisher<CMPedometerData, any Error> {
-        pedometer.queryPedometerData(from: start, to: end) { [weak self] data, error in
-            if let data { self?.querySubject.send(data) }
-            else if let error { self?.querySubject.send(completion: .failure(error)) }
-        }
-        return querySubject.eraseToAnyPublisher()
+        isRunning = false
     }
 }

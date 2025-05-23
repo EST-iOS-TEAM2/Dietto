@@ -12,7 +12,7 @@ protocol StorageRepository {
     associatedtype T: PersistentModel
     
     func insertData(data: T)
-    func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) async throws
+    func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) throws
     func fetchData(where predicate: Predicate<T>?,sort: [SortDescriptor<T>] ) async throws -> [T]
     func deleteData(where predicate: Predicate<T>) async throws
 }
@@ -41,8 +41,9 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
     }
     
     func insertData(data: T) {
+        
         Task {
-            let modelContext = ModelContext(modelContainer)
+            let modelContext = ModelContext(self.modelContainer)
             modelContext.insert(data)
             do {
                 try modelContext.save()
@@ -53,7 +54,7 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
         }
     }
     
-    func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) async throws {
+    func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) throws {
         let context = ModelContext(modelContainer)
         let descriptor = FetchDescriptor<T>(predicate: predicate)
         if let result = try context.fetch(descriptor).first {
@@ -63,14 +64,15 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
     }
     
     @MainActor
-    func fetchData(where predicate: Predicate<T>? = nil, sort: [SortDescriptor<T>] = [] ) async throws -> [T] {
+    func fetchData(where predicate: Predicate<T>? = nil, sort: [SortDescriptor<T>] = [] ) throws -> [T] {
+        // MARK:
         let descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
         let context = ModelContext(modelContainer)
         let data = try context.fetch(descriptor)
         return data
     }
     
-    func deleteData(where predicate: Predicate<T>) async throws {
+    func deleteData(where predicate: Predicate<T>) throws {
         let context = ModelContext(modelContainer)
         try context.delete(model: T.self, where: predicate)
         try context.save()

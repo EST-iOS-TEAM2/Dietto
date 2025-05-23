@@ -9,16 +9,15 @@ import SwiftUI
 struct ActivityTable: View {
     let currentSteps: Int
     let currentDistance: Float
-    let targetDistance: Float 
+    let targetDistance: Float
     
     var body: some View {
         VStack(alignment: .center) {
-            HStack {
-                Text("오늘의 활동").font(.pretendardBold20).foregroundStyle(.text)
-                Spacer()
-                Text(Date().formattedString()).font(.pretendardBold20).foregroundStyle(.text)
-            }.padding([.leading, .trailing, .top])
-            HStack(alignment: .top) {
+            Text("오늘의 활동").font(.pretendardBold20).foregroundStyle(.text)
+                .padding([.top, .bottom], 16)
+                .padding([.leading, .trailing], 8)
+            
+            VStack {
                 Gauge(value: currentDistance, in: 0...targetDistance) {
                     Text("Goal")
                         .font(.pretendardBold12)
@@ -26,23 +25,29 @@ struct ActivityTable: View {
                 }
                 .gaugeStyle(.accessoryCircularCapacity)
                 .tint(.accent)
-                .frame(width: 100, height: 100)
+//                .frame(width: 100, height: 100)
                 .scaleEffect(2)
                 .padding()
                 
-                Divider().padding()
+//                Divider().padding(0)
                 
-                VStack(alignment: .leading) {
-                    HStack(spacing: 4) {
-                        Text("\(currentSteps)").font(.pretendardBold20).foregroundStyle(.text)
-                        Text("Steps").font(.pretendardBold16).foregroundStyle(.text)
-                    }
-                    HStack(spacing: 4) {
-                        Text(String(format: "%.2f", currentDistance)).font(.pretendardBold20).foregroundStyle(.text)
-                        Text("km").font(.pretendardBold16).foregroundStyle(.text)
-                    }
+                HStack(spacing: 4) {
+                    Text("걸음 수").font(.pretendardBold20).foregroundStyle(.text)
+                    Spacer()
+                    Text("\(currentSteps)").font(.pretendardBold24).foregroundStyle(.text)
+                        .animation(.spring(), value: currentSteps)
+                    Text("Steps").font(.pretendardBold16).foregroundStyle(.text)
                 }
-                .padding()
+                .padding(8)
+                HStack(spacing: 4) {
+                    Text("움직인 거리").font(.pretendardBold20).foregroundStyle(.text)
+                    Spacer()
+                    Text(String(format: "%.2f", currentDistance)).font(.pretendardBold24).foregroundStyle(.text)
+                        .animation(.spring(), value: currentDistance)
+                    Text("km").font(.pretendardBold16).foregroundStyle(.text)
+                }
+                .padding([.leading, .trailing], 8)
+                .padding([.bottom], 16)
             }.padding([.leading, .trailing])
         }
         .background(Color.white)

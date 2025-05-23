@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreMotion
 import Combine
 
 struct PedometerModel {
@@ -18,7 +17,6 @@ struct PedometerModel {
 protocol PedometerUsecase {
     func startLivePedometerData() -> AnyPublisher<PedometerModel?, Never>
     func stopLivePedometerData()
-    func getPedometerDataFromDate(start: Date, end: Date) -> AnyPublisher<PedometerModel?, Never>
 }
 
 final class PedometerUsecaseImpl: PedometerUsecase {
@@ -28,7 +26,7 @@ final class PedometerUsecaseImpl: PedometerUsecase {
         self.pedometer = pedometer
     }
     
-    func startLivePedometerData() -> AnyPublisher<PedometerModel?, Never> {
+    func startLivePedometerData() -> AnyPublisher<PedometerModel?, Never> { // err 처리
         pedometer.startPedometer()
             .map {
                 PedometerModel(
@@ -36,7 +34,7 @@ final class PedometerUsecaseImpl: PedometerUsecase {
                     distance: ($0.distance?.floatValue ?? 0) / 1000
                 )
             }
-            .catch({ err in
+            .catch({ err in // X
                 Just(nil)
             })
             .eraseToAnyPublisher()
@@ -44,19 +42,5 @@ final class PedometerUsecaseImpl: PedometerUsecase {
     
     func stopLivePedometerData() {
         pedometer.stopPedometer()
-    }
-    
-    func getPedometerDataFromDate(start: Date, end: Date) -> AnyPublisher<PedometerModel?, Never> {
-        pedometer.fetchPedometerFromDate(start: start, end: end)
-            .map {
-                PedometerModel(
-                    steps: $0.numberOfSteps.intValue,
-                    distance: ($0.distance?.floatValue ?? 0) / 1000
-                )
-            }
-            .catch({ err in
-                Just(nil)
-            })
-            .eraseToAnyPublisher()
     }
 }

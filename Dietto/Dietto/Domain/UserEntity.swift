@@ -7,13 +7,18 @@
 
 import Foundation
 
-struct User {
+struct UserEntity {
     var name: String
     var birth: Date
-    var gender: String
+    var gender: Gender
     var height: Int
     var weight: Int
     var targetWeight: Int
     var targetDistance: Int
     var favorite: [String]
+}
+
+enum Gender: String {
+    case male = "남성"
+    case female = "여성"
 }

@@ -18,7 +18,7 @@ final class HomeViewModel {
     
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
-    var userData: User = User(name: "홍길동", birth: Date(), gender: "남", height: 170, weight: 68, targetWeight: 62, targetDistance: 5, favorite: [])
+    var userData: UserEntity = UserEntity(name: "홍길동", birth: Date(), gender: .male, height: 170, weight: 68, targetWeight: 62, targetDistance: 5, favorite: [])
     
     
     private let pedometerUsecase: PedometerUsecase
@@ -35,6 +35,10 @@ final class HomeViewModel {
     }
     
     func fetchPedometer() {
+        guard bag.isEmpty else {
+            print("already exist")
+            return
+        }
         pedometerUsecase.startLivePedometerData()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] pedometer in
