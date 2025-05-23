@@ -30,8 +30,6 @@ final class NetworkManagerImpl: NetworkManager {
         guard let raw = String(data: data, encoding: .utf8) else {
             throw NetworkError.invalidResponse
         }
-        
-        print(#file,#function,#line,raw)
 
         return raw
     }

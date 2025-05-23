@@ -175,7 +175,6 @@ struct DietaryView: View {
                         Button("식단 추천받기") {
                             print("식단 추천 받기 버튼이 클릭댐")
                             if !dietartViewModel.presentIngredients.isEmpty {
-                                //                                dietartViewModel.addpastIngredients(ingredients: dietartViewModel.presentIngredients)
                                 isLoading = true
                                 Task { #warning("쓰레드 확인해보기.")
                                     await dietartViewModel.fetchRecommendations(ingredients: dietartViewModel.presentIngredients)

@@ -31,7 +31,7 @@ final class PromptManagerImpl: PromptManager {
                 다음 예시를 참고해서 설명해주세요.
                 
                 {
-                  "recommendations": [
+                  "recommendation": [
                     { "title": "미역국", 
                       "description": " 1. 요즘에는 간편미역이라고 해서 씻은 미역을 20g 잘라담아서 팔고 있습니다 20g을 다하면 너무 양이 많아서 2인분용으로 절반만 썼어요 여기에 물을 넣으면 금방 불어납니다.
                                        2. 키친타월로 소고기 피를 살짝 뺍니다.

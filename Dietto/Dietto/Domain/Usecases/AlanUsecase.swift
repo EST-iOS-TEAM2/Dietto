@@ -23,24 +23,15 @@ final class AlanUsecaseImpl : AlanUsecase {
         self.repository = repository
     }
     
+    //추천식단
     func fetchRecommend(ingredients: [IngredientEntity]) async throws -> [RecommendEntity] {
-        
-        let wrapper: RecommendDTO = try await repository.fetch(
-            promptType: .recommend,
-            rawValues: ingredients,
-            outputType: RecommendDTO.self
-        )
+        let wrapper = try await repository.fetch(promptType: .recommend, rawValues: ingredients, outputType: RecommendDTO.self)
         
         return wrapper.recommendation
     }
     
     func fetchArticle(topics: [ArticleEntity]) async throws -> [ArticleEntity] {
-        
-        let wrapper: ArticleDTO = try await repository.fetch(
-            promptType: .recommend,
-            rawValues: topics,
-            outputType: ArticleDTO.self
-        )
+        let wrapper = try await repository.fetch(promptType: .article, rawValues: topics, outputType: ArticleDTO.self)
         
         return wrapper.articles
     }

@@ -16,9 +16,9 @@ final class NetworkRepositoryImpl: NetworkRepository {
     
     private let promptManager: PromptManager
     private let networkManager: NetworkManager
+    private let parsingManager: ParsingManager = ParsingManagerImpl()
     
-    init(promptManager: PromptManager = PromptManagerImpl(),
-         networkManager: NetworkManager = NetworkManagerImpl()) {
+    init(promptManager: PromptManager = PromptManagerImpl(),networkManager: NetworkManager = NetworkManagerImpl()) {
         self.promptManager = promptManager
         self.networkManager = networkManager
     }
@@ -31,12 +31,8 @@ final class NetworkRepositoryImpl: NetworkRepository {
         }
         let prompt = promptManager.makePrompt(for: promptType, with: values)
         
-        
         let rawResponse = try await networkManager.request(request: prompt)
         
-        let parser = ParsingManagerImpl<T>()
-        print(#file,#function,#line,parser)
-        
-        return try parser.parse(from: rawResponse)
+        return try parsingManager.parse(from: rawResponse, as: T.self)
     }
 }

@@ -82,12 +82,12 @@ class DietaryViewModel: ObservableObject {
         do {
             let result = try await usecase.fetchRecommend(ingredients: ingredients)
             self.recommendList = result
-            //            Thread.isMainThread
-            //            MainActor.preconditionIsolated() //메인엑터 확인.
-            print(recommendList)
         } catch {
             print(#file,#function,#line, error.localizedDescription)
         }
     }
     
 }
+
+//            Thread.isMainThread
+//            MainActor.preconditionIsolated() //메인엑터 확인.
