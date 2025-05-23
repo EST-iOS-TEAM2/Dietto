@@ -15,8 +15,12 @@ struct HomeView: View {
         VStack(spacing: 0) {
             HomeHeader()
             ScrollView {
-                WeightTable()
-
+                WeightTable(
+                    startWeight: viewModel.userData.startWeight,
+                    targetWeight: viewModel.userData.targetWeight,
+                    currentWeight: viewModel.userData.currentWeight
+                )
+                
                 WeightHistoryView()
                     .environment(viewModel)
                 
@@ -24,7 +28,7 @@ struct HomeView: View {
                     ActivityTable(
                         currentSteps: pedometer.steps,
                         currentDistance: pedometer.distance,
-                        targetDistance: 5
+                        targetDistance: viewModel.userData.targetDistance
                     )
                 }
                 else {

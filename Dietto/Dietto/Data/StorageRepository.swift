@@ -15,6 +15,7 @@ protocol StorageRepository {
     func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) throws
     func fetchData(where predicate: Predicate<T>?,sort: [SortDescriptor<T>]) throws -> [T]
     func deleteData(where predicate: Predicate<T>) throws
+    func deleteAll() throws
 }
 
 final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
@@ -70,6 +71,14 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
     
     func deleteData(where predicate: Predicate<T>) throws {
         try context.delete(model: T.self, where: predicate)
+        try context.save()
+    }
+    
+    func deleteAll() throws {
+        let data = try fetchData()
+        for item in data {
+            context.delete(item)
+        }
         try context.save()
     }
 }

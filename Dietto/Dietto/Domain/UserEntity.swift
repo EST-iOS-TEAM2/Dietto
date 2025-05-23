@@ -8,15 +8,14 @@
 import Foundation
 
 struct UserEntity {
+    var id: UUID
     var name: String
-    var birth: Date
     var gender: Gender
     var height: Int
     var startWeight: Int
     var currentWeight: Int
     var targetWeight: Int
     var targetDistance: Int
-    var favorite: [String]
 }
 
 enum Gender: String {

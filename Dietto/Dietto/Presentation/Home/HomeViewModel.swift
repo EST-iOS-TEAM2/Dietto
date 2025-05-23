@@ -35,7 +35,16 @@ final class HomeViewModel {
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
     
-    var userData: UserEntity = UserEntity(name: "홍길동", birth: Date(), gender: .male, height: 170, weight: 68, targetWeight: 62, targetDistance: 5, favorite: [])
+    var userData: UserEntity = UserEntity(
+        id: UUID(),
+        name: "홍길동",
+        gender: .male,
+        height: 170,
+        startWeight: 68,
+        currentWeight: 67,
+        targetWeight: 62,
+        targetDistance: 5
+    )
     
     
     private let pedometerUsecase: PedometerUsecase
@@ -125,4 +134,11 @@ final class HomeViewModel {
             }
         }
     }
+}
+
+// ProfileView Function
+extension HomeViewModel {
+    func updateUserData() {}
+    func updateGoal() {}
+    func deleteAllData() {}
 }

@@ -9,7 +9,7 @@ import SwiftUI
 struct ActivityTable: View {
     let currentSteps: Int
     let currentDistance: Float
-    let targetDistance: Float
+    let targetDistance: Int
     
     var body: some View {
         VStack(alignment: .center) {
@@ -18,14 +18,13 @@ struct ActivityTable: View {
                 .padding([.leading, .trailing], 8)
             
             VStack {
-                Gauge(value: currentDistance, in: 0...targetDistance) {
+                Gauge(value: currentDistance, in: 0...Float(targetDistance)) {
                     Text("Goal")
                         .font(.pretendardBold12)
                         .foregroundStyle(.text)
                 }
                 .gaugeStyle(.accessoryCircularCapacity)
                 .tint(.accent)
-//                .frame(width: 100, height: 100)
                 .scaleEffect(2)
                 .padding()
                 

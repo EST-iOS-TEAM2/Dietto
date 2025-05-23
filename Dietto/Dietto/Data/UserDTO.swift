@@ -10,33 +10,23 @@ import SwiftData
 
 @Model
 final class UserDTO {
+    var id: UUID
     var name: String
-    var birth: Date
     var gender: String
     var height: Int
     var startWeight: Int
     var currentWeight: Int
     var targetWeight: Int
     var targetDistance: Int
-    var favorite: [FavoriteItem]
     
-    init(name: String, birth: Date, gender: String, height: Int, startWeight: Int, currentWeight: Int, targetWeight: Int, targetDistance: Int, favorite: [FavoriteItem]) {
+    init(id: UUID, name: String, gender: String, height: Int, startWeight: Int, currentWeight: Int, targetWeight: Int, targetDistance: Int) {
+        self.id = id
         self.name = name
-        self.birth = birth
         self.gender = gender
         self.height = height
         self.startWeight = startWeight
         self.currentWeight = currentWeight
         self.targetWeight = targetWeight
         self.targetDistance = targetDistance
-        self.favorite = favorite
-    }
-}
-
-@Model
-final class FavoriteItem {
-    var name: String
-    init(name: String) {
-        self.name = name
     }
 }
