@@ -9,7 +9,7 @@ import Foundation
 
 protocol WeightHistoryUsecase {
     func addNewWeight(weight: Int, date: Date)
-    func getWeightHistory(chartRange: ChartTimeType) async -> [WeightEntity]
+    func getWeightHistory(chartRange: ChartTimeType) -> [WeightEntity]
 }
 
 final class WeightHistoryUsecaseImpl<Repository: StorageRepository>: WeightHistoryUsecase where Repository.T == WeightDTO {
@@ -22,11 +22,11 @@ final class WeightHistoryUsecaseImpl<Repository: StorageRepository>: WeightHisto
         storage.insertData(data: WeightDTO(date: date, scale: weight))
     }
     
-    func getWeightHistory(chartRange: ChartTimeType) async -> [WeightEntity] {
+    func getWeightHistory(chartRange: ChartTimeType) -> [WeightEntity] {
         let predicate = getDateRange(range: chartRange)
         
         do {
-            let result = try await storage.fetchData(where: predicate, sort: [])
+            let result = try storage.fetchData(where: predicate, sort: [])
             return result.map{$0.convertEntity()}
         }
         catch {

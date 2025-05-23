@@ -13,8 +13,8 @@ protocol StorageRepository {
     
     func insertData(data: T)
     func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) throws
-    func fetchData(where predicate: Predicate<T>?,sort: [SortDescriptor<T>] ) async throws -> [T]
-    func deleteData(where predicate: Predicate<T>) async throws
+    func fetchData(where predicate: Predicate<T>?,sort: [SortDescriptor<T>]) throws -> [T]
+    func deleteData(where predicate: Predicate<T>) throws
 }
 
 final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
