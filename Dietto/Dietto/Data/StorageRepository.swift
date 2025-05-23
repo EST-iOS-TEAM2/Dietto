@@ -19,11 +19,10 @@ protocol StorageRepository {
 
 final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
     
-    private let modelContainer: ModelContainer
-
+    private let context: ModelContext
     
     init(modelContainer: ModelContainer) {
-        self.modelContainer = modelContainer
+        self.context = ModelContext(modelContainer)
     }
     
     /*
@@ -34,7 +33,8 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
     init() {
         let configure = ModelConfiguration("\(T.self)") // 이름 지정 
         do {
-            self.modelContainer = try ModelContainer(for: T.self, configurations: configure)
+            let modelContainer = try ModelContainer(for: T.self, configurations: configure)
+            self.context = ModelContext(modelContainer)
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -43,10 +43,9 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
     func insertData(data: T) {
         
         Task {
-            let modelContext = ModelContext(self.modelContainer)
-            modelContext.insert(data)
+            context.insert(data)
             do {
-                try modelContext.save()
+                try context.save()
             }
             catch {
                 print("Data Save ERROR: \(error.localizedDescription)")
@@ -55,7 +54,6 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
     }
     
     func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) throws {
-        let context = ModelContext(modelContainer)
         let descriptor = FetchDescriptor<T>(predicate: predicate)
         if let result = try context.fetch(descriptor).first {
             updateBlock(result)
@@ -63,17 +61,14 @@ final class StorageRepositoryImpl<T: PersistentModel>: StorageRepository {
         }
     }
     
-    @MainActor
     func fetchData(where predicate: Predicate<T>? = nil, sort: [SortDescriptor<T>] = [] ) throws -> [T] {
         // MARK:
         let descriptor = FetchDescriptor(predicate: predicate, sortBy: sort)
-        let context = ModelContext(modelContainer)
         let data = try context.fetch(descriptor)
         return data
     }
     
     func deleteData(where predicate: Predicate<T>) throws {
-        let context = ModelContext(modelContainer)
         try context.delete(model: T.self, where: predicate)
         try context.save()
     }

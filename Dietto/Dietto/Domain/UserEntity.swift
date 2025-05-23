@@ -12,7 +12,8 @@ struct UserEntity {
     var birth: Date
     var gender: Gender
     var height: Int
-    var weight: Int
+    var startWeight: Int
+    var currentWeight: Int
     var targetWeight: Int
     var targetDistance: Int
     var favorite: [String]

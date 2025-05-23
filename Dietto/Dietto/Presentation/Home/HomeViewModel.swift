@@ -40,15 +40,19 @@ final class HomeViewModel {
     
     private let pedometerUsecase: PedometerUsecase
     private let weightHistroyUsecase: WeightHistoryUsecase
+    private let userStorageUsecase: UserStorageUsecase
     private var bag = Set<AnyCancellable>()
-    //    private let userUsecase: UserUsecase
+        
     
     init(
         pedometerUsecase: PedometerUsecase = PedometerUsecaseImpl(pedometer: PedometerRepositoryImpl()),
-        weightHistroyUsecase: WeightHistoryUsecase = WeightHistoryUsecaseImpl(repository: StorageRepositoryImpl<WeightDTO>())
+        weightHistroyUsecase: WeightHistoryUsecase = WeightHistoryUsecaseImpl(repository: StorageRepositoryImpl<WeightDTO>()),
+        userStorageUsecase: UserStorageUsecase = UserStorageUsecaseImpl(storage: StorageRepositoryImpl<UserDTO>())
+        
     ) {
         self.pedometerUsecase = pedometerUsecase
         self.weightHistroyUsecase = weightHistroyUsecase
+        self.userStorageUsecase = userStorageUsecase
         bodyScaleHistoryFetch(type: chartTimeType)
     }
     

@@ -14,17 +14,19 @@ final class UserDTO {
     var birth: Date
     var gender: String
     var height: Int
-    var weight: Int
+    var startWeight: Int
+    var currentWeight: Int
     var targetWeight: Int
     var targetDistance: Int
     var favorite: [FavoriteItem]
     
-    init(name: String, birth: Date, gender: String, height: Int, weight: Int, targetWeight: Int, targetDistance: Int, favorite: [FavoriteItem]) {
+    init(name: String, birth: Date, gender: String, height: Int, startWeight: Int, currentWeight: Int, targetWeight: Int, targetDistance: Int, favorite: [FavoriteItem]) {
         self.name = name
         self.birth = birth
         self.gender = gender
         self.height = height
-        self.weight = weight
+        self.startWeight = startWeight
+        self.currentWeight = currentWeight
         self.targetWeight = targetWeight
         self.targetDistance = targetDistance
         self.favorite = favorite
