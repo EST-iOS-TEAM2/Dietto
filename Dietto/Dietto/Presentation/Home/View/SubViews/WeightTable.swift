@@ -45,6 +45,7 @@ struct WeightTable: View {
                     Text("최근 몸무게").font(.pretendardBold16).foregroundStyle(.text)
                     HStack(spacing: 4) {
                         Text("\(currentWeight)").font(.pretendardBold32).foregroundStyle(.text)
+                            .animation(.spring(duration: 0.25), value: currentWeight)
                         Text("kg").font(.pretendardBold16).foregroundStyle(.text)
                     }
                 }

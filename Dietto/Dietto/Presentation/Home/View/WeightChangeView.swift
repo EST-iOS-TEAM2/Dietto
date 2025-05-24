@@ -34,13 +34,21 @@ struct WeightChangeView: View {
                     .padding(3)
                 Text("KG")
             }
-            .font(.pretendardBold32)
+            .font(.custom("Pretendard-Bold", size: 40))
             .foregroundStyle(.text)
             .modifier(ShakeEffect(animatableData: shake))
             
             Spacer()
-            
-            CustomKeypad()
+            ZStack {
+                RoundedRectangle(cornerRadius: 21)
+                    .ignoresSafeArea()
+                    .foregroundStyle(.white)
+                    .shadow(radius: 5, x: 2, y: 2)
+                    
+                
+                CustomKeypad()
+            }
+            .fixedSize(horizontal: false, vertical: true)
         }
         .background(Color.backGround)
     }
@@ -84,6 +92,7 @@ struct WeightChangeView: View {
         .font(.pretendardBold20)
         .foregroundStyle(Color.text)
         .buttonStyle(KeypadButtonStyle())
+        .padding()
     }
     
     private func addNumber(number: String) {

@@ -23,6 +23,7 @@ struct ActivityTable: View {
                         .font(.pretendardBold12)
                         .foregroundStyle(.text)
                 }
+                .animation(.easeInOut(duration: 0.25), value: currentDistance)
                 .gaugeStyle(.accessoryCircularCapacity)
                 .tint(.accent)
                 .scaleEffect(2)
@@ -34,7 +35,7 @@ struct ActivityTable: View {
                     Text("걸음 수").font(.pretendardBold20).foregroundStyle(.text)
                     Spacer()
                     Text("\(currentSteps)").font(.pretendardBold24).foregroundStyle(.text)
-                        .animation(.spring(), value: currentSteps)
+                        .animation(.spring(duration: 0.25), value: currentSteps)
                     Text("Steps").font(.pretendardBold16).foregroundStyle(.text)
                 }
                 .padding(8)
@@ -42,7 +43,7 @@ struct ActivityTable: View {
                     Text("움직인 거리").font(.pretendardBold20).foregroundStyle(.text)
                     Spacer()
                     Text(String(format: "%.2f", currentDistance)).font(.pretendardBold24).foregroundStyle(.text)
-                        .animation(.spring(), value: currentDistance)
+                        .animation(.spring(duration: 0.25), value: currentDistance)
                     Text("km").font(.pretendardBold16).foregroundStyle(.text)
                 }
                 .padding([.leading, .trailing], 8)

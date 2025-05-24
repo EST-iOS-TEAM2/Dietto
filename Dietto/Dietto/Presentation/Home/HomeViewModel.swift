@@ -67,10 +67,12 @@ final class HomeViewModel {
         pedometerUsecase.startLivePedometerData()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] pedometer in
-                if let pedometer {
-                    self?.pedometerData = PedometerModel(steps: pedometer.steps, distance: pedometer.distance)
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    if let pedometer {
+                        self?.pedometerData = PedometerModel(steps: pedometer.steps, distance: pedometer.distance)
+                    }
+                    else { self?.pedometerData = nil }
                 }
-                else { self?.pedometerData = nil }
             }
             .store(in: &bag)
     }
