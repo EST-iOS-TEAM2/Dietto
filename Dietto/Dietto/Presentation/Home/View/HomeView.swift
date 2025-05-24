@@ -10,15 +10,16 @@ import Charts
 
 struct HomeView: View {
     @State var viewModel = HomeViewModel()
-    
+    @State var isTapModify: Bool = false
     var body: some View {
         VStack(spacing: 0) {
             HomeHeader()
             ScrollView {
                 WeightTable(
-                    startWeight: viewModel.userData.startWeight,
-                    targetWeight: viewModel.userData.targetWeight,
-                    currentWeight: viewModel.userData.currentWeight
+                    startWeight: $viewModel.userData.startWeight,
+                    targetWeight: $viewModel.userData.targetWeight,
+                    currentWeight: $viewModel.userData.currentWeight,
+                    isTapModify: $isTapModify
                 )
                 
                 WeightHistoryView()
@@ -57,6 +58,9 @@ struct HomeView: View {
                 }
             }
         }
+        .sheet(isPresented: $isTapModify, content: {
+            WeightChangeView()
+        })
         .background(Color.backGround)
         .onAppear {
             viewModel.fetchPedometer()

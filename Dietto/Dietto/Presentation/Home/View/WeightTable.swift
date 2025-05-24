@@ -7,9 +7,11 @@
 import SwiftUI
 
 struct WeightTable: View {
-    @State var startWeight: Int = 68
-    @State var targetWeight: Int = 64
-    @State var currentWeight: Int = 68
+    @Binding var startWeight: Int
+    @Binding var targetWeight: Int
+    @Binding var currentWeight: Int
+    
+    @Binding var isTapModify: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -48,7 +50,7 @@ struct WeightTable: View {
                 }
                 Spacer()
                 Button("수정") {
-                    print("")
+                    isTapModify.toggle()
                 }
             }.padding()//.padding([.leading, .trailing])
             
