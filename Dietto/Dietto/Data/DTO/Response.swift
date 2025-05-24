@@ -7,10 +7,6 @@
 
 import Foundation
 
-//Encodable : Swift객체 -> Json
-//Decodable : Json -> Swift객체
-//Codable : Encodable + Decodable
-
 //MARK: - Response
 struct AlanResponse: Decodable {
     let content: String
