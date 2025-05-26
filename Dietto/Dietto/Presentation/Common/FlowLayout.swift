@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-/// iOS 16+ ㅇㅇ
 struct FlowLayout: Layout {
     var spacing: CGFloat? = nil
     var lineSpacing: CGFloat = 10.0
@@ -67,7 +66,6 @@ struct FlowLayout: Layout {
             withAnimation(.bouncy) {
                 self.contentHeight = totalHeight
             }
-            //            self.contentHeight = totalHeight
         }
         
         return CGSize(width: maxWidth, height: totalHeight)

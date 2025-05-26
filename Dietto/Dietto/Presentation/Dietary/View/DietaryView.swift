@@ -9,7 +9,8 @@ import SwiftUI
 
 struct DietaryView: View {
     
-    @StateObject private var ViewModel = DietaryViewModel()
+    @StateObject private var dietartViewModel = DietaryViewModel()
+    @StateObject private var recommendViewModel = RecommendViewModel()
     
     @State private var newfood : String = ""
     
@@ -65,7 +66,7 @@ struct DietaryView: View {
                             
                             Button("추가"){
                                 if newfood != ""{
-                                    ViewModel.addpresentIngredients(newfood)
+                                    dietartViewModel.addpresentIngredients(newfood)
                                     newfood = ""
                                 }
                                 
@@ -95,14 +96,16 @@ struct DietaryView: View {
                                     Spacer()
                                     
                                     FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $recommandflowlayout) {
-                                        ForEach(ViewModel.presentIngredients) { ingredient in
+                                        ForEach(dietartViewModel.presentIngredients) { ingredient in
                                             PillText(text: ingredient.name, onDelete: {
-                                                ViewModel.removepresentIngredients(ingredient)
+                                                withAnimation(.easeInOut) {
+                                                    dietartViewModel.removepresentIngredients(ingredient)
+                                                    
+                                                }
                                             })
-                                            
                                         }
                                     }
-
+                                    
                                     Spacer()
                                 }
                             }
@@ -133,9 +136,17 @@ struct DietaryView: View {
                                     
                                     if !isFoldMyRefrigerlator{
                                         FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $myRefrigerlatorflowlayout) {
-                                            ForEach(ViewModel.pastIngredients) { ingredient in
-                                                PillText(text: ingredient.name, onDelete: {
-                                                    ViewModel.removepastIngredients(ingredient)
+                                            
+                                            ForEach(dietartViewModel.pastIngredients) { ingredient in
+                                                PillText(text: ingredient.name,
+                                                         onAdd:{
+                                                    withAnimation(.bouncy){
+                                                        dietartViewModel.addpresentIngredients(ingredient.name)
+                                                    }
+                                                }, onDelete: {
+                                                    withAnimation(.easeInOut) {
+                                                        dietartViewModel.removepastIngredients(ingredient)
+                                                    }
                                                 })
                                             }
                                         }
@@ -161,10 +172,16 @@ struct DietaryView: View {
                     }
                     HStack {
                         Button("식단 추천받기") {
-                            for ingredient in ViewModel.presentIngredients {
-                                print("id \(ingredient.id), name \(ingredient.name)")
+                            print("식단 추천 받기 버튼이 클릭댐")
+                            if !dietartViewModel.presentIngredients.isEmpty {
+                                //                                dietartViewModel.addpastIngredients(ingredients: dietartViewModel.presentIngredients)
+                                Task {
+                                    await recommendViewModel.fetchRecommendations(ingredients: dietartViewModel.presentIngredients)
+                                    PushToRecommandView = true
+                                }
+                            }else{
+                                print("비어있음 현재 식재료가 ")
                             }
-                            PushToRecommandView = true
                         }
                         .font(.pretendardBold16)
                         .foregroundColor(.white)
@@ -181,7 +198,7 @@ struct DietaryView: View {
                 }
             }
             .navigationDestination(isPresented: $PushToRecommandView) {
-                RecommendView()
+                RecommendView().environmentObject(recommendViewModel)
             }
         }
     }
