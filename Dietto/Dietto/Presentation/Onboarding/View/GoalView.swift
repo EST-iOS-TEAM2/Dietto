@@ -22,7 +22,7 @@ struct GoalView: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(viewModel.nickname)님의")
-                Text("목표").foregroundColor(.accent) + Text("를 알려주세요 !")
+                Text("목표").foregroundColor(.appMain) + Text("를 알려주세요 !")
             }
             .font(.pretendardBold24)
             .ignoresSafeArea(.container, edges: .top)
@@ -48,7 +48,7 @@ struct GoalView: View {
                             
                             Text("kg")
                                 .font(.AppLogo)
-                                .foregroundColor(.accent)
+                                .foregroundColor(.appMain)
                         }
                         
                     }
@@ -71,7 +71,7 @@ struct GoalView: View {
                             
                             Text("km")
                                 .font(.AppLogo)
-                                .foregroundColor(.accent)
+                                .foregroundColor(.appMain)
                         }
                         
                     }

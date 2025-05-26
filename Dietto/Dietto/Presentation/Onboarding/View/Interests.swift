@@ -34,10 +34,10 @@ struct Interests: View {
                             .padding(.vertical, 4)
                     }
                     .background(
-                        Capsule().fill(selected ? Color.accent : Color.backGround)
+                        Capsule().fill(selected ? Color.appMain : Color.backGround)
                     )
                     .overlay(
-                        Capsule().stroke(Color.accent, lineWidth: 1)
+                        Capsule().stroke(Color.appMain, lineWidth: 1)
                     )
                     .fixedSize()
                 }

@@ -43,7 +43,7 @@ struct TutorialView: View {
                             Text("다음")
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(Color.accentColor)
+                                .background(Color.appMain)
                                 .foregroundColor(.white)
                                 .cornerRadius(13)
                                 .font(.pretendardMedium16)

@@ -18,7 +18,7 @@ struct IntroView: View {
         ZStack {
             if first {
                 Text("안녕하세요! 환영합니다 !")
-                    .foregroundColor(.accent)
+                    .foregroundColor(.appMain)
                     .font(.pretendardBlack24)
                     .opacity(first ? 1 : 0)
                     .transition(.opacity)
@@ -27,7 +27,7 @@ struct IntroView: View {
             
             if second {
                 Text("프로필을 설정해주세요!")
-                    .foregroundColor(.accent)
+                    .foregroundColor(.appMain)
                     .font(.pretendardBlack24)
                     .opacity(second ? 1 : 0)
                     .transition(.opacity)

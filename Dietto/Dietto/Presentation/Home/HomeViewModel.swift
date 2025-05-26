@@ -129,6 +129,7 @@ final class HomeViewModel {
     }
     
     func chartAnimate() {
+        guard !bodyScaleHistory.isEmpty else { return }
         isAnimating = true
         for (index, _) in bodyScaleHistory.enumerated() {
             let delay = Double(index) * 0.05

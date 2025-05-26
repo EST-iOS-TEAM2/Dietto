@@ -10,9 +10,15 @@ import SwiftData
 
 @main
 struct DiettoApp: App {
+    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            if isFirstLaunch {
+                IntroView()
+            }
+            else {
+                MainTabView()
+            }
         }
     }
 }

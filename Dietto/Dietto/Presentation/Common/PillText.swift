@@ -35,7 +35,7 @@ struct PillText: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 4)
-        .background(Capsule().fill(Color.accentColor))
+        .background(Capsule().fill(Color.appMain))
         .fixedSize()
     }
 }

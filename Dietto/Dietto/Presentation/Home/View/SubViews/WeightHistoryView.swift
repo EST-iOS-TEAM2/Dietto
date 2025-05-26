@@ -50,6 +50,7 @@ struct WeightHistoryView: View {
                         Image(systemName: "chevron.down")
                             .font(.pretendardBold16)
                     }
+                    .foregroundStyle(Color.appMain)
                 }
             }
             ZStack {
@@ -60,6 +61,8 @@ struct WeightHistoryView: View {
                             y: .value("Scale", item.isAnimated ? item.scale : 1)
                         )
                         .symbol(.circle)
+                        .foregroundStyle(.red)
+                        #warning("색이 안먹힘")
                     }
                     
                     RoundedRectangle(cornerRadius: 21)

@@ -44,7 +44,7 @@ struct ProfileView: View {
                                     .foregroundColor(.white)
                                     .padding(.vertical, 5)
                                     .padding(.horizontal, 20)
-                                    .background(Color.accent)
+                                    .background(Color.appMain)
                                     .clipShape(Capsule())
                             }
                         }
@@ -54,7 +54,7 @@ struct ProfileView: View {
                     //MARK: - 프로필 이미지
                     ZStack {
                         Circle()
-                            .stroke(Color.accent, lineWidth: 2)
+                            .stroke(Color.appMain, lineWidth: 2)
                             .frame(width: 180, height: 180)
                         Image(systemName: "person.crop.circle.fill")
                             .resizable()
@@ -85,7 +85,7 @@ struct ProfileView: View {
                             .padding(.vertical, 15)
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.accent)
+                                    .fill(Color.appMain)
                             )
                     }
                     .cornerRadius(20)
