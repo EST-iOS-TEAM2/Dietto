@@ -7,11 +7,16 @@
 
 import SwiftUI
 
-struct ContainerView <content : View> : View {
-    
+struct ContainerView<Content: View>: View {
     var paddingSize: CGFloat
     var height: CGFloat
-    let Content: () -> content
+    let content: () -> Content  // ✅ 변수명은 소문자!
+    
+    init(paddingSize: CGFloat, height: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+        self.paddingSize = paddingSize
+        self.height = height
+        self.content = content
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -28,7 +33,7 @@ struct ContainerView <content : View> : View {
                         )
                         .shadow(color: Color.black.opacity(0.2), radius: 4, x: 4, y: 4)
                     
-                    Content()
+                    content()
                         .frame(width: width, height: height)
                 }
                 .frame(width: geometry.size.width, height: height)
@@ -36,5 +41,4 @@ struct ContainerView <content : View> : View {
         }
         .frame(height: height)
     }
-    
 }

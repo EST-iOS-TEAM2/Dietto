@@ -13,8 +13,7 @@ struct PillText: View {
     var onDelete: (() -> Void)? = nil  // X 버튼 클릭 액션
     
     var body: some View {
-        HStack(spacing: 0) {
-            // 텍스트 버튼
+        HStack() {
             Button(action: {
                 onAdd?()
             }) {
@@ -24,7 +23,6 @@ struct PillText: View {
             }
             .buttonStyle(PlainButtonStyle())
             
-            // X 버튼
             Button(action: {
                 onDelete?()
             }) {

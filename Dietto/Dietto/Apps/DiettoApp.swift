@@ -11,8 +11,6 @@ import SwiftData
 @main
 struct DiettoApp: App {
     var body: some Scene {
-        WindowGroup {
-            DietaryView()
-        }
+
     }
 }

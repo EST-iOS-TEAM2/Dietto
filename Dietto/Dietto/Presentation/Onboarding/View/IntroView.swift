@@ -1,5 +1,5 @@
 //
-//  FirstView.swift
+//  IntroView.swift
 //  Dietto
 //
 //  Created by InTak Han on 5/15/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FirstView: View {
+struct IntroView: View {
     
     @State private var first : Bool = false
     @State private var second : Bool = false
@@ -17,12 +17,12 @@ struct FirstView: View {
     var body: some View {
         ZStack {
             if first {
-                Text("로그인 성공!")
+                Text("안녕하세요! 환영합니다 !")
                     .foregroundColor(.accent)
                     .font(.pretendardBlack24)
                     .opacity(first ? 1 : 0)
                     .transition(.opacity)
-                    .animation(.easeInOut(duration: 3), value: first)
+                    .animation(.easeInOut(duration: 1), value: first)
             }
             
             if second {
@@ -31,18 +31,29 @@ struct FirstView: View {
                     .font(.pretendardBlack24)
                     .opacity(second ? 1 : 0)
                     .transition(.opacity)
-                    .animation(.easeInOut(duration: 3), value: second)
+                    .animation(.easeInOut(duration: 1), value: second)
             }
         }
         .onAppear {
-            first = true
+            withAnimation(.easeInOut(duration: 1)) {
+                first = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                withAnimation(.easeInOut(duration: 1)) {
+                    first = false
+                }
+            }
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                second = true
+                withAnimation(.easeInOut(duration: 1)) {
+                    second = true
+                }
             }
         }
     }
 }
 
 #Preview {
-    FirstView()
+    IntroView()
 }
