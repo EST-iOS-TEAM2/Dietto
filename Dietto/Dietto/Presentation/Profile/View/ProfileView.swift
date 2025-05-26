@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 //MARK: 내 프로필 데이터 뷰 모델에서 관리한다.
 class ProfileViewModel: ObservableObject {
     @Published var isEditActive: Bool = false

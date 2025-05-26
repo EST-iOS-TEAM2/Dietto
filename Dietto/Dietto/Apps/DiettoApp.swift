@@ -12,7 +12,7 @@ import SwiftData
 struct DiettoApp: App {
     var body: some Scene {
         WindowGroup {
-            TutorialView()
+            HomeView()
         }
     }
 }
