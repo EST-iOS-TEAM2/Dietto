@@ -10,7 +10,6 @@ import SwiftUI
 struct DietaryView: View {
     
     @StateObject private var dietartViewModel = DietaryViewModel()
-    @StateObject private var recommendViewModel = RecommendViewModel()
     
     @State private var newfood : String = ""
     
@@ -21,7 +20,9 @@ struct DietaryView: View {
     
     @State private var PushToRecommandView : Bool = false // 화면이동
     
-    @State private var isAnimating : Bool = false
+    @State private var isLoading : Bool = false
+    
+#warning("상태값 관리.")
     
     var body: some View {
         NavigationStack{
@@ -35,19 +36,6 @@ struct DietaryView: View {
                             .font(.NerkoOne40)
                             .foregroundStyle(.text)
                         Spacer()
-                        Button {
-                            print("Profile Clicked")
-                        } label: {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 38, height: 38)
-                                .foregroundStyle(.textFieldGray)
-                                .clipShape(Circle())
-                                .overlay(
-                                    Circle().stroke(Color.appMain, lineWidth: 1)
-                                )
-                        }
                     }
                     .padding([.leading, .trailing], 16)
                     //MARK: - TextField
@@ -97,7 +85,7 @@ struct DietaryView: View {
                                     
                                     FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $recommandflowlayout) {
                                         ForEach(dietartViewModel.presentIngredients) { ingredient in
-                                            PillText(text: ingredient.name, onDelete: {
+                                            PillText(text: ingredient.ingredient, onDelete: {
                                                 withAnimation(.easeInOut) {
                                                     dietartViewModel.removepresentIngredients(ingredient)
                                                     
@@ -138,10 +126,10 @@ struct DietaryView: View {
                                         FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $myRefrigerlatorflowlayout) {
                                             
                                             ForEach(dietartViewModel.pastIngredients) { ingredient in
-                                                PillText(text: ingredient.name,
+                                                PillText(text: ingredient.ingredient,
                                                          onAdd:{
                                                     withAnimation(.bouncy){
-                                                        dietartViewModel.addpresentIngredients(ingredient.name)
+                                                        dietartViewModel.addpresentIngredients(ingredient.ingredient)
                                                     }
                                                 }, onDelete: {
                                                     withAnimation(.easeInOut) {
@@ -174,9 +162,10 @@ struct DietaryView: View {
                         Button("식단 추천받기") {
                             print("식단 추천 받기 버튼이 클릭댐")
                             if !dietartViewModel.presentIngredients.isEmpty {
-                                //                                dietartViewModel.addpastIngredients(ingredients: dietartViewModel.presentIngredients)
-                                Task {
-                                    await recommendViewModel.fetchRecommendations(ingredients: dietartViewModel.presentIngredients)
+                                isLoading = true
+                                Task { #warning("쓰레드 확인해보기.")
+                                    await dietartViewModel.fetchRecommendations(ingredients: dietartViewModel.presentIngredients)
+                                    isLoading = false
                                     PushToRecommandView = true
                                 }
                             }else{
@@ -184,7 +173,7 @@ struct DietaryView: View {
                             }
                         }
                         .font(.pretendardBold16)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .padding(.vertical, 16)
                         .frame(maxWidth: .infinity)
                         .background(Color.appMain)
@@ -197,8 +186,21 @@ struct DietaryView: View {
                     
                 }
             }
+            .overlay(content: {
+                ///loading indicator
+                if isLoading {
+                    Color.black.opacity(0.4)
+                        .ignoresSafeArea()
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .foregroundStyle(.white)
+                        .padding()
+                        .background(Color.gray.opacity(0.8))
+                    
+                }
+            })
             .navigationDestination(isPresented: $PushToRecommandView) {
-                RecommendView().environmentObject(recommendViewModel)
+                RecommendView().environmentObject(dietartViewModel)
             }
         }
     }

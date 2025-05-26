@@ -9,38 +9,48 @@ import SwiftUI
 
 class DietaryViewModel: ObservableObject {
     
+    //현재
     @Published var presentIngredients: [IngredientEntity] = []
     
+    //과거
     @Published var pastIngredients : [IngredientEntity] = [
-        IngredientEntity(name: "오징어"),
-        IngredientEntity(name: "꼴뚜기"),
-        IngredientEntity(name: "홍합"),
-        IngredientEntity(name: "닭다리"),
-        IngredientEntity(name: "연어머리"),
-        IngredientEntity(name: "마늘"),
-        IngredientEntity(name: "올리브유"),
-        IngredientEntity(name: "양파"),
-        IngredientEntity(name: "국간장"),
-        IngredientEntity(name: "밀가루"),
-        IngredientEntity(name: "참기름"),
-        IngredientEntity(name: "들기름"),
-        IngredientEntity(name: "통후추"),
-        IngredientEntity(name: "미역"),
-        IngredientEntity(name: "감자"),
-        IngredientEntity(name: "와인"),
-        IngredientEntity(name: "당근"),
-        IngredientEntity(name: "배추")
+        IngredientEntity(ingredient: "오징어"),
+        IngredientEntity(ingredient: "꼴뚜기"),
+        IngredientEntity(ingredient: "홍합"),
+        IngredientEntity(ingredient: "닭다리"),
+        IngredientEntity(ingredient: "연어머리"),
+        IngredientEntity(ingredient: "마늘"),
+        IngredientEntity(ingredient: "올리브유"),
+        IngredientEntity(ingredient: "양파"),
+        IngredientEntity(ingredient: "국간장"),
+        IngredientEntity(ingredient: "밀가루"),
+        IngredientEntity(ingredient: "참기름"),
+        IngredientEntity(ingredient: "들기름"),
+        IngredientEntity(ingredient: "통후추"),
+        IngredientEntity(ingredient: "미역"),
+        IngredientEntity(ingredient: "감자"),
+        IngredientEntity(ingredient: "와인"),
+        IngredientEntity(ingredient: "당근"),
+        IngredientEntity(ingredient: "배추")
     ]
     
-    //MARK: - Usecase로 옮겨야함요.
+    //추천 리스트
+    @Published var recommendList : [RecommendEntity]  = []
+    
+    private let usecase : AlanUsecase
+    
+    //MARK: - init
+    init(usecase: AlanUsecase = AlanUsecaseImpl(repository: NetworkRepositoryImpl())) {
+        self.usecase = usecase
+    }
     
     //MARK: - 현재 식단에 있는거 생성
     func addpresentIngredients(_ ingredient: String) {
         let trimmed = ingredient.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty,
-              !presentIngredients.contains(where: { $0.name == trimmed }) else { return }
+              !presentIngredients.contains(where: { $0.ingredient == trimmed }) else { return }
         
-        presentIngredients.append(IngredientEntity(name: trimmed))
+        presentIngredients.append(IngredientEntity(ingredient: trimmed))
     }
     //MARK: - 현재 식단에 있는거 삭제
     func removepresentIngredients(_ ingredient: IngredientEntity) {
@@ -64,4 +74,19 @@ class DietaryViewModel: ObservableObject {
         pastIngredients.removeAll { $0.id == ingredient.id }
     }
     
+    //MARK: - 현재 재료를 통해 식단 추천 받기.
+    //mainactor <- thread
+#warning("쓰레드 확인해보기.")
+    func fetchRecommendations(ingredients: [IngredientEntity]) async {
+        do {
+            let result = try await usecase.fetchRecommend(ingredients: ingredients)
+            self.recommendList = result
+        } catch {
+            print(#file,#function,#line, error.localizedDescription)
+        }
+    }
+    
 }
+
+//            Thread.isMainThread
+//            MainActor.preconditionIsolated() //메인엑터 확인.
