@@ -17,7 +17,7 @@ struct InterestsView: View {
         VStack(spacing: 40) {
             VStack(alignment: .leading) {
                 Text("\(viewModel.nickname)님의")
-                + Text(" 관심사").foregroundColor(.accent)
+                + Text(" 관심사").foregroundColor(.appMain)
                 + Text("를 알려주세요 !")
             }
             .font(.pretendardBold24)

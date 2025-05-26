@@ -17,7 +17,7 @@ struct LastView: View {
             withAnimation(.easeInOut) {
                 Text("\(nickName)님의 Challenge를 응원합니다!")
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(.appMain)
                     .font(.pretendardBlack24)
                     .padding()
             }
@@ -28,7 +28,7 @@ struct LastView: View {
                 Text("시작하기")
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.accentColor)
+                    .background(Color.appMain)
                     .foregroundColor(.white)
                     .cornerRadius(13)
                     .font(.pretendardMedium16)

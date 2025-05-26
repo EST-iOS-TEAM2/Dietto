@@ -40,7 +40,7 @@ struct ProfileEditView: View {
                         viewModel.showPhotoSheet = true
                     }) {
                         Circle()
-                            .stroke(Color.accent, lineWidth: 2)
+                            .stroke(Color.appMain, lineWidth: 2)
                             .frame(width: 180, height: 180)
                             .background(
                                 Image(systemName: "person.crop.circle.fill")
@@ -80,7 +80,7 @@ struct ProfileEditView: View {
                         .frame(height: 54)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.accent, lineWidth: 2)
+                                .stroke(Color.appMain, lineWidth: 2)
                         )
                 }
                 .padding(.top, 40)
@@ -96,7 +96,7 @@ struct ProfileEditView: View {
                     
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
-                            .stroke(.accent, lineWidth: 2)
+                            .stroke(.appMain, lineWidth: 2)
                             .frame(height: 54)
                         
                         HStack {
@@ -158,7 +158,7 @@ struct ProfileEditView: View {
                             }
                         Text("cm")
                             .font(.custom("NerkoOne-regular", size: 50))
-                            .foregroundColor(Color.accent)
+                            .foregroundColor(Color.appMain)
                             .padding(.leading, 12)
                     }
                 }

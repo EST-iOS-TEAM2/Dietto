@@ -22,7 +22,7 @@ struct PageControl: View {
                     let width = isCurrentPage ? height * 2 : height
                     
                     Capsule()
-                        .fill(isCurrentPage ? .accent : .gray.opacity(0.5))
+                        .fill(isCurrentPage ? .appMain : .gray.opacity(0.5))
                         .frame(width: width, height: height)
                 }
             }

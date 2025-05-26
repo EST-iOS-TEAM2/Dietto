@@ -14,7 +14,7 @@ struct DiettoApp: App {
     var body: some Scene {
         WindowGroup {
             if isFirstLaunch {
-                OnboardingView()
+                IntroView()
             }
             else {
                 MainTabView()

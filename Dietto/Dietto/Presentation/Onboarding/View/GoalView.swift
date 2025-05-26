@@ -48,7 +48,7 @@ struct GoalView: View {
                             
                             Text("kg")
                                 .font(.AppLogo)
-                                .foregroundColor(.accent)
+                                .foregroundColor(.appMain)
                         }
                         
                     }
@@ -71,7 +71,7 @@ struct GoalView: View {
                             
                             Text("km")
                                 .font(.AppLogo)
-                                .foregroundColor(.accent)
+                                .foregroundColor(.appMain)
                         }
                         
                     }
