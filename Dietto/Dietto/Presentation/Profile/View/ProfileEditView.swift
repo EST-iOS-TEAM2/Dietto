@@ -66,7 +66,7 @@ struct ProfileEditView: View {
                     .offset(x: -1, y: -1)
                 }
                 .frame(width: 180, height: 180)
-                .padding(.top, 48)
+                .padding(.top, -50)
                 
                 // MARK: - 이름 입력란
                 VStack(alignment: .leading, spacing: 6) {
@@ -83,7 +83,7 @@ struct ProfileEditView: View {
                                 .stroke(Color.appMain, lineWidth: 2)
                         )
                 }
-                .padding(.top, 40)
+                .padding(.top, 20)
                 .padding(.horizontal, 20)
                 
                 
@@ -128,7 +128,7 @@ struct ProfileEditView: View {
                         }
                     }
                 }
-                .padding(.top, 30)
+                .padding(.top, 20)
                 .padding(.horizontal, 20)
                 
                 //MARK: - 키 수정
@@ -163,7 +163,7 @@ struct ProfileEditView: View {
                     }
                 }
                 .padding(.horizontal, 25)
-                .padding(.top, 30)
+                .padding(.top, 20)
                 
                 //MARK:  - 저장 버튼
                 Button(action: {
@@ -180,8 +180,8 @@ struct ProfileEditView: View {
                         )
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 80)
-                .padding(.bottom, 40)
+                .padding(.top, 0)
+                .padding(.bottom, 10)
             }
         }
         //MARK: - 프로필 사진 변경
