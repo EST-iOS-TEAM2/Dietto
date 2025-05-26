@@ -8,6 +8,8 @@
 import SwiftUI
  
 struct WeightChangeView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Binding var viewModel: HomeViewModel
     @State private var value: [String] = []
     @State private var shake: CGFloat = 0
     
@@ -51,6 +53,20 @@ struct WeightChangeView: View {
             .fixedSize(horizontal: false, vertical: true)
         }
         .background(Color.backGround)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("저장") {
+                    guard !value.isEmpty else { return }
+                    viewModel.updateCurrentBodyScale(value.joined())
+                    dismiss()
+                }
+            }
+            ToolbarItem(placement: .topBarLeading) {
+                Button("취소") {
+                    dismiss()
+                }
+            }
+        }
     }
     
     @ViewBuilder
@@ -107,8 +123,6 @@ struct WeightChangeView: View {
 
 
 
-#Preview {
-    WeightChangeView()
-}
-
-
+//#Preview {
+//    WeightChangeView()
+//}

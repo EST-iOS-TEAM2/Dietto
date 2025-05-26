@@ -59,7 +59,9 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $isTapModify, content: {
-            WeightChangeView()
+            NavigationView {
+                WeightChangeView(viewModel: $viewModel)
+            }
         })
         .background(Color.backGround)
         .onAppear {

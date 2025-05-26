@@ -60,6 +60,8 @@ final class HomeViewModel {
         self.weightHistroyUsecase = weightHistroyUsecase
         self.userStorageUsecase = userStorageUsecase
         bodyScaleHistoryFetch(type: chartTimeType)
+        
+        userStorageUsecase.createUserData(userData)
     }
     
     func fetchPedometer() {
@@ -77,8 +79,13 @@ final class HomeViewModel {
             .store(in: &bag)
     }
     
-    func updateCurrentBodyScale(_ value: Int) {
-        weightHistroyUsecase.addNewWeight(weight: value, date: Date())
+    func updateCurrentBodyScale(_ value: String) {
+        print("Update!!!")
+        weightHistroyUsecase.addNewWeight(weight: Int(value)!, date: Date())
+        userStorageUsecase.updateCurrentWeight(id: userData.id, currentWeight: Int(value)!)
+        
+        print("Update: \(weightHistroyUsecase.getWeightHistory(chartRange: .weekly))")
+        print("Update: \(userStorageUsecase.getUserData()?.currentWeight)")
         // 마지막에 bodyScaleHistoryFetch 필요함
     }
     
