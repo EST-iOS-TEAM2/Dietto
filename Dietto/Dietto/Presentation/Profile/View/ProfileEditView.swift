@@ -120,6 +120,7 @@ struct ProfileEditView: View {
                                 }
                             } label: {
                                 Image(systemName: "chevron.up.chevron.down")
+                                    .font(.pretendardBold16)
                                     .foregroundColor(.gray)
                                     .padding(.trailing, 12)
                             }
@@ -169,7 +170,7 @@ struct ProfileEditView: View {
                     dismiss()
                 }) {
                     Text("저장")
-                        .font(.pretendardBold20)
+                        .font(.pretendardBold16)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 15)
