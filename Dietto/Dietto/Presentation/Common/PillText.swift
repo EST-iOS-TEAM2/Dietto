@@ -13,24 +13,22 @@ struct PillText: View {
     var onDelete: (() -> Void)? = nil  // X 버튼 클릭 액션
     
     var body: some View {
-        HStack(spacing: 0) {
-            // 텍스트 버튼
+        HStack() {
             Button(action: {
                 onAdd?()
             }) {
                 Text(text)
                     .font(.pretendardBold14)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
             }
             .buttonStyle(PlainButtonStyle())
             
-            // X 버튼
             Button(action: {
                 onDelete?()
             }) {
                 Image(systemName: "xmark")
                     .font(.pretendardBold12)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .padding(4)
             }
             .buttonStyle(PlainButtonStyle())

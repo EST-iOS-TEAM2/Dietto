@@ -1,6 +1,6 @@
 //
 //  LastView.swift
-//  HelloSwiftUI
+//  Dietto
 //
 //  Created by InTak Han on 5/14/25.
 //
@@ -8,30 +8,38 @@
 import SwiftUI
 
 struct LastView: View {
-    var nickName = "lee"
+    
+    var nickName = "asddasasd"
     
     var body: some View {
-        VStack{
-            HStack{
-                Text("\(nickName)님의 Challenge\n를 응원합니다!")
-                    .foregroundColor(.accent)
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
+        VStack {
+            Spacer()
+            withAnimation(.easeInOut) {
+                Text("\(nickName)님의 Challenge를 응원합니다!")
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.accentColor)
+                    .font(.pretendardBlack24)
+                    .padding()
             }
-        }
-        
-        VStack{
+            Spacer()
             Button {
-                //메인화면으로 이동
-                
+                // 다음으로 넘어가는 함수
             } label: {
                 Text("시작하기")
-            }.frame(width: 300, height: 50)
-                .background(.accent)
-                .foregroundColor(.white)
-                .cornerRadius(13)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.accentColor)
+                    .foregroundColor(.white)
+                    .cornerRadius(13)
+                    .font(.pretendardMedium16)
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 20)
         }
+        .frame(maxHeight: .infinity, alignment: .center)
     }
 }
+
 
 #Preview {
     LastView()
