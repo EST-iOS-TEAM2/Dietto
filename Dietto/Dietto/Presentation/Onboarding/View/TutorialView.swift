@@ -26,7 +26,7 @@ struct TutorialView: View {
             Text("\(name)님의")
             HStack{
                 Text("목표를")
-                    .foregroundColor(.accent)
+                    .foregroundColor(.appMain)
                 Text("알려주세요")
             }
             
@@ -51,11 +51,11 @@ struct TutorialView: View {
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color(.accent), lineWidth: 2)
+                            .stroke(Color(.appMain), lineWidth: 2)
                     )
                 
                 Text("kg")
-                    .foregroundColor(.accent)
+                    .foregroundColor(.appMain)
                     .font(.AppLogo)
             }
             .frame(width: 250)
@@ -80,11 +80,11 @@ struct TutorialView: View {
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color(.accent), lineWidth: 2)
+                            .stroke(Color(.appMain), lineWidth: 2)
                     )
                 
                 Text("km")
-                    .foregroundColor(.accent)
+                    .foregroundColor(.appMain)
                     .font(.AppLogo)
             }
             .frame(width: 250)
@@ -102,7 +102,7 @@ struct TutorialView: View {
         }
         
         .frame(width: 300, height: 50)
-            .background(.accent)
+            .background(.appMain)
             .foregroundColor(.white)
         .cornerRadius(13)
         .font(.pretendardMedium16)

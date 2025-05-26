@@ -34,15 +34,15 @@ struct RoundedButton: View{
         }){
             Text(text)
                 .font(.pretendardMedium12)
-                .foregroundColor(isSelected ? Color.white : Color.accentColor)
+                .foregroundColor(isSelected ? Color.white : Color.appMain)
         }
         .padding(5)
         .padding(.horizontal, 8)
-        .background(isSelected ? Color.accentColor : Color.white)
+        .background(isSelected ? Color.appMain : Color.white)
         .cornerRadius(100)
         .overlay(
             RoundedRectangle(cornerRadius: 100)
-                .stroke(Color(.accent), lineWidth: 1))
+                .stroke(Color(.appMain), lineWidth: 1))
     }
 }
 

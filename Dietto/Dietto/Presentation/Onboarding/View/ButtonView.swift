@@ -17,7 +17,7 @@ struct ButtonView: View {
             Text("\(name)님의")
             HStack{
                 Text("관심사를")
-                    .foregroundColor(.accent)
+                    .foregroundColor(.appMain)
                 Text("알려주세요")
             }
             .font(.pretendardBold28)
@@ -98,7 +98,7 @@ struct ButtonView: View {
             }
         }
         .frame(width: 300, height: 50)
-        .background(.accent)
+        .background(.appMain)
         .foregroundColor(.white)
         .cornerRadius(13)
         .font(.pretendardMedium16)

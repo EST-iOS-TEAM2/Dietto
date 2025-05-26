@@ -24,7 +24,7 @@ struct ContainerView <content : View> : View {
                         .frame(width: width, height: height)
                         .overlay(
                             RoundedRectangle(cornerRadius: 21)
-                                .stroke(Color.accentColor, lineWidth: 1)
+                                .stroke(Color.appMain, lineWidth: 1)
                         )
                         .shadow(color: Color.black.opacity(0.2), radius: 4, x: 4, y: 4)
                     

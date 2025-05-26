@@ -11,7 +11,7 @@ struct First1View: View {
     var body: some View {
         Text("로그인 성공!")
             .font(.system(size: 24, weight: .bold, design: .rounded))
-            .foregroundColor(.accent)
+            .foregroundColor(.appMain)
             .font(.pretendardBold20)
     }
 }

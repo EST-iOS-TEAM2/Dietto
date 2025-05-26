@@ -11,7 +11,7 @@ struct First2View: View {
     var body: some View {
         Text("프로필을 설정해 주세요!")
             .font(.system(size: 24, weight: .bold, design: .rounded))
-            .foregroundColor(.accent)
+            .foregroundColor(.appMain)
             .font(.pretendardBold20)
     }
 }

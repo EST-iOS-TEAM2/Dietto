@@ -30,7 +30,7 @@ struct ProfileEditView: View {
                             showPhotoSheet = true
                         }) {
                             Circle()
-                                .stroke(Color.accent, lineWidth: 2)
+                                .stroke(Color.appMain, lineWidth: 2)
                                 .frame(width: 180, height: 180)
                                 .background(
                                     Image(systemName: "person.crop.circle.fill")
@@ -70,7 +70,7 @@ struct ProfileEditView: View {
                             .padding(.vertical, 15)
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.accent, lineWidth: 2)
+                                    .stroke(Color.appMain, lineWidth: 2)
                             )
                     }
                     .padding(.top, 25)
@@ -88,7 +88,7 @@ struct ProfileEditView: View {
                             .padding(.vertical, 15)
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.accent, lineWidth: 2)
+                                    .stroke(Color.appMain, lineWidth: 2)
                             )
                     }
                     .padding(.top, 20)
@@ -103,7 +103,7 @@ struct ProfileEditView: View {
 
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.accent, lineWidth: 2)
+                                .stroke(Color.appMain, lineWidth: 2)
 
                             HStack {
                                 Text(gender.isEmpty ? "남성" : gender)
@@ -156,11 +156,11 @@ struct ProfileEditView: View {
                                 .padding(.vertical, 12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.accent, lineWidth: 2)
+                                        .stroke(Color.appMain, lineWidth: 2)
                                 )
                             Text("cm")
                                 .font(.custom("NerkoOne-regular", size: 50))
-                                .foregroundColor(Color.accent)
+                                .foregroundColor(Color.appMain)
                                 .padding(.leading, 12)
                         }
                     }
@@ -184,11 +184,11 @@ struct ProfileEditView: View {
                                 .padding(.vertical, 12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.accent, lineWidth: 2)
+                                        .stroke(Color.appMain, lineWidth: 2)
                                 )
                             Text("kg")
                                 .font(.custom("NerkoOne-regular", size: 50))
-                                .foregroundColor(Color.accent)
+                                .foregroundColor(Color.appMain)
                                 .padding(.leading, 12)
                         }
                     }
@@ -206,7 +206,7 @@ struct ProfileEditView: View {
                         .padding(.vertical, 15)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.accent)
+                                .fill(Color.appMain)
                         )
                 }
                 .padding(.horizontal, 20)

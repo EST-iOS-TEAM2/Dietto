@@ -14,7 +14,7 @@ struct LastView: View {
         VStack{
             HStack{
                 Text("\(nickName)님의 Challenge\n를 응원합니다!")
-                    .foregroundColor(.accent)
+                    .foregroundColor(.appMain)
                     .font(.system(size: 28, weight: .bold, design: .rounded))
             }
         }
@@ -26,7 +26,7 @@ struct LastView: View {
             } label: {
                 Text("시작하기")
             }.frame(width: 300, height: 50)
-                .background(.accent)
+                .background(.appMain)
                 .foregroundColor(.white)
                 .cornerRadius(13)
         }

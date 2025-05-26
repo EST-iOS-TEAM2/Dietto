@@ -45,7 +45,7 @@ struct DietaryView: View {
                                 .foregroundStyle(.textFieldGray)
                                 .clipShape(Circle())
                                 .overlay(
-                                    Circle().stroke(Color.accentColor, lineWidth: 1)
+                                    Circle().stroke(Color.appMain, lineWidth: 1)
                                 )
                         }
                     }
@@ -61,7 +61,7 @@ struct DietaryView: View {
                                 .background(Color.white)
                                 .overlay{
                                     RoundedRectangle(cornerRadius: 13)
-                                        .stroke(Color.accentColor, lineWidth: 1)
+                                        .stroke(Color.appMain, lineWidth: 1)
                                 }
                             
                             Button("추가"){
@@ -77,7 +77,7 @@ struct DietaryView: View {
                             .padding(.horizontal, 16)
                             .background {
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.accentColor)
+                                    .fill(Color.appMain)
                             }
                         }
                         .padding(.top,3)
@@ -187,7 +187,7 @@ struct DietaryView: View {
                         .foregroundColor(.white)
                         .padding(.vertical, 16)
                         .frame(maxWidth: .infinity)
-                        .background(Color.accentColor)
+                        .background(Color.appMain)
                         .cornerRadius(12)
                     }
                     .padding(.horizontal, 16)

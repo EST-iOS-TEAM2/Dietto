@@ -32,7 +32,7 @@ struct ProfileView: View {
                                         .foregroundColor(.white)
                                         .padding(.vertical, 5)
                                         .padding(.horizontal, 20)
-                                        .background(Color.accent)
+                                        .background(Color.appMain)
                                         .clipShape(Capsule())
                                 }
                                 .padding(.trailing, 15)
@@ -42,7 +42,7 @@ struct ProfileView: View {
                         VStack(spacing: 14) {
                             ZStack {
                                 Circle()
-                                    .stroke(Color.accent, lineWidth: 2)
+                                    .stroke(Color.appMain, lineWidth: 2)
                                     .frame(width: 180, height: 180)
                                 Image(systemName: "person.crop.circle.fill")
                                     .resizable()
@@ -94,7 +94,7 @@ struct InterestsView: View {
                         .foregroundColor(.white)
                         .padding(.vertical, 4)
                         .padding(.horizontal, 14)
-                        .background(Color.accent)
+                        .background(Color.appMain)
                         .clipShape(Capsule())
                 }
             }
@@ -106,7 +106,7 @@ struct InterestsView: View {
         .padding(30)
         .background(
             RoundedRectangle(cornerRadius: 32)
-                .stroke(Color.accentColor, lineWidth: 2)
+                .stroke(Color.appMain, lineWidth: 2)
                 .background(Color.clear.clipShape(RoundedRectangle(cornerRadius: 32)))
         )
         .padding(.horizontal, 10)
@@ -143,7 +143,7 @@ struct InterestTag: View {
             .padding(.horizontal, 25)
             .background(
                 Capsule()
-                    .fill(Color.accent)
+                    .fill(Color.appMain)
             )
     }
 }
