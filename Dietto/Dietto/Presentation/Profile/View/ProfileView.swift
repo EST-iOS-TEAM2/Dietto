@@ -74,24 +74,35 @@ struct ProfileView: View {
                     
                     Spacer()
                     //MARK: - 목표수정 버튼
-                    Button("목표 수정") {
+                    Button(action: {
                         //목표수정창으로 이동해야함(듀토리얼1)
+                    }) {
+                        Text("목표수정")
+                            .font(.pretendardBold16)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 15)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color.accent)
+                            )
                     }
-                    .font(.pretendardBold16)
-                    .frame(maxWidth: .infinity, minHeight: 56)
-                    .background(Color.accent)
-                    .foregroundStyle(Color.white)
                     .cornerRadius(20)
                     .padding(.bottom, 14)
                     //MARK: - 모든 데이터 삭제하기
-                    Button("모든 데이터 삭제하기") {
+                    Button(action: {
                         viewModel.isDeleteAlert = true
+                    }) {
+                        Text("모든 데이터 삭제하기")
+                            .font(.pretendardBold16)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 15)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color.red)
+                            )
                     }
-                    .font(.pretendardBold16)
-                    .frame(maxWidth: .infinity, minHeight: 56)
-                    .background(Color.red)
-                    .foregroundStyle(Color.white)
-                    .cornerRadius(20)
                     .padding(.bottom, 100)
                     .alert("모든 데이터를 삭제하시겠습니까?", isPresented: $viewModel.isDeleteAlert) {
                         Button("삭제", role: .destructive) {}
