@@ -102,7 +102,7 @@ struct ProfileEditView: View {
                         HStack {
                             Text(viewModel.gender.isEmpty ? "남성" : viewModel.gender)
                                 .font(.pretendardMedium16)
-                                .foregroundColor(viewModel.gender.isEmpty ? .gray : .primary)
+                                .foregroundColor(viewModel.gender.isEmpty ? .black : .primary)
                                 .padding(.leading, 20)
                             
                             Spacer()
