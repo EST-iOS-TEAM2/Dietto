@@ -10,6 +10,7 @@ import SwiftUI
 //MARK: 내 프로필 데이터 뷰 모델에서 관리한다.
 class ProfileViewModel: ObservableObject {
     @Published var isEditActive: Bool = false
+    @Published var isDeleteAlert: Bool = false
     
 }
 
@@ -76,31 +77,33 @@ struct ProfileView: View {
                     Button("목표 수정") {
                         //목표수정창으로 이동해야함(듀토리얼1)
                     }
-                    .font(.pretendardMedium16)
+                    .font(.pretendardBold16)
                     .frame(maxWidth: .infinity, minHeight: 56)
                     .background(Color.accent)
                     .foregroundStyle(Color.white)
                     .cornerRadius(20)
-                    .padding(.horizontal, 24)
                     .padding(.bottom, 14)
                     //MARK: - 모든 데이터 삭제하기
                     Button("모든 데이터 삭제하기") {
-                        
+                        viewModel.isDeleteAlert = true
                     }
-                    .font(.pretendardMedium16)
+                    .font(.pretendardBold16)
                     .frame(maxWidth: .infinity, minHeight: 56)
                     .background(Color.red)
                     .foregroundStyle(Color.white)
                     .cornerRadius(20)
-                    .padding(.horizontal, 24)
                     .padding(.bottom, 100)
+                    .alert("모든 데이터를 삭제하시겠습니까?", isPresented: $viewModel.isDeleteAlert) {
+                        Button("삭제", role: .destructive) {}
+                        Button("취소", role: .cancel) {}
+                    }
                     //MARK: - edit 누르면 ProfileEditView로 이동
                     .navigationDestination(isPresented: $viewModel.isEditActive) {
                         ProfileEditView()
                     }
                 }
+                .padding(.horizontal, 24)
             }
-            .padding(.horizontal, 24)
             .frame(minHeight: UIScreen.main.bounds.height)
         }
     }
