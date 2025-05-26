@@ -6,13 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		2203D0E82DD332C6000EA331 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 2203D0E72DD332C6000EA331 /* FSCalendar */; };
-		2203D0EB2DD33350000EA331 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2203D0EA2DD33350000EA331 /* FirebaseAuth */; };
-		2203D0ED2DD33350000EA331 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2203D0EC2DD33350000EA331 /* FirebaseFirestore */; };
-		2203D0EF2DD33350000EA331 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 2203D0EE2DD33350000EA331 /* FirebaseStorage */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		22C73C322DD1968A001EDF35 /* Dietto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dietto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -45,10 +38,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2203D0E82DD332C6000EA331 /* FSCalendar in Frameworks */,
-				2203D0EF2DD33350000EA331 /* FirebaseStorage in Frameworks */,
-				2203D0EB2DD33350000EA331 /* FirebaseAuth in Frameworks */,
-				2203D0ED2DD33350000EA331 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,10 +80,6 @@
 			);
 			name = Dietto;
 			packageProductDependencies = (
-				2203D0E72DD332C6000EA331 /* FSCalendar */,
-				2203D0EA2DD33350000EA331 /* FirebaseAuth */,
-				2203D0EC2DD33350000EA331 /* FirebaseFirestore */,
-				2203D0EE2DD33350000EA331 /* FirebaseStorage */,
 			);
 			productName = Dietto;
 			productReference = 22C73C322DD1968A001EDF35 /* Dietto.app */;
@@ -125,8 +110,6 @@
 			mainGroup = 22C73C292DD1968A001EDF35;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				2203D0E62DD332C6000EA331 /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				2203D0E92DD33350000EA331 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 22C73C332DD1968A001EDF35 /* Products */;
@@ -364,48 +347,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		2203D0E62DD332C6000EA331 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.8.4;
-			};
-		};
-		2203D0E92DD33350000EA331 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.12.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		2203D0E72DD332C6000EA331 /* FSCalendar */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2203D0E62DD332C6000EA331 /* XCRemoteSwiftPackageReference "FSCalendar" */;
-			productName = FSCalendar;
-		};
-		2203D0EA2DD33350000EA331 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2203D0E92DD33350000EA331 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		2203D0EC2DD33350000EA331 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2203D0E92DD33350000EA331 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-		2203D0EE2DD33350000EA331 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2203D0E92DD33350000EA331 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 22C73C2A2DD1968A001EDF35 /* Project object */;
 }

@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
     var body: some View {
-        Text("Onboarding View")
+        VStack {
+            Text("Onboarding View")
+            Button("Done") {
+                isFirstLaunch = false
+            }
+        }
     }
 }
 
