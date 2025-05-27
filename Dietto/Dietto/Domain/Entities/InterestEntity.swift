@@ -7,7 +7,6 @@
 
 import Foundation
 
-struct InterestEntity: Identifiable,Hashable {
-    let id = UUID()
+struct InterestEntity: Hashable {
     let title : String
 }

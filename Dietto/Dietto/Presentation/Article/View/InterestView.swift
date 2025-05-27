@@ -9,13 +9,14 @@ import SwiftUI
 
 struct InterestsView: View {
     
-    @ObservedObject var viewModel : OnboardingViewModel
+    @ObservedObject var viewModel : ArticleViewModel
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        VStack(spacing: 40) {
+        VStack {
             VStack(alignment: .leading) {
-                Text("건강에 관련된")
-                + Text(" 관심사").foregroundColor(.appMain)
+                Text("건강에 관련된\n")
+                + Text("관심사").foregroundColor(.appMain)
                 + Text("를 알려주세요 !")
             }
             .font(.pretendardBold24)
@@ -23,8 +24,8 @@ struct InterestsView: View {
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            ScrollView {
-                VStack(alignment: .leading, spacing: 30) {
+//            ScrollView {
+//                VStack(alignment: .leading, spacing: 30) {
                     ForEach(viewModel.interestData, id: \.topic) { block in
                         Interests(
                             topic: block.topic,
@@ -37,15 +38,30 @@ struct InterestsView: View {
                             }
                         )
                     }
-                }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 20)
+                    .padding()
+            Spacer()
+            Button {
+                print("Submit!")
+                dismiss()
+            } label: {
+                Text("저장")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.appMain)
+                    .foregroundColor(.white)
+                    .cornerRadius(13)
+                    .font(.pretendardMedium16)
             }
+            .padding()
         }
-        .background(Color(.backGround).ignoresSafeArea())
+        .navigationTitle("관심사 수정")
+        .toolbarTitleDisplayMode(.inline)
+        .background(Color.backGround)
     }
 }
 
 #Preview {
-    InterestsView(viewModel: OnboardingViewModel())
+    NavigationView {
+        InterestsView(viewModel: ArticleViewModel())
+    }
 }
