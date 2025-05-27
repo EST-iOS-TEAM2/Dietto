@@ -21,7 +21,7 @@ final class OnboardingViewModel: ObservableObject {
         ("수면 및 스트레스", ["수면 개선", "스트레스"])
     ]
     
-    @Published private(set) var selectedArticles: [ArticleEntity] = []
+    @Published private(set) var selectedArticles: [InterestEntity] = []
     
     @Published var weight : Int = 0
     @Published var distance : Int = 0
@@ -36,7 +36,7 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - 관심사 추가 / 삭제
     
     func addInterest(_ title: String) {
-        let entity = ArticleEntity(title: title)
+        let entity = InterestEntity(title: title)
         guard !selectedArticles.contains(where: { $0.title == title }) else { return }
         selectedArticles.append(entity)
     }

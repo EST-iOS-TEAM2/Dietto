@@ -17,7 +17,7 @@ struct MainTabView: View {
                 DietaryView()
             }
             Tab("아티클", systemImage: "newspaper") {
-                EmptyView()
+                ArticleView()
             }
             Tab("프로필", systemImage: "person.circle.fill") {
                 ProfileView()

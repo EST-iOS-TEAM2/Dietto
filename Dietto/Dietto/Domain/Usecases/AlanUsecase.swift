@@ -30,6 +30,7 @@ final class AlanUsecaseImpl : AlanUsecase {
         return wrapper.recommendation
     }
     
+    //아티클
     func fetchArticle(topics: [ArticleEntity]) async throws -> [ArticleEntity] {
         let wrapper = try await repository.fetch(promptType: .article, rawValues: topics, outputType: ArticleDTO.self)
         

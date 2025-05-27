@@ -9,6 +9,7 @@ import SwiftUI
 import Foundation
 //MARK: - 뷰
 class ProfileEditViewModel: ObservableObject {
+    
     @Published var name: String = ""
     @Published var birthString: String = ""
     @Published var gender: String = ""
