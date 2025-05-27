@@ -11,12 +11,10 @@ struct InterestsView: View {
     
     @ObservedObject var viewModel : OnboardingViewModel
     
-    @Binding var selection: Int //binding
-    
     var body: some View {
         VStack(spacing: 40) {
             VStack(alignment: .leading) {
-                Text("\(viewModel.nickname)님의")
+                Text("건강에 관련된")
                 + Text(" 관심사").foregroundColor(.appMain)
                 + Text("를 알려주세요 !")
             }
@@ -46,4 +44,8 @@ struct InterestsView: View {
         }
         .background(Color(.backGround).ignoresSafeArea())
     }
+}
+
+#Preview {
+    InterestsView(viewModel: OnboardingViewModel())
 }
