@@ -7,23 +7,6 @@
 
 import SwiftUI
 import Foundation
-//MARK: - 뷰
-class ProfileEditViewModel: ObservableObject {
-    @Published var name: String = ""
-    @Published var birthString: String = ""
-    @Published var gender: String = ""
-    @Published var weight: String = ""
-    @Published var showPhotoSheet: Bool = false
-    @Published var showDatePicker: Bool = false
-    
-    func saveProfile() {
-        print("프로필이 저장되었습니다.")
-    }
-    
-    func selectGender(_ gender: String) {
-        self.gender = gender
-    }
-}
 
 struct ProfileEditView: View {
     @StateObject private var viewModel = ProfileEditViewModel()

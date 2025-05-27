@@ -9,7 +9,16 @@ import SwiftUI
 
 final class OnboardingViewModel: ObservableObject {
     
-    let nickname: String = "asdasdasd"
+    
+    @Published var name: String?
+    @Published var birthString: String?
+    @Published var gender: String?
+    @Published var weight: Int?
+    @Published var showPhotoSheet: Bool?
+    @Published var showDatePicker: Bool?
+    @Published var distance : Int?
+    
+    @Published var nickname: String? = nil
     
     let weights: [Int] = Array(20...100).reversed()
     let distances: [Int] = Array(1...10).reversed()
@@ -23,8 +32,14 @@ final class OnboardingViewModel: ObservableObject {
     
     @Published private(set) var selectedArticles: [ArticleEntity] = []
     
-    @Published var weight : Int = 0
-    @Published var distance : Int = 0
+    //MARK: - 프로필 설정
+    func saveProfile() {
+        print("프로필이 저장되었습니다.")
+    }
+    
+    func selectGender(_ gender: String) {
+        self.gender = gender
+    }
     
     
     //MARK: - 목표 설정
