@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ArticleView: View {
     let articles = [
+        "https://www.youtube.com/watch?v=3p8EBPVZ2Iw",
         "https://www.news1.kr/articles/?5301234",
         "https://www.youtube.com/watch?v=F2ojC6TNwws",
         "https://www.youtube.com/watch?v=bz6GTYaIQXU"

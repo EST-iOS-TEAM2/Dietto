@@ -11,7 +11,7 @@ import Foundation
 
 protocol AlanUsecase {
     func fetchRecommend(ingredients: [IngredientEntity]) async throws -> [RecommendEntity]
-    func fetchArticle(topics : [ArticleEntity]) async throws -> [ArticleEntity]
+    func fetchArticle(topics : [InterestEntity]) async throws -> [ArticleEntity]
 }
 
 //MARK: - UsecaseImpl
@@ -31,7 +31,7 @@ final class AlanUsecaseImpl : AlanUsecase {
     }
     
     //아티클
-    func fetchArticle(topics: [ArticleEntity]) async throws -> [ArticleEntity] {
+    func fetchArticle(topics: [InterestEntity]) async throws -> [ArticleEntity] {
         let wrapper = try await repository.fetch(promptType: .article, rawValues: topics, outputType: ArticleDTO.self)
         
         return wrapper.articles

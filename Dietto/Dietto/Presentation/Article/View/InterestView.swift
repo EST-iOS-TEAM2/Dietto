@@ -34,7 +34,7 @@ struct InterestsView: View {
                                 viewModel.toggleInterest(title)
                             },
                             isSelected: { title in
-                                viewModel.selectedArticles.contains(where: { $0.title == title })
+                                viewModel.selectedInterests.contains(where: { $0.title == title })
                             }
                         )
                     }
