@@ -10,15 +10,13 @@ import SwiftUI
 final class OnboardingViewModel: ObservableObject {
     
     
-    @Published var name: String?
-    @Published var birthString: String?
-    @Published var gender: String?
-    @Published var weight: Int?
-    @Published var showPhotoSheet: Bool?
-    @Published var showDatePicker: Bool?
-    @Published var distance : Int?
-    
-    @Published var nickname: String? = nil
+    @Published var name: String = "name"
+    @Published var birthString: String = "birthString"
+    @Published var gender: String = "남성"
+    @Published var weight: Int = 60
+    @Published var distance: Int = 60
+    @Published var showPhotoSheet: Bool = false
+    @Published var showDatePicker: Bool = false
     
     let weights: [Int] = Array(20...100).reversed()
     let distances: [Int] = Array(1...10).reversed()
@@ -35,6 +33,7 @@ final class OnboardingViewModel: ObservableObject {
     //MARK: - 프로필 설정
     func saveProfile() {
         print("프로필이 저장되었습니다.")
+        print("이름: \(name), 생일: \(birthString), 성별: \(gender), 몸무게: \(weight), 거리: \(distance)")
     }
     
     func selectGender(_ gender: String) {
@@ -49,25 +48,25 @@ final class OnboardingViewModel: ObservableObject {
     }
     
     // MARK: - 관심사 추가 / 삭제
-    
-    func addInterest(_ title: String) {
-        let entity = ArticleEntity(title: title)
-        guard !selectedArticles.contains(where: { $0.title == title }) else { return }
-        selectedArticles.append(entity)
-    }
-    
-    func removeInterest(_ title: String) {
-        if let index = selectedArticles.firstIndex(where: { $0.title == title }) {
-            selectedArticles.remove(at: index)
-        }
-    }
-    
-    func toggleInterest(_ title: String) {
-        if selectedArticles.contains(where: { $0.title == title }) {
-            removeInterest(title)
-        } else {
-            addInterest(title)
-        }
-        print(selectedArticles)
-    }
+//    
+//    func addInterest(_ title: String) {
+//        let entity = ArticleEntity(title: title)
+//        guard !selectedArticles.contains(where: { $0.title == title }) else { return }
+//        selectedArticles.append(entity)
+//    }
+//    
+//    func removeInterest(_ title: String) {
+//        if let index = selectedArticles.firstIndex(where: { $0.title == title }) {
+//            selectedArticles.remove(at: index)
+//        }
+//    }
+//    
+//    func toggleInterest(_ title: String) {
+//        if selectedArticles.contains(where: { $0.title == title }) {
+//            removeInterest(title)
+//        } else {
+//            addInterest(title)
+//        }
+//        print(selectedArticles)
+//    }
 }

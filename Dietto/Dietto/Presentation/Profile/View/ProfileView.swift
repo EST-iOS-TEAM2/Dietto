@@ -111,7 +111,7 @@ struct ProfileView: View {
                     }
                     //MARK: - edit 누르면 ProfileEditView로 이동
                     .navigationDestination(isPresented: $viewModel.isEditActive) {
-                        ProfileEditView()
+//                        ProfileEditView()
                     }
                 }
                 .padding(.horizontal, 24)

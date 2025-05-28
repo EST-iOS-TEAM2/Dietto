@@ -9,18 +9,23 @@ import SwiftUI
 
 struct TutorialView: View {
     
+    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
+    
     @State private var selection = 0
     @StateObject private var viewModel = OnboardingViewModel()
+    @Environment(\.dismiss) private var dismiss
+    
     
     var body: some View {
         ZStack {
             Color(.backGround).ignoresSafeArea(edges: .all)
             VStack {
                 TabView(selection: $selection) {
+                    
+                    ProfileEditView(selection: $selection, viewModel: viewModel)
+                        .tag(0)
                     //목표 설정 뷰
                     GoalView(selection: $selection, viewModel: viewModel)
-                        .tag(0)
-                    InterestsView(viewModel: viewModel, selection: $selection)
                         .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
@@ -33,14 +38,13 @@ struct TutorialView: View {
                     
                     HStack {
                         Button {
-                            if selection == 0 {
-                                viewModel.setGoals(weight: viewModel.weight, distance: viewModel.distance)
-                            }
                             if selection < 1 {
                                 selection += 1
+                            }else{
+                                isFirstLaunch = false
                             }
                         } label: {
-                            Text("다음")
+                            Text(selection < 1 ? "다음" : "완료")
                                 .frame(maxWidth: .infinity)
                                 .padding()
                                 .background(Color.appMain)
