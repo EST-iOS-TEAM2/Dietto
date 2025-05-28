@@ -8,51 +8,75 @@
 import SwiftUI
 
 struct IntroView: View {
-    
-    @State private var first : Bool = false
-    @State private var second : Bool = false
-    
-    @State private var isAnimating : Bool = false
+    @State private var first: Bool = false
+    @State private var second: Bool = false
+    @State private var nextbtn: Bool = false
+    @State private var navigate: Bool = false // ✅ push 트리거
     
     var body: some View {
-        ZStack {
-            if first {
-                Text("안녕하세요! 환영합니다 !")
-                    .foregroundColor(.appMain)
-                    .font(.pretendardBlack24)
-                    .opacity(first ? 1 : 0)
-                    .transition(.opacity)
-                    .animation(.easeInOut(duration: 1), value: first)
+        NavigationStack {
+            ZStack {
+                Color(.backGround)
+                    .ignoresSafeArea()
+                
+                // 텍스트는 항상 중앙에 고정
+                ZStack {
+                    if first {
+                        Text("안녕하세요! 환영합니다 !")
+                            .foregroundColor(.appMain)
+                            .font(.pretendardBlack24)
+                            .transition(.opacity)
+                    }
+                    
+                    if second {
+                        Text("프로필을 설정해주세요!")
+                            .foregroundColor(.appMain)
+                            .font(.pretendardBlack24)
+                            .transition(.opacity)
+                    }
+                }
+                .animation(.easeInOut(duration: 1), value: first)
+                .animation(.easeInOut(duration: 1), value: second)
+                
+                VStack {
+                    
+                    Spacer()
+                    
+                    if nextbtn {
+                        NavigationLink(destination: TutorialView()
+                            .navigationBarBackButtonHidden(true)) {
+                                Text("다음")
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.appMain)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(13)
+                                    .font(.pretendardMedium16)
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 20)
+                            .transition(.opacity)
+                    }
+                }
             }
-            
-            if second {
-                Text("프로필을 설정해주세요!")
-                    .foregroundColor(.appMain)
-                    .font(.pretendardBlack24)
-                    .opacity(second ? 1 : 0)
-                    .transition(.opacity)
-                    .animation(.easeInOut(duration: 1), value: second)
-            }
+            .animation(.easeInOut(duration: 1), value: nextbtn)
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: 1)) {
-                first = true
-            }
+            first = true
             
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                withAnimation(.easeInOut(duration: 1)) {
-                    first = false
-                }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                first = false
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                withAnimation(.easeInOut(duration: 1)) {
-                    second = true
-                }
+                second = true
+                nextbtn = true
             }
         }
     }
 }
+
+
 
 #Preview {
     IntroView()
