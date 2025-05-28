@@ -10,6 +10,7 @@ import Foundation
 protocol WeightHistoryUsecase {
     func addNewWeight(weight: Int, date: Date)
     func getWeightHistory(chartRange: ChartTimeType) -> [WeightEntity]
+    func deleteAllWeightHistory()
 }
 
 final class WeightHistoryUsecaseImpl<Repository: StorageRepository>: WeightHistoryUsecase where Repository.T == WeightDTO {
@@ -32,6 +33,15 @@ final class WeightHistoryUsecaseImpl<Repository: StorageRepository>: WeightHisto
         catch {
             print("\(#function) : \(error.localizedDescription)")
             return []
+        }
+    }
+    
+    func deleteAllWeightHistory() {
+        do {
+            try storage.deleteAll()
+        }
+        catch {
+            print("\(#function) : \(error.localizedDescription)")
         }
     }
     

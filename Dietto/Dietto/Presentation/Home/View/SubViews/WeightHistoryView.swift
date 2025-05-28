@@ -57,7 +57,7 @@ struct WeightHistoryView: View {
                 if viewModel.bodyScaleHistory.isEmpty {
                     Chart(weightHistory, id: \.date) { item in
                         LineMark(
-                            x: .value("Date", item.date, unit: .day),
+                            x: .value("Date", item.date/*, unit: .day*/),
                             y: .value("Scale", item.isAnimated ? item.scale : 1)
                         )
                         .symbol(.circle)

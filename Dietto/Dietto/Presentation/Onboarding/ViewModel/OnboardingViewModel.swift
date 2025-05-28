@@ -46,7 +46,7 @@ final class OnboardingViewModel: ObservableObject {
                        targetWeight: targetWeight,
                        targetDistance: targetDistance)
         )
-        print("프로필이 저장되었습니다.")
+        weightHistroyUsecase.addNewWeight(weight: weight, date: Date())
         isFirstLaunch = false
     }
     
@@ -58,6 +58,12 @@ final class OnboardingViewModel: ObservableObject {
     func setGoals(weight: Int, distance: Int) {
         self.targetWeight = weight
         self.targetDistance = distance
+    }
+    
+    func deleteAllUserData() {
+        userStorageUsecase.deleteUserData()
+        weightHistroyUsecase.deleteAllWeightHistory()
+        isFirstLaunch = true
     }
     
 }

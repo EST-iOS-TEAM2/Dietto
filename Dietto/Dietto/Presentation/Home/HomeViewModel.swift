@@ -78,48 +78,21 @@ final class HomeViewModel {
             print("\(#function) : FAILED to update current body scale")
             return
         }
+        #warning("업데이트 한 날짜가 같으면 기존 데이터 replace")
         weightHistroyUsecase.addNewWeight(weight: value, date: Date())
         userStorageUsecase.updateCurrentWeight(id: userData.id, currentWeight: value)
         userData.currentWeight = value
+        bodyScaleHistoryFetch(type: chartTimeType)
     }
     
     func bodyScaleHistoryFetch(type: ChartTimeType) {
         chartTimeType = type
-        var result = weightHistroyUsecase.getWeightHistory(chartRange: type)
-        
-        if type == .weekly {
-            result = [
-                WeightEntity(date: Date()-(86400*3), scale: 70),
-                WeightEntity(date: Date()-(86400*2), scale: 65),
-                WeightEntity(date: Date()-86400, scale: 55),
-                WeightEntity(date: Date(), scale: 50),
-                WeightEntity(date: Date()+86400, scale: 55)
-            ]
-        }
-        else if type == .monthly {
-            result = [
-                WeightEntity(date: Date()-(86400*3), scale: 70),
-                WeightEntity(date: Date()-(86400*2), scale: 65),
-                WeightEntity(date: Date()-86400, scale: 55),
-                WeightEntity(date: Date(), scale: 50),
-                WeightEntity(date: Date()+86400, scale: 55),
-                WeightEntity(date: Date()+(86400*2), scale: 63),
-                WeightEntity(date: Date()+(86400*3), scale: 72),
-                WeightEntity(date: Date()+(86400*4), scale: 82),
-                WeightEntity(date: Date()+(86400*5), scale: 72),
-                WeightEntity(date: Date()+(86400*6), scale: 62),
-                WeightEntity(date: Date()+(86400*7), scale: 52),
-                WeightEntity(date: Date()+(86400*8), scale: 52),
-                WeightEntity(date: Date()+(86400*9), scale: 52),
-                WeightEntity(date: Date()+(86400*10), scale: 52),
-                WeightEntity(date: Date()+(86400*11), scale: 58)
-            ]
-        }
+        let result = weightHistroyUsecase.getWeightHistory(chartRange: type)
         
         if result.count >= type.limitDataCount() {
             bodyScaleHistory = result
         }
-        else { bodyScaleHistory = []}
+        else { bodyScaleHistory = [] }
     }
     
     func chartAnimate() {
@@ -138,3 +111,37 @@ final class HomeViewModel {
         }
     }
 }
+
+
+//        result.forEach { item in
+//            print(item)
+//        }
+//        print()
+//        if type == .weekly {
+//            result = [
+//                WeightEntity(date: Date()-(86400*3), scale: 70),
+//                WeightEntity(date: Date()-(86400*2), scale: 65),
+//                WeightEntity(date: Date()-86400, scale: 55),
+//                WeightEntity(date: Date(), scale: 50),
+//                WeightEntity(date: Date()+86400, scale: 55)
+//            ]
+//        }
+//        else if type == .monthly {
+//            result = [
+//                WeightEntity(date: Date()-(86400*3), scale: 70),
+//                WeightEntity(date: Date()-(86400*2), scale: 65),
+//                WeightEntity(date: Date()-86400, scale: 55),
+//                WeightEntity(date: Date(), scale: 50),
+//                WeightEntity(date: Date()+86400, scale: 55),
+//                WeightEntity(date: Date()+(86400*2), scale: 63),
+//                WeightEntity(date: Date()+(86400*3), scale: 72),
+//                WeightEntity(date: Date()+(86400*4), scale: 82),
+//                WeightEntity(date: Date()+(86400*5), scale: 72),
+//                WeightEntity(date: Date()+(86400*6), scale: 62),
+//                WeightEntity(date: Date()+(86400*7), scale: 52),
+//                WeightEntity(date: Date()+(86400*8), scale: 52),
+//                WeightEntity(date: Date()+(86400*9), scale: 52),
+//                WeightEntity(date: Date()+(86400*10), scale: 52),
+//                WeightEntity(date: Date()+(86400*11), scale: 58)
+//            ]
+//        }
