@@ -26,7 +26,8 @@ final class InterestsUsecaseImpl<Repository: StorageRepository>: InterestsUsecas
     
     func deleteInterests(_ interests: InterestEntity) {
         do {
-            let predicate = #Predicate<InterestsDTO> { $0.title == interests.title }
+            let title = interests.title
+            let predicate = #Predicate<InterestsDTO> { $0.title == title }
             try repository.deleteData(where: predicate)
         }
         catch {

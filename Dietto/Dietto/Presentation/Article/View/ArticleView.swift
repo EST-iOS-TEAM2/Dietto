@@ -11,36 +11,47 @@ struct ArticleView: View {
     let articles = [
         "https://www.youtube.com/watch?v=3p8EBPVZ2Iw",
         "https://www.news1.kr/articles/?5301234",
-        "https://www.youtube.com/watch?v=F2ojC6TNwws",
-        "https://www.youtube.com/watch?v=bz6GTYaIQXU"
+        "https://www.youtube.com/watch?v=FdYIvEc7e-0",
+        "https://www.youtube.com/watch?v=2tM1LFFxeKg"
     ]
     @StateObject var viewModel = ArticleViewModel()
     var body: some View {
-        VStack{
-            HStack {
-                //MARK: - 로고
-                Text("Dietto")
-                    .font(.NerkoOne40)
-                    .foregroundStyle(.text)
-                Spacer()
-                
-                NavigationLink(destination: InterestsView(viewModel: viewModel)) {
-                    Text("edit")
-                        .font(.pretendardMedium16)
-                        .foregroundColor(.white)
-                        .padding(.vertical, 5)
-                        .padding(.horizontal, 20)
-                        .background(Color.appMain)
-                        .clipShape(Capsule())
+        NavigationView {
+            VStack(alignment: .leading){
+                HStack {
+                    //MARK: - 로고
+                    Text("Dietto")
+                        .font(.NerkoOne40)
+                        .foregroundStyle(.text)
+                    Spacer()
+                    
+                    NavigationLink(destination: InterestsView(viewModel: viewModel)) {
+                        Text("관심사 수정")
+                            .font(.pretendardMedium16)
+                            .foregroundColor(.white)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 12)
+                            .background(Color.appMain)
+                            .clipShape(Capsule())
+                    }
                 }
-            }
-            .padding([.leading, .trailing], 16)
-            
-            List(articles, id: \.self) { item in
-                LinkRow(previewURL: URL(string: item)!)
-            }
-            .listStyle(.plain)
+                .padding([.leading, .trailing], 16)
+                Text("내 관심사")
+                    .font(.pretendardBold20)
+                    .padding(.leading, 16)
+                Interests(
+                    topic: "",
+                    titles: viewModel.selectedInterests.map{$0.title},
+                    onClicked: {_ in },
+                    isSelected: {_ in true}
+                ).padding(.leading, 16)
+                
+                List(articles, id: \.self) { item in
+                    LinkRow(previewURL: URL(string: item)!)
+                }
+                .listStyle(.plain)
 
+            }
         }
         .toolbarVisibility(.hidden, for: .navigationBar)
     }
