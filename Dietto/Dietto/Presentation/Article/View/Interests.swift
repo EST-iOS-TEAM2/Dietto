@@ -2,7 +2,7 @@
 //  Interests.swift
 //  Dietto
 //
-//  Created by 안세훈 on 5/26/25.
+//  Created by 안정흠 on 5/28/25.
 //
 
 import SwiftUI

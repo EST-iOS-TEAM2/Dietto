@@ -75,14 +75,16 @@ class DietaryViewModel: ObservableObject {
     }
     
     //MARK: - 현재 재료를 통해 식단 추천 받기.
-    //mainactor <- thread
-#warning("쓰레드 확인해보기.")
-    func fetchRecommendations(ingredients: [IngredientEntity]) async {
-        do {
-            let result = try await usecase.fetchRecommend(ingredients: ingredients)
-            self.recommendList = result
-        } catch {
-            print(#file,#function,#line, error.localizedDescription)
+    func fetchRecommendations(ingredients: [IngredientEntity]) {
+        Task {
+            do {
+                let result = try await usecase.fetchRecommend(ingredients: ingredients)
+                await MainActor.run {
+                    self.recommendList = result
+                }
+            } catch {
+                print(#file,#function,#line, error.localizedDescription)
+            }
         }
     }
     
