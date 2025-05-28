@@ -11,7 +11,7 @@ final class ArticleViewModel: ObservableObject {
     @Published private(set) var selectedInterests: [InterestEntity] = []
     
     private let alanUsecase: AlanUsecase
-//    private let storageUsecase:
+    private let storageUsecase: InterestsUsecase
     let interestData: [(topic: String, titles: [String])] = [
         ("운동", ["근육량 증가", "규칙적인 운동", "체지방률 감소"]),
         ("식습관 개선", ["음식 섭취 패턴 안정화", "안정된 영양소 섭취", "수분 섭취", "외식 줄이기", "저염식"]),
@@ -19,8 +19,13 @@ final class ArticleViewModel: ObservableObject {
         ("수면 및 스트레스", ["수면 개선", "스트레스"])
     ]
     
-    init(alanUsecase: AlanUsecase = AlanUsecaseImpl(repository: NetworkRepositoryImpl())) {
+    init(
+        alanUsecase: AlanUsecase = AlanUsecaseImpl(repository: NetworkRepositoryImpl()),
+        storageUsecase: InterestsUsecase = InterestsUsecaseImpl(repository: StorageRepositoryImpl<InterestsDTO>())
+    ) {
         self.alanUsecase = alanUsecase
+        self.storageUsecase = storageUsecase
+        selectedInterests = storageUsecase.fetchInterests()
     }
     
     // MARK: - 아티클 로드
@@ -45,8 +50,10 @@ final class ArticleViewModel: ObservableObject {
     func toggleInterest(_ title: String) {
         if selectedInterests.contains(where: { $0.title == title }) {
             removeInterest(title)
+            storageUsecase.deleteInterests(InterestEntity(title: title))
         } else {
             addInterest(title)
+            storageUsecase.insertInterests(InterestEntity(title: title))
         }
         print(selectedInterests)
     }
