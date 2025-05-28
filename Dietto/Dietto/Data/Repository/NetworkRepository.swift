@@ -26,7 +26,7 @@ final class NetworkRepositoryImpl: NetworkRepository {
     func fetch<T>(promptType: PromptType, rawValues: [Any], outputType: T.Type) async throws -> T where T: Decodable {
         let values: [String] = rawValues.compactMap {
             if let ing = $0 as? IngredientEntity { return ing.ingredient }
-            if let art = $0 as? ArticleEntity    { return art.title }
+            if let art = $0 as? InterestEntity { return art.title }
             return nil
         }
         let prompt = promptManager.makePrompt(for: promptType, with: values)

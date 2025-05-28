@@ -20,8 +20,8 @@ struct TutorialView: View {
                     //목표 설정 뷰
                     GoalView(selection: $selection, viewModel: viewModel)
                         .tag(0)
-                    InterestsView(viewModel: viewModel, selection: $selection)
-                        .tag(1)
+//                    InterestsView(viewModel: viewModel, selection: $selection)
+//                        .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.linear, value: selection)

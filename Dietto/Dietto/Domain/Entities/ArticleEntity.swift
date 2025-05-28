@@ -10,5 +10,7 @@ import Foundation
 //MARK: - 아티클은 저장합니다.
 struct ArticleEntity: Identifiable, Hashable, Decodable{
     var id = UUID()
-    let title: String
+    let url : URL
+    let title : String
+    let description : String
 }
