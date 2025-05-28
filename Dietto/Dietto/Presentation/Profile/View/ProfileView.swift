@@ -47,6 +47,7 @@ struct ProfileView: View {
                                 }
                             }
                     }
+                    .padding(.top, 16)
                     
                     VStack {
                         //MARK: - 프로필 이미지
@@ -160,7 +161,7 @@ struct ProfileView: View {
                         .padding(.bottom, 100)
                         //MARK: - edit 누르면 ProfileEditView로 이동
                         .navigationDestination(isPresented: $viewModel.isEditActive) {
-                            ProfileEditView()
+//                            ProfileEditView()
                         }
                     }
                 }
