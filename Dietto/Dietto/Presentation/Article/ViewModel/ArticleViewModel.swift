@@ -30,7 +30,7 @@ final class ArticleViewModel: ObservableObject {
     
     // MARK: - 아티클 로드
     func loadArticles() async throws -> [ArticleEntity] {
-//        alanUsecase.fetchArticle(topics: <#T##[ArticleEntity]#>)
+//        alanUsecase.fetchArticle(topics: []])
         []
     }
     

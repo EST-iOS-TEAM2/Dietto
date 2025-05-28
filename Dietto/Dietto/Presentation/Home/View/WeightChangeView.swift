@@ -56,7 +56,10 @@ struct WeightChangeView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("저장") {
-                    guard !value.isEmpty else { return }
+                    guard !value.isEmpty else {
+                        shake += 1
+                        return
+                    }
                     viewModel.updateCurrentBodyScale(value.joined())
                     dismiss()
                 }
@@ -70,7 +73,7 @@ struct WeightChangeView: View {
     }
     
     @ViewBuilder
-    func CustomKeypad() -> some View {
+    private func CustomKeypad() -> some View {
         LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
             ForEach(1...9, id: \.self) { number in
                 Button {
