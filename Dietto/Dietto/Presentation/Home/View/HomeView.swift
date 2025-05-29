@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct HomeView: View {
-    @State var viewModel = HomeViewModel()
+    @State var viewModel: HomeViewModel
     @State var isTapModify: Bool = false
     var body: some View {
         VStack(spacing: 0) {
@@ -60,7 +60,7 @@ struct HomeView: View {
         }
         .sheet(isPresented: $isTapModify, content: {
             NavigationView {
-                WeightChangeView(viewModel: $viewModel)
+                WeightChangeView(viewModel: viewModel)
             }
         })
         .background(Color.backGround)
@@ -71,7 +71,7 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(viewModel: HomeViewModel())
 }
 
 

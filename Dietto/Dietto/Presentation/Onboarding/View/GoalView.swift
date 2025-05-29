@@ -14,9 +14,6 @@ struct GoalView: View {
     
     @ObservedObject var viewModel : OnboardingViewModel
     
-    @State private var targetWeight = 60
-    @State private var targetDistance = 1
-    
     var body: some View {
         VStack(spacing: 40) {
             
@@ -37,7 +34,7 @@ struct GoalView: View {
                         .foregroundStyle(.textFieldGray)
                     ContainerView(paddingSize: 20, height: 100) {
                         HStack{
-                            Picker("", selection: $viewModel.weight) {
+                            Picker("", selection: $viewModel.targetWeight) {
                                 ForEach(viewModel.weights, id: \.self) { w in
                                     Text("\(w)").tag(w)
                                         .font(.pretendardBold20)
@@ -60,7 +57,7 @@ struct GoalView: View {
                         .foregroundStyle(.textFieldGray)
                     ContainerView(paddingSize: 20, height: 100) {
                         HStack{
-                            Picker("", selection: $viewModel.distance) {
+                            Picker("", selection: $viewModel.targetDistance) {
                                 ForEach(viewModel.distances, id: \.self) { d in
                                     Text("\(d)").tag(d)
                                         .font(.pretendardBold20)

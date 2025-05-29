@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TutorialView: View {
     
-    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
+//    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
     
     @State private var selection = 0
     @StateObject private var viewModel = OnboardingViewModel()
@@ -41,7 +41,8 @@ struct TutorialView: View {
                             if selection < 1 {
                                 selection += 1
                             }else{
-                                isFirstLaunch = false
+                                viewModel.saveProfile()
+//                                isFirstLaunch = false
                             }
                         } label: {
                             Text(selection < 1 ? "다음" : "완료")

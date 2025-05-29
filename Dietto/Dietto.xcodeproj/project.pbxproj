@@ -14,8 +14,6 @@
 		2203D0AC2DD32098000EA331 /* Exceptions for "Dietto" folder in "Dietto" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Apps/AppCoordinator.swift,
-				Apps/Destination.swift,
 				Info.plist,
 			);
 			target = 22C73C312DD1968A001EDF35 /* Dietto */;
