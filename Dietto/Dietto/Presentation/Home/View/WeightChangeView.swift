@@ -9,7 +9,7 @@ import SwiftUI
  
 struct WeightChangeView: View {
     @Environment(\.dismiss) private var dismiss
-    @Binding var viewModel: HomeViewModel
+    var viewModel: HomeViewModel
     @State private var value: [String] = []
     @State private var shake: CGFloat = 0
     

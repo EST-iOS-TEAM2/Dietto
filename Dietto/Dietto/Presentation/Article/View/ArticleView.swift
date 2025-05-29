@@ -14,7 +14,7 @@ struct ArticleView: View {
         "https://www.youtube.com/watch?v=FdYIvEc7e-0",
         "https://www.youtube.com/watch?v=2tM1LFFxeKg"
     ]
-    @StateObject var viewModel = ArticleViewModel()
+    @StateObject var viewModel: ArticleViewModel
     var body: some View {
         NavigationView {
             VStack(alignment: .leading){
@@ -59,7 +59,7 @@ struct ArticleView: View {
 
 #Preview {
     NavigationView {
-        ArticleView()
+        ArticleView(viewModel: ArticleViewModel())
     }
     
 }

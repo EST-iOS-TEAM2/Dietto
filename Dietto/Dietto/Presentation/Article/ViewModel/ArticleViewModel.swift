@@ -8,7 +8,8 @@
 import SwiftUI
 
 final class ArticleViewModel: ObservableObject {
-    @Published private(set) var selectedInterests: [InterestEntity] = []
+    @Published var selectedInterests: [InterestEntity] = []
+    @Published var articles: [ArticleEntity] = []
     
     private let alanUsecase: AlanUsecase
     private let storageUsecase: InterestsUsecase
@@ -29,9 +30,17 @@ final class ArticleViewModel: ObservableObject {
     }
     
     // MARK: - 아티클 로드
-    func loadArticles() async throws -> [ArticleEntity] {
-//        alanUsecase.fetchArticle(topics: []])
-        []
+    func loadArticles() {
+        Task {
+            do {
+                let result = try await alanUsecase.fetchArticle(topics: selectedInterests)
+                await MainActor.run{ articles = result }
+            }
+            catch {
+                
+            }
+        }
+        
     }
     
     // MARK: - 관심사 추가 / 삭제

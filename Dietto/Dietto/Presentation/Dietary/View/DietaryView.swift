@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DietaryView: View {
     
-    @StateObject private var dietartViewModel = DietaryViewModel()
+    @StateObject var dietartViewModel: DietaryViewModel
     
     @State private var newfood : String = ""
     
@@ -205,5 +205,5 @@ struct DietaryView: View {
 }
 
 #Preview {
-    DietaryView()
+    DietaryView(dietartViewModel: DietaryViewModel())
 }

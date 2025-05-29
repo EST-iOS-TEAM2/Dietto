@@ -12,7 +12,7 @@ struct WeightHistoryView: View {
     
     @State private var trigger: Bool = false
     @State private var isAnimated: Bool = false
-    @State var weightHistory: [WeightEntity] = [
+    private let weightHistory: [WeightEntity] = [
         WeightEntity(date: Date()-(86400*3), scale: 70),
         WeightEntity(date: Date()-(86400*2), scale: 65),
         WeightEntity(date: Date()-86400, scale: 55),
@@ -40,7 +40,7 @@ struct WeightHistoryView: View {
                         Button(type.rawValue) {
                             if !viewModel.isAnimating {
                                 viewModel.bodyScaleHistoryFetch(type: type)
-                                viewModel.chartAnimate()
+//                                viewModel.chartAnimate()
                             }
                         }
                     }
@@ -57,8 +57,8 @@ struct WeightHistoryView: View {
                 if viewModel.bodyScaleHistory.isEmpty {
                     Chart(weightHistory, id: \.date) { item in
                         LineMark(
-                            x: .value("Date", item.date/*, unit: .day*/),
-                            y: .value("Scale", item.isAnimated ? item.scale : 1)
+                            x: .value("Date", item.date, unit: .day),
+                            y: .value("Scale", item.isAnimated ? item.scale : 0)
                         )
                         .symbol(.circle)
                         .foregroundStyle(.red)
@@ -90,6 +90,6 @@ struct WeightHistoryView: View {
             }
         }
         .padding()
-        .onAppear(perform: viewModel.chartAnimate)
+//        .onAppear(perform: viewModel.chartAnimate)
     }
 }

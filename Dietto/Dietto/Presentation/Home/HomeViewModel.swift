@@ -28,7 +28,7 @@ enum ChartTimeType: String, CaseIterable {
 @Observable
 final class HomeViewModel {
     var isAnimating: Bool = false
-    var chartTimeType: ChartTimeType = .monthly
+    var chartTimeType: ChartTimeType = .weekly
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
     
@@ -78,6 +78,7 @@ final class HomeViewModel {
             print("\(#function) : FAILED to update current body scale")
             return
         }
+        
         #warning("업데이트 한 날짜가 같으면 기존 데이터 replace")
         weightHistroyUsecase.addNewWeight(weight: value, date: Date())
         userStorageUsecase.updateCurrentWeight(id: userData.id, currentWeight: value)
@@ -91,11 +92,12 @@ final class HomeViewModel {
         
         if result.count >= type.limitDataCount() {
             bodyScaleHistory = result
+            chartAnimate()
         }
         else { bodyScaleHistory = [] }
     }
     
-    func chartAnimate() {
+    private func chartAnimate() {
         guard !bodyScaleHistory.isEmpty else { return }
         isAnimating = true
         for (index, _) in bodyScaleHistory.enumerated() {

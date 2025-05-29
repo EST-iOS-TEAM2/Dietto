@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @Environment(DIContainer.self) private var diContainer
     var body: some View {
         TabView {
             Tab("홈", systemImage: "house.fill") {
-                HomeView()
+                HomeView(viewModel: diContainer.getHomeViewModel())
             }
             Tab("식단", systemImage: "leaf.fill") {
-                DietaryView()
+                DietaryView(dietartViewModel: diContainer.getDietaryViewModel())
             }
             Tab("아티클", systemImage: "newspaper") {
-                ArticleView()
+                ArticleView(viewModel: diContainer.getArticleViewModel())
             }
             Tab("프로필", systemImage: "person.circle.fill") {
                 ProfileView()
