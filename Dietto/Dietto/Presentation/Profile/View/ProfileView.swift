@@ -7,16 +7,10 @@
 
 import SwiftUI
 
-
-//MARK: 내 프로필 데이터 뷰 모델에서 관리한다.
-class ProfileViewModel: ObservableObject {
-    @Published var isEditActive: Bool = false
-    @Published var isDeleteAlert: Bool = false
-    
-}
-
 struct ProfileView: View {
-    @StateObject private var viewModel = ProfileViewModel()
+    
+    @StateObject var viewModel : OnboardingViewModel
+    
     var body: some View {
         NavigationStack {
             ZStack(alignment: .top) {
@@ -65,19 +59,16 @@ struct ProfileView: View {
                         .padding(.top, 30)
                         //MARK: - 이름, 키, 몸무게
                         VStack(spacing: 4) {
-                            Text("이규현")
+                            Text(viewModel.name)
                                 .font(.pretendardBold28)
-                            Text("170cm 65kg")
-                                .font(.pretendardRegular20)
                         }
                         // MARK: - 목표 표시
                         VStack(spacing: 20) {
-                            // 첫 번째 표: 현재 체중, 목표 체중
                             HStack(spacing: 0) {
                                 VStack(spacing: 8) {
                                     Text("현재 체중")
                                         .font(.pretendardRegular16)
-                                    Text("68kg")
+                                    Text("\(viewModel.weight)kg")
                                         .font(.pretendardBold16)
                                 }
                                 .frame(maxWidth: .infinity)
@@ -87,9 +78,9 @@ struct ProfileView: View {
                                     .background(Color.appMain)
                                 
                                 VStack(spacing: 8) {
-                                    Text("목표 체중")
+                                    Text("현재 키")
                                         .font(.pretendardRegular16)
-                                    Text("60kg")
+                                    Text("\(viewModel.height)cm")
                                         .font(.pretendardBold16)
                                 }
                                 .frame(maxWidth: .infinity)
@@ -106,9 +97,9 @@ struct ProfileView: View {
                             
                             HStack(spacing: 0) {
                                 VStack(spacing: 8) {
-                                    Text("목표 거리")
+                                    Text("목표 체중")
                                         .font(.pretendardRegular16)
-                                    Text("5km")
+                                    Text("\(viewModel.targetWeight)kg")
                                         .font(.pretendardBold16)
                                 }
                                 .frame(maxWidth: .infinity)
@@ -118,9 +109,9 @@ struct ProfileView: View {
                                     .background(Color.appMain)
                                 
                                 VStack(spacing: 8) {
-                                    Text("목표 걸음 수")
+                                    Text("목표 거리")
                                         .font(.pretendardRegular16)
-                                    Text("10000걸음")
+                                    Text("\(viewModel.targetDistance)km")
                                         .font(.pretendardBold16)
                                 }
                                 .frame(maxWidth: .infinity)
@@ -155,13 +146,14 @@ struct ProfileView: View {
                         }
                         .padding(.horizontal, 24)
                         .alert("모든 데이터를 삭제하시겠습니까?", isPresented: $viewModel.isDeleteAlert) {
-                            Button("삭제", role: .destructive) {}
+                            Button("삭제", role: .destructive) {viewModel.deleteAllUserData()}
                             Button("취소", role: .cancel) {}
                         }
-                        .padding(.bottom, 100)
+                        .padding(.horizontal)
+                        .padding(.vertical)
                         //MARK: - edit 누르면 ProfileEditView로 이동
                         .navigationDestination(isPresented: $viewModel.isEditActive) {
-//                            ProfileEditView()
+                            TutorialView(viewModel: viewModel)
                         }
                     }
                 }
@@ -173,5 +165,5 @@ struct ProfileView: View {
 
 
 #Preview {
-    ProfileView()
+    ProfileView(viewModel: OnboardingViewModel())
 }

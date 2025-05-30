@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct IntroView: View {
+    
+    @Environment(DIContainer.self) private var diContainer
+    
     @State private var first: Bool = false
     @State private var second: Bool = false
     @State private var nextbtn: Bool = false
-    @State private var navigate: Bool = false // ✅ push 트리거
+    @State private var navigate: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -43,7 +46,7 @@ struct IntroView: View {
                     Spacer()
                     
                     if nextbtn {
-                        NavigationLink(destination: TutorialView()
+                        NavigationLink(destination: TutorialView(viewModel: diContainer.getOnboardingViewModel())
                             .navigationBarBackButtonHidden(true)) {
                                 Text("다음")
                                     .frame(maxWidth: .infinity)

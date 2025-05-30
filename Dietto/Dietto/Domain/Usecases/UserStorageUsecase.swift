@@ -10,7 +10,7 @@ import Foundation
 protocol UserStorageUsecase {
     func createUserData(_ user: UserEntity)
     func getUserData() -> UserEntity?
-    func updateUserData(_ user: UserEntity)
+    func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int)
     func updateGoal(id: UUID, weight: Int, distance: Int)
     func updateCurrentWeight(id: UUID, currentWeight: Int)
     func deleteUserData()
@@ -58,14 +58,13 @@ final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUs
         }
     }
     
-    func updateUserData(_ user: UserEntity) {
-        let userID = user.id
-        let predicate = #Predicate<UserDTO> { $0.id == userID }
+    func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int) {
+        let predicate = #Predicate<UserDTO> { $0.id == id }
         do {
             try storage.updateData(predicate: predicate) { dto in
-                dto.name = user.name
-                dto.gender = user.gender.rawValue
-                dto.height = user.height
+                dto.name = name
+                dto.gender = gender.rawValue
+                dto.height = height
             }
         }
         catch {

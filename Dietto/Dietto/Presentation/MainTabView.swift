@@ -21,7 +21,7 @@ struct MainTabView: View {
                 ArticleView(viewModel: diContainer.getArticleViewModel())
             }
             Tab("프로필", systemImage: "person.circle.fill") {
-                ProfileView()
+                ProfileView(viewModel : diContainer.getOnboardingViewModel())
             }
         }
     }
