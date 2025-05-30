@@ -27,6 +27,8 @@ final class OnboardingViewModel: ObservableObject {
     
     private var currentUserId: UUID?
     
+    @Published var isProfileSaved : Bool = false
+    
     let weights: [Int] = Array(20...100).reversed()
     let distances: [Int] = Array(1...10).reversed()
     
@@ -77,8 +79,14 @@ final class OnboardingViewModel: ObservableObject {
             currentUserId = userEntity.id
             userStorageUsecase.createUserData(userEntity)
             weightHistroyUsecase.addNewWeight(weight: weight, date: Date())
-            isFirstLaunch = false
-        //수정
+            
+            isProfileSaved = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.isFirstLaunch = false
+                self.isProfileSaved = false
+            }
+            //수정
         } else {
             guard let currentUserId = currentUserId else {
                 fatalError("CurrentUser is nil") //없으면 말도 안되고 완전 꼬여버리기 때문에 일단 조치해둠

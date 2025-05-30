@@ -54,6 +54,15 @@ struct TutorialView: View {
                     .padding(.horizontal, 20)
                 }
             }
+            .overlay {
+                if viewModel.isProfileSaved{
+                    ZStack {
+                        withAnimation(.easeInOut){
+                            LastView(nickName: viewModel.name)
+                        }
+                    }
+                }
+            }
         }
     }
     
