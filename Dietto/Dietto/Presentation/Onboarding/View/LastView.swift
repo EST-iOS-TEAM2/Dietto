@@ -26,7 +26,7 @@ struct LastView: View {
                         + Text("를\n 응원합니다!")
                     }
                 }.multilineTextAlignment(.center)
-                    .foregroundColor(.appMain)
+                    .foregroundStyle(.appMain)
                     .font(.pretendardBlack24)
                 //            VStack {
                 //                Spacer()
