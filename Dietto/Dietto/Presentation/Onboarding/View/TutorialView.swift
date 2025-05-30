@@ -10,7 +10,7 @@ import SwiftUI
 struct TutorialView: View {
     
     @State private var selection = 0
-    @StateObject var viewModel : OnboardingViewModel
+    @ObservedObject var viewModel : OnboardingViewModel
     @Environment(\.dismiss) private var dismiss
     
     
@@ -39,13 +39,7 @@ struct TutorialView: View {
                             if selection < 1 {
                                 selection += 1
                             }else{
-                                if viewModel.isEditActive{
-                                    viewModel.saveProfile()
-                                    dismiss()
-                                }else{
-                                    viewModel.saveProfile()
-                                }
-                                
+                                viewModel.saveProfile()
                             }
                         } label: {
                             Text(selection < 1 ? "다음" : "완료")

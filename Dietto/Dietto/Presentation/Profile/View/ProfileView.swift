@@ -153,7 +153,7 @@ struct ProfileView: View {
                         .padding(.vertical)
                         //MARK: - edit 누르면 ProfileEditView로 이동
                         .navigationDestination(isPresented: $viewModel.isEditActive) {
-                            TutorialView(viewModel: OnboardingViewModel())
+                            TutorialView(viewModel: viewModel)
                         }
                     }
                 }

@@ -64,7 +64,7 @@ final class OnboardingViewModel: ObservableObject {
         
         //최초
         if isFirstLaunch {
-            var userEntity = UserEntity(
+            let userEntity = UserEntity(
                 id: currentUserId ?? UUID(),
                 name: name,
                 gender: gender,
