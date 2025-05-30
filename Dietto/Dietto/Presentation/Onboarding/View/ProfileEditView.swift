@@ -11,13 +11,12 @@ struct ProfileEditView: View {
     
     @Binding var selection: Int
     @ObservedObject var viewModel: OnboardingViewModel
-//    @State private var weightInput: String = ""
-//    @State private var heightInput: String = ""
     
     var body: some View {
         ZStack {
             Color(.backGround)
                 .ignoresSafeArea()
+            
             ScrollView {
                 VStack(spacing: 30) {
                     // MARK: - 프로필 이미지
@@ -92,69 +91,10 @@ struct ProfileEditView: View {
                     }
                     
                     // MARK: - 키 수정
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("키")
-                            .font(.pretendardBold16)
-                        HStack(spacing: 0) {
-                            TextField("ex) 170", text: $viewModel.height)
-                                .keyboardType(.numberPad)
-                                .multilineTextAlignment(.center)
-                                .frame(height: 54)
-                                .padding(.horizontal, 20)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.appMain, lineWidth: 2)
-                                )
-                                .toolbar {
-                                    ToolbarItemGroup(placement: .keyboard) {
-                                        Spacer()
-                                        Button("완료") {
-                                            UIApplication.shared.sendAction(
-                                                #selector(UIResponder.resignFirstResponder),
-                                                to: nil, from: nil, for: nil
-                                            )
-                                        }
-                                    }
-                                }
-                            Text("cm")
-                                .font(.custom("NerkoOne-regular", size: 50))
-                                .foregroundColor(Color.appMain)
-                                .padding(.leading, 12)
-                        }
-                    }
+                    InputFieldForNumbers(fieldName: "키", placeholder: "170", unit: "cm", startWeight: $viewModel.height)
                     
+                    InputFieldForNumbers(fieldName: "몸무게", placeholder: "70", unit: "kg", startWeight: $viewModel.weight)
                     
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("몸무게")
-                            .font(.pretendardBold16)
-                        HStack(spacing: 0) {
-                            TextField("ex) 65", text: $viewModel.startWeight)
-                                .keyboardType(.numberPad)
-                                .multilineTextAlignment(.center)
-                                .frame(height: 54)
-                                .padding(.horizontal, 20)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.appMain, lineWidth: 2)
-                                )
-                                .toolbar {
-                                    ToolbarItemGroup(placement: .keyboard) {
-                                        Spacer()
-                                        Button("완료") {
-                                            UIApplication.shared.sendAction(
-                                                #selector(UIResponder.resignFirstResponder),
-                                                to: nil, from: nil, for: nil
-                                            )
-                                        }
-                                    }
-                                }
-                            //
-                            Text("kg")
-                                .font(.custom("NerkoOne-regular", size: 50))
-                                .foregroundColor(Color.appMain)
-                                .padding(.leading, 12)
-                        }
-                    }
                 }
             }
             .padding(.top, 48)
@@ -168,7 +108,52 @@ struct ProfileEditView: View {
                 Button("갤러리") { /* 갤러리 액션 */ }
                 Button("취소", role: .cancel) {}
             }
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+                        Button("완료") {
+                            UIApplication.shared.sendAction(
+                                #selector(UIResponder.resignFirstResponder),
+                                to: nil, from: nil, for: nil
+                            )
+                        }
+                    }
+                }
+            }
         }
         
+    }
+}
+
+struct InputFieldForNumbers: View {
+    let fieldName: String
+    let placeholder: String
+    let unit: String
+    @Binding var startWeight: String
+    
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(fieldName)
+                .font(.pretendardBold16)
+            HStack(spacing: 0) {
+                TextField(placeholder, text: $startWeight)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.center)
+                    .frame(height: 54)
+                    .padding(.horizontal, 20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.appMain, lineWidth: 2)
+                    )
+                    
+                //
+                Text(unit)
+                    .font(.custom("NerkoOne-regular", size: 50))
+                    .foregroundColor(Color.appMain)
+                    .padding(.leading, 12)
+            }
+        }
     }
 }

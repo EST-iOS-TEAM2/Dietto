@@ -68,7 +68,7 @@ struct ProfileView: View {
                                 VStack(spacing: 8) {
                                     Text("현재 체중")
                                         .font(.pretendardRegular16)
-                                    Text("\(viewModel.currentweight)kg")
+                                    Text("\(viewModel.weight)kg")
                                         .font(.pretendardBold16)
                                 }
                                 .frame(maxWidth: .infinity)
