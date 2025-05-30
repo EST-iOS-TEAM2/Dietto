@@ -9,10 +9,8 @@ import SwiftUI
 
 struct TutorialView: View {
     
-//    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
-    
     @State private var selection = 0
-    @StateObject private var viewModel = OnboardingViewModel()
+    @StateObject var viewModel : OnboardingViewModel
     @Environment(\.dismiss) private var dismiss
     
     
@@ -24,7 +22,7 @@ struct TutorialView: View {
                     
                     ProfileEditView(selection: $selection, viewModel: viewModel)
                         .tag(0)
-                    //목표 설정 뷰
+                    
                     GoalView(selection: $selection, viewModel: viewModel)
                         .tag(1)
                 }
@@ -41,8 +39,13 @@ struct TutorialView: View {
                             if selection < 1 {
                                 selection += 1
                             }else{
-                                viewModel.saveProfile()
-//                                isFirstLaunch = false
+                                if viewModel.isEditActive{
+                                    viewModel.saveProfile()
+                                    dismiss()
+                                }else{
+                                    viewModel.saveProfile()
+                                }
+                                
                             }
                         } label: {
                             Text(selection < 1 ? "다음" : "완료")
@@ -63,5 +66,5 @@ struct TutorialView: View {
 }
 
 #Preview {
-    TutorialView()
+    TutorialView(viewModel: OnboardingViewModel())
 }
