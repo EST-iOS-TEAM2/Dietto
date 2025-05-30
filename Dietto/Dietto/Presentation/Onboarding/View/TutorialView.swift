@@ -10,7 +10,7 @@ import SwiftUI
 struct TutorialView: View {
     
     @State private var selection = 0
-    @ObservedObject var viewModel : OnboardingViewModel
+    @StateObject var viewModel : OnboardingViewModel
     @Environment(\.dismiss) private var dismiss
     
     
