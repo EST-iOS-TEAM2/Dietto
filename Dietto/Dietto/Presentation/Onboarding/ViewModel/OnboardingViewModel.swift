@@ -64,7 +64,7 @@ final class OnboardingViewModel: ObservableObject {
             return
         }
         
-        //최초
+        //MARK: - 최초 진입
         if isFirstLaunch {
             let userEntity = UserEntity(
                 id: currentUserId ?? UUID(),
@@ -82,11 +82,12 @@ final class OnboardingViewModel: ObservableObject {
             
             isProfileSaved = true
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                 self.isFirstLaunch = false
                 self.isProfileSaved = false
             }
-            //수정
+            
+            //MARK: - 프로필 수정
         } else {
             guard let currentUserId = currentUserId else {
                 fatalError("CurrentUser is nil") //없으면 말도 안되고 완전 꼬여버리기 때문에 일단 조치해둠
