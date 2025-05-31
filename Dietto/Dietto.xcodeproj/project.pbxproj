@@ -6,7 +6,40 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		228B4CA52DEB17D40095BDC3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228B4CA42DEB17D30095BDC3 /* WidgetKit.framework */; };
+		228B4CA72DEB17D40095BDC3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228B4CA62DEB17D40095BDC3 /* SwiftUI.framework */; };
+		228B4CB42DEB17D50095BDC3 /* PedometerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 228B4CA22DEB17D30095BDC3 /* PedometerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		228B4CB22DEB17D50095BDC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 22C73C2A2DD1968A001EDF35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 228B4CA12DEB17D30095BDC3;
+			remoteInfo = PedometerWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		228B4CB52DEB17D50095BDC3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				228B4CB42DEB17D50095BDC3 /* PedometerWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		228B4CA22DEB17D30095BDC3 /* PedometerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PedometerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		228B4CA42DEB17D30095BDC3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		228B4CA62DEB17D40095BDC3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		22C73C322DD1968A001EDF35 /* Dietto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dietto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -18,9 +51,24 @@
 			);
 			target = 22C73C312DD1968A001EDF35 /* Dietto */;
 		};
+		228B4CB92DEB17D50095BDC3 /* Exceptions for "PedometerWidget" folder in "PedometerWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 228B4CA12DEB17D30095BDC3 /* PedometerWidgetExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		228B4CA82DEB17D40095BDC3 /* PedometerWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				228B4CB92DEB17D50095BDC3 /* Exceptions for "PedometerWidget" folder in "PedometerWidgetExtension" target */,
+			);
+			path = PedometerWidget;
+			sourceTree = "<group>";
+		};
 		22C73C342DD1968A001EDF35 /* Dietto */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -32,6 +80,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		228B4C9F2DEB17D30095BDC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				228B4CA72DEB17D40095BDC3 /* SwiftUI.framework in Frameworks */,
+				228B4CA52DEB17D40095BDC3 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22C73C2F2DD1968A001EDF35 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -42,10 +99,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		228B4CA32DEB17D30095BDC3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				228B4CA42DEB17D30095BDC3 /* WidgetKit.framework */,
+				228B4CA62DEB17D40095BDC3 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		22C73C292DD1968A001EDF35 = {
 			isa = PBXGroup;
 			children = (
 				22C73C342DD1968A001EDF35 /* Dietto */,
+				228B4CA82DEB17D40095BDC3 /* PedometerWidget */,
+				228B4CA32DEB17D30095BDC3 /* Frameworks */,
 				22C73C332DD1968A001EDF35 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				22C73C322DD1968A001EDF35 /* Dietto.app */,
+				228B4CA22DEB17D30095BDC3 /* PedometerWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,6 +130,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		228B4CA12DEB17D30095BDC3 /* PedometerWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 228B4CB82DEB17D50095BDC3 /* Build configuration list for PBXNativeTarget "PedometerWidgetExtension" */;
+			buildPhases = (
+				228B4C9E2DEB17D30095BDC3 /* Sources */,
+				228B4C9F2DEB17D30095BDC3 /* Frameworks */,
+				228B4CA02DEB17D30095BDC3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				228B4CA82DEB17D40095BDC3 /* PedometerWidget */,
+			);
+			name = PedometerWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = PedometerWidgetExtension;
+			productReference = 228B4CA22DEB17D30095BDC3 /* PedometerWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		22C73C312DD1968A001EDF35 /* Dietto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 22C73C3F2DD1968C001EDF35 /* Build configuration list for PBXNativeTarget "Dietto" */;
@@ -68,10 +159,12 @@
 				22C73C2E2DD1968A001EDF35 /* Sources */,
 				22C73C2F2DD1968A001EDF35 /* Frameworks */,
 				22C73C302DD1968A001EDF35 /* Resources */,
+				228B4CB52DEB17D50095BDC3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				228B4CB32DEB17D50095BDC3 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				22C73C342DD1968A001EDF35 /* Dietto */,
@@ -93,6 +186,9 @@
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
+					228B4CA12DEB17D30095BDC3 = {
+						CreatedOnToolsVersion = 16.3;
+					};
 					22C73C312DD1968A001EDF35 = {
 						CreatedOnToolsVersion = 16.3;
 					};
@@ -115,11 +211,19 @@
 			projectRoot = "";
 			targets = (
 				22C73C312DD1968A001EDF35 /* Dietto */,
+				228B4CA12DEB17D30095BDC3 /* PedometerWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		228B4CA02DEB17D30095BDC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22C73C302DD1968A001EDF35 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -130,6 +234,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		228B4C9E2DEB17D30095BDC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22C73C2E2DD1968A001EDF35 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -139,7 +250,69 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		228B4CB32DEB17D50095BDC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 228B4CA12DEB17D30095BDC3 /* PedometerWidgetExtension */;
+			targetProxy = 228B4CB22DEB17D50095BDC3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		228B4CB62DEB17D50095BDC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UUYBHY988H;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PedometerWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PedometerWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justhm.Dietto.PedometerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		228B4CB72DEB17D50095BDC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UUYBHY988H;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PedometerWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PedometerWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justhm.Dietto.PedometerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		22C73C3D2DD1968C001EDF35 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -330,6 +503,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		228B4CB82DEB17D50095BDC3 /* Build configuration list for PBXNativeTarget "PedometerWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				228B4CB62DEB17D50095BDC3 /* Debug */,
+				228B4CB72DEB17D50095BDC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		22C73C2D2DD1968A001EDF35 /* Build configuration list for PBXProject "Dietto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
