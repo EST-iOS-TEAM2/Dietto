@@ -90,6 +90,5 @@ struct WeightHistoryView: View {
             }
         }
         .padding()
-//        .onAppear(perform: viewModel.chartAnimate)
     }
 }
