@@ -52,14 +52,21 @@ final class HomeViewModel {
         self.userStorageUsecase = userStorageUsecase
         if let userData = userStorageUsecase.getUserData() {
             self.userData = userData
-#warning("데이터 없으면 온보딩으로")
         }
         else { fatalError("데이터 없음") }
         bodyScaleHistoryFetch(type: chartTimeType)
+        
+        self.userStorageUsecase.subscribeChangeEvent()
+            .sink {[weak self] in
+                if let data = self?.userStorageUsecase.getUserData() {
+                    self?.userData = data
+                }
+            }
+            .store(in: &bag)
     }
     
     func fetchPedometer() {
-        guard bag.isEmpty else { return }
+//        guard bag.isEmpty else { return }
         pedometerUsecase.startLivePedometerData()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] pedometer in
@@ -82,7 +89,6 @@ final class HomeViewModel {
         #warning("업데이트 한 날짜가 같으면 기존 데이터 replace")
         weightHistroyUsecase.addNewWeight(weight: value, date: Date())
         userStorageUsecase.updateCurrentWeight(id: userData.id, currentWeight: value)
-        userData.currentWeight = value
         bodyScaleHistoryFetch(type: chartTimeType)
     }
     
