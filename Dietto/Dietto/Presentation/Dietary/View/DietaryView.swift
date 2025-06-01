@@ -20,7 +20,6 @@ struct DietaryView: View {
     
     @State private var PushToRecommandView : Bool = false // 화면이동
     
-    @State private var isLoading : Bool = false
     
 #warning("상태값 관리.")
     
@@ -162,9 +161,7 @@ struct DietaryView: View {
                         Button("식단 추천받기") {
                             print("식단 추천 받기 버튼이 클릭댐")
                             if !dietartViewModel.presentIngredients.isEmpty {
-                                isLoading = true
                                 dietartViewModel.fetchRecommendations(ingredients: dietartViewModel.presentIngredients)
-                                isLoading = false
                                 PushToRecommandView = true
                             }else{
                                 print("비어있음 현재 식재료가 ")
@@ -184,19 +181,6 @@ struct DietaryView: View {
                     
                 }
             }
-            .overlay(content: {
-                ///loading indicator
-                if isLoading {
-                    Color.black.opacity(0.4)
-                        .ignoresSafeArea()
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .foregroundStyle(.white)
-                        .padding()
-                        .background(Color.gray.opacity(0.8))
-                    
-                }
-            })
             .navigationDestination(isPresented: $PushToRecommandView) {
                 RecommendView().environmentObject(dietartViewModel)
             }
