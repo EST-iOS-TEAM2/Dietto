@@ -10,7 +10,7 @@ import Observation
 @Observable
 final class DIContainer {
     private let alanUsecase: AlanUsecase
-    private var interestsUsecase: InterestsUsecase?
+    private var interestsUsecase: InterestsUsecase
     private let pedometerUsecase: PedometerUsecase
     private let userStorageUsecase: UserStorageUsecase
     private let weightHistoryUsecase: WeightHistoryUsecase
@@ -21,10 +21,10 @@ final class DIContainer {
 //        self.interestsUsecase = InterestsUsecaseImpl(repository: StorageRepositoryImpl<InterestsDTO>())
         self.userStorageUsecase = UserStorageUsecaseImpl(storage: StorageRepositoryImpl<UserDTO>())
         self.weightHistoryUsecase = WeightHistoryUsecaseImpl(repository: StorageRepositoryImpl<WeightDTO>())
-        
-        Task.detached(priority: .background) { [weak self] in
-            self?.interestsUsecase = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>())
-        }
+        self.interestsUsecase = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>())
+//        Task.detached(priority: .background) { [weak self] in
+//            self?.interestsUsecase = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>())
+//        }
     }
     
     func getHomeViewModel() -> HomeViewModel {
@@ -38,7 +38,7 @@ final class DIContainer {
     func getArticleViewModel() -> ArticleViewModel {
         ArticleViewModel(
             alanUsecase: alanUsecase,
-            storageUsecase: interestsUsecase!
+            storageUsecase: interestsUsecase
         )
     }
     

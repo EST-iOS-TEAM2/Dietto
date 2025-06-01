@@ -40,11 +40,13 @@ actor AnotherStorageRepositoryImpl<T: PersistentModel>: AnotherStorageRepository
     
     func insertData(data: T) async throws {
         modelContext.insert(data)
+        try modelContext.save()
     }
     func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) async throws {
         let descriptor = FetchDescriptor<T>(predicate: predicate)
         if let result = try modelContext.fetch(descriptor).first {
             updateBlock(result)
+            try modelContext.save()
         }
         else { // first가 없을경우 (찾는 값이 없는 경우)
             
@@ -56,11 +58,13 @@ actor AnotherStorageRepositoryImpl<T: PersistentModel>: AnotherStorageRepository
     }
     func deleteData(where predicate: Predicate<T>) async throws {
         try modelContext.delete(model: T.self, where: predicate)
+        try modelContext.save()
     }
     func deleteAll() async throws {
         let data = try await fetchData()
         for item in data {
             modelContext.delete(item)
         }
+        try modelContext.save()
     }
 }
