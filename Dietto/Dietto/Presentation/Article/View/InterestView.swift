@@ -60,8 +60,8 @@ struct InterestsView: View {
     }
 }
 
-#Preview {
-    NavigationView {
-        InterestsView(viewModel: ArticleViewModel())
-    }
-}
+//#Preview {
+//    NavigationView {
+//        InterestsView(viewModel: ArticleViewModel())
+//    }
+//}

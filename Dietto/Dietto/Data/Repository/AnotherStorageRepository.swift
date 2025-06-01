@@ -21,12 +21,22 @@ protocol AnotherStorageRepository {
     
     func insertData(data: T) async throws
     func updateData(predicate: Predicate<T>, updateBlock: @escaping (T) -> Void) async throws
-    func fetchData(where predicate: Predicate<T>?,sort: [SortDescriptor<T>]) async throws -> [T]
+    func fetchData(where predicate: Predicate<T>?, sort: [SortDescriptor<T>]) async throws -> [T]
     func deleteData(where predicate: Predicate<T>) async throws
     func deleteAll() async throws
 }
 @ModelActor
 actor AnotherStorageRepositoryImpl<T: PersistentModel>: AnotherStorageRepository {
+    
+    init() {
+        let configure = ModelConfiguration("\(T.self)") // 이름 지정
+        do {
+            let modelContainer = try ModelContainer(for: T.self, configurations: configure)
+            self.init(modelContainer: modelContainer)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
     
     func insertData(data: T) async throws {
         modelContext.insert(data)

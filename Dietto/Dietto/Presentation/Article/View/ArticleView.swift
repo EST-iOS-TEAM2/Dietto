@@ -61,12 +61,12 @@ struct ArticleView: View {
     }
 }
 
-#Preview {
-    NavigationView {
-        ArticleView(viewModel: ArticleViewModel())
-    }
-    
-}
+//#Preview {
+//    NavigationView {
+//        ArticleView(viewModel: ArticleViewModel())
+//    }
+//    
+//}
 
 
 
