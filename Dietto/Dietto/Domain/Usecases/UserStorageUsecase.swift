@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 protocol UserStorageUsecase {
+    var changeEvent: CurrentValueSubject<Void, Never> { get }
+    
     func createUserData(_ user: UserEntity)
     func getUserData() -> UserEntity?
     func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int)
@@ -18,6 +21,7 @@ protocol UserStorageUsecase {
 
 final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUsecase where Repository.T == UserDTO {
     private let storage: Repository
+    var changeEvent: CurrentValueSubject<Void, Never> = .init(())
     
     init(storage: Repository) {
         self.storage = storage
@@ -66,6 +70,7 @@ final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUs
                 dto.gender = gender.rawValue
                 dto.height = height
             }
+            changeEvent.send()
         }
         catch {
             print("\(#function) : \(error.localizedDescription)")
@@ -79,6 +84,7 @@ final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUs
                 dto.targetWeight = weight
                 dto.targetDistance = distance
             }
+            changeEvent.send()
         }
         catch {
             print("\(#function) : \(error.localizedDescription)")
@@ -91,6 +97,7 @@ final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUs
             try storage.updateData(predicate: predicate) { dto in
                 dto.currentWeight = currentWeight
             }
+            changeEvent.send()
         }
         catch {
             print("\(#function) : \(error.localizedDescription)")
