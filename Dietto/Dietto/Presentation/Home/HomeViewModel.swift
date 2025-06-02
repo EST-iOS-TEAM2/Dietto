@@ -31,6 +31,14 @@ final class HomeViewModel {
     var chartTimeType: ChartTimeType = .weekly
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
+    var currentDistance: Float {
+        get {
+            if let distance = pedometerData?.distance {
+                return distance <= Float(userData.targetDistance) ? distance : Float(userData.targetDistance)
+            }
+            else { return 0 }
+        }
+    }
     
     var userData: UserEntity
     
