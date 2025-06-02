@@ -64,7 +64,8 @@ final class HomeViewModel {
         else { fatalError("데이터 없음") }
         bodyScaleHistoryFetch(type: chartTimeType)
         
-        self.userStorageUsecase.subscribeChangeEvent()
+        self.userStorageUsecase.changeEvent
+            .receive(on: DispatchQueue.main)
             .sink {[weak self] in
                 if let data = self?.userStorageUsecase.getUserData() {
                     self?.userData = data

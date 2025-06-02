@@ -9,7 +9,8 @@ import Foundation
 import Combine
 
 protocol UserStorageUsecase {
-    func subscribeChangeEvent() -> AnyPublisher<Void, Never>
+    var changeEvent: CurrentValueSubject<Void, Never> { get }
+    
     func createUserData(_ user: UserEntity)
     func getUserData() -> UserEntity?
     func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int)
@@ -20,14 +21,10 @@ protocol UserStorageUsecase {
 
 final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUsecase where Repository.T == UserDTO {
     private let storage: Repository
-    private let changeEvent: CurrentValueSubject<Void, Never> = .init(())
+    var changeEvent: CurrentValueSubject<Void, Never> = .init(())
     
     init(storage: Repository) {
         self.storage = storage
-    }
-    
-    func subscribeChangeEvent() -> AnyPublisher<Void, Never> {
-        changeEvent.eraseToAnyPublisher()
     }
     
     func createUserData(_ user: UserEntity) {

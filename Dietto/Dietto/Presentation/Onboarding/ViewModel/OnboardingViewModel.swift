@@ -55,7 +55,7 @@ final class OnboardingViewModel: ObservableObject {
             targetDistance = user.targetDistance
         }
         
-        userStorageUsecase.subscribeChangeEvent()
+        self.userStorageUsecase.changeEvent
             .receive(on: DispatchQueue.main)
             .sink {[weak self] in
                 if let user = self?.userStorageUsecase.getUserData() {
