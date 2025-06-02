@@ -13,7 +13,7 @@ struct PillText: View {
     var onDelete: (() -> Void)? = nil  // X 버튼 클릭 액션
     
     var body: some View {
-        HStack() {
+        HStack(spacing : 2) {
             Button(action: {
                 onAdd?()
             }) {
@@ -29,11 +29,11 @@ struct PillText: View {
                 Image(systemName: "xmark")
                     .font(.pretendardBold12)
                     .foregroundStyle(.white)
-                    .padding(4)
+                    .padding(2)
             }
             .buttonStyle(PlainButtonStyle())
         }
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 8)
         .padding(.vertical, 4)
         .background(Capsule().fill(Color.appMain))
         .fixedSize()

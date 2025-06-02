@@ -176,9 +176,7 @@ struct DietaryView: View {
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 40)
-                    
-                    Spacer()
-                    
+                                        
                 }
             }
             .navigationDestination(isPresented: $PushToRecommandView) {

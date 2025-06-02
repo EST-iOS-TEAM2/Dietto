@@ -9,7 +9,7 @@ import SwiftUI
 
 class DietaryViewModel: ObservableObject {
     //로딩 여부
-    @Published var isLoading : Bool = false
+    @Published var isPresneted : Bool = false
     
     //현재
     @Published var presentIngredients: [IngredientEntity] = []
@@ -78,17 +78,17 @@ class DietaryViewModel: ObservableObject {
     
     //MARK: - 현재 재료를 통해 식단 추천 받기.
     func fetchRecommendations(ingredients: [IngredientEntity]) {
-        isLoading = true
+        isPresneted = true
         Task {
             do {
                 let result = try await usecase.fetchRecommend(ingredients: ingredients)
                 await MainActor.run {
                     self.recommendList = result
-                    isLoading = false
+                    isPresneted = false
                 }
             } catch {
                 print(#file,#function,#line, error.localizedDescription)
-                isLoading = false
+                isPresneted = false
             }
         }
     }
