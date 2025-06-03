@@ -19,12 +19,13 @@ final class DIContainer {
         self.alanUsecase = AlanUsecaseImpl(repository: NetworkRepositoryImpl())
         self.pedometerUsecase = PedometerUsecaseImpl(pedometer: PedometerRepositoryImpl())
 //        self.interestsUsecase = InterestsUsecaseImpl(repository: StorageRepositoryImpl<InterestsDTO>())
-        self.userStorageUsecase = UserStorageUsecaseImpl(storage: StorageRepositoryImpl<UserDTO>())
-        self.weightHistoryUsecase = WeightHistoryUsecaseImpl(repository: StorageRepositoryImpl<WeightDTO>())
+//        self.userStorageUsecase = UserStorageUsecaseImpl(storage: StorageRepositoryImpl<UserDTO>())
+//        self.weightHistoryUsecase = WeightHistoryUsecaseImpl(repository: StorageRepositoryImpl<WeightDTO>())
         self.interestsUsecase = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>())
-//        Task.detached(priority: .background) { [weak self] in
-//            self?.interestsUsecase = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>())
-//        }
+        self.userStorageUsecase = UserStorageUsecaseImpl(storage: AnotherStorageRepositoryImpl<UserDTO>())
+        self.weightHistoryUsecase = WeightHistoryUsecaseImpl(repository: AnotherStorageRepositoryImpl<WeightDTO>())
+        
+
     }
     
     func getHomeViewModel() -> HomeViewModel {
