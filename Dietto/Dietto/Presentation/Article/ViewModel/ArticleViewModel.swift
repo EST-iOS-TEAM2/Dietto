@@ -28,8 +28,13 @@ final class ArticleViewModel: ObservableObject {
         self.storageUsecase = storageUsecase
         
         Task {
-            let result = try await storageUsecase.fetchInterests()
-            await MainActor.run { self.selectedInterests = result }
+            do {
+                let result = try await storageUsecase.fetchInterests()
+                await MainActor.run { self.selectedInterests = result }
+            }
+            catch {
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
         }
     }
     
@@ -41,7 +46,7 @@ final class ArticleViewModel: ObservableObject {
                 await MainActor.run{ articles = result }
             }
             catch {
-                
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
             }
         }
         
@@ -64,12 +69,16 @@ final class ArticleViewModel: ObservableObject {
         if selectedInterests.contains(where: { $0.title == title }) {
             removeInterest(title)
             Task {
-                try await storageUsecase.deleteInterests(InterestEntity(title: title))
+                do { try await storageUsecase.deleteInterests(InterestEntity(title: title))}
+                catch {  }
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
             }
         } else {
             addInterest(title)
             Task {
-                try await storageUsecase.insertInterests(InterestEntity(title: title))
+                do { try await storageUsecase.deleteInterests(InterestEntity(title: title)) }
+                catch {  }
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
             }
             
         }

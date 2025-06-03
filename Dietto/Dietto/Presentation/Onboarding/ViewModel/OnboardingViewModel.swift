@@ -13,8 +13,8 @@ final class OnboardingViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var gender: Gender = .male
     
-    @Published var targetWeight: Int = 60
-    @Published var targetDistance: Int = 2
+    @Published var targetWeight: Int = 0
+    @Published var targetDistance: Int = 0
     
     @Published var height: String = ""
     @Published var weight : String = ""
@@ -36,22 +36,30 @@ final class OnboardingViewModel: ObservableObject {
     private let weightHistroyUsecase: WeightHistoryUsecase
     
     init(
-        weightHistroyUsecase: WeightHistoryUsecase = WeightHistoryUsecaseImpl(repository: StorageRepositoryImpl<WeightDTO>()),
-        userStorageUsecase: UserStorageUsecase = UserStorageUsecaseImpl(storage: StorageRepositoryImpl<UserDTO>())
+        weightHistroyUsecase: WeightHistoryUsecase,
+        userStorageUsecase: UserStorageUsecase
     ) {
         self.weightHistroyUsecase = weightHistroyUsecase
         self.userStorageUsecase = userStorageUsecase
         
-        
-        if let user = userStorageUsecase.getUserData() {
-            currentUserId = user.id
-            name = user.name
-            gender = user.gender
-            height = String(user.height)
-            weight = String(user.currentWeight)
-            targetWeight = user.targetWeight
-            targetDistance = user.targetDistance
+        Task {
+            do {
+                let user = try await userStorageUsecase.getUserData()
+                await MainActor.run {
+                    currentUserId = user.id
+                    name = user.name
+                    gender = user.gender
+                    height = String(user.height)
+                    weight = String(user.currentWeight)
+                    targetWeight = user.targetWeight
+                    targetDistance = user.targetDistance
+                }
+            }
+            catch {
+                #warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
         }
+        
     }
     
     //MARK: - 프로필 설정
@@ -66,37 +74,58 @@ final class OnboardingViewModel: ObservableObject {
         
         //MARK: - 최초 진입
         if isFirstLaunch {
-            let userEntity = UserEntity(
-                id: currentUserId ?? UUID(),
-                name: name,
-                gender: gender,
-                height: height,
-                startWeight: weight,
-                currentWeight: weight,
-                targetWeight: targetWeight,
-                targetDistance: targetDistance
-            )
-            currentUserId = userEntity.id
-            userStorageUsecase.createUserData(userEntity)
-            weightHistroyUsecase.addNewWeight(weight: weight, date: Date())
-            
-            isProfileSaved = true
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                self.isFirstLaunch = false
-                self.isProfileSaved = false
-            }
-            
-            //MARK: - 프로필 수정
+            createNewProfile(weight: weight, height: height)
         } else {
             guard let currentUserId = currentUserId else {
                 fatalError("CurrentUser is nil") //없으면 말도 안되고 완전 꼬여버리기 때문에 일단 조치해둠
             }
-            userStorageUsecase.updateUserDefaultData(id: currentUserId, name: name, gender: gender, height: height)
-            userStorageUsecase.updateGoal(id: currentUserId, weight: targetWeight, distance: targetDistance)
-            userStorageUsecase.updateCurrentWeight(id: currentUserId, currentWeight: weight)
-            isEditActive = false
+            editProfile(currentUserId: currentUserId, weight: weight, height: height)
         }
+    }
+    
+    private func editProfile(currentUserId: UUID, weight: Int, height: Int) {
+        Task {
+            do {
+                try await userStorageUsecase.updateUserDefaultData(id: currentUserId, name: name, gender: gender, height: height)
+                try await userStorageUsecase.updateGoal(id: currentUserId, weight: targetWeight, distance: targetDistance)
+                try await userStorageUsecase.updateCurrentWeight(id: currentUserId, currentWeight: weight)
+                await MainActor.run { isEditActive = false }
+            }
+            catch {
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
+        }
+    }
+    
+    private func createNewProfile(weight: Int, height: Int) {
+        Task {
+            do {
+                let userEntity = UserEntity(
+                    id: UUID(),
+                    name: name,
+                    gender: gender,
+                    height: height,
+                    startWeight: weight,
+                    currentWeight: weight,
+                    targetWeight: targetWeight,
+                    targetDistance: targetDistance
+                )
+                try await userStorageUsecase.createUserData(userEntity)
+                try await weightHistroyUsecase.addNewWeight(weight: weight, date: Date())
+                await MainActor.run {
+                    isProfileSaved = true
+                }
+                try await Task.sleep(for: .seconds(4))
+                await MainActor.run {
+                    self.isFirstLaunch = false
+                    self.isProfileSaved = false
+                }
+            }
+            catch {
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
+        }
+        
     }
     
     func selectGender(_ gender: Gender) {
@@ -110,9 +139,16 @@ final class OnboardingViewModel: ObservableObject {
     }
     
     func deleteAllUserData() {
-        userStorageUsecase.deleteUserData()
-        weightHistroyUsecase.deleteAllWeightHistory()
-        isFirstLaunch = true
+        Task {
+            do {
+                try await userStorageUsecase.deleteUserData()
+                try await weightHistroyUsecase.deleteAllWeightHistory()
+                isFirstLaunch = true
+            }
+            catch {
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
+        }
     }
     
 }

@@ -68,6 +68,6 @@ struct TutorialView: View {
     
 }
 
-#Preview {
-    TutorialView(viewModel: OnboardingViewModel())
-}
+//#Preview {
+//    TutorialView(viewModel: OnboardingViewModel())
+//}

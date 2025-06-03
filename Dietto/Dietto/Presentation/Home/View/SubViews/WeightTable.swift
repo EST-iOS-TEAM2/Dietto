@@ -7,9 +7,9 @@
 import SwiftUI
 
 struct WeightTable: View {
-    @Binding var startWeight: Int
-    @Binding var targetWeight: Int
-    @Binding var currentWeight: Int
+    let startWeight: Int
+    let targetWeight: Int
+    let currentWeight: Int
     
     @Binding var isTapModify: Bool
     

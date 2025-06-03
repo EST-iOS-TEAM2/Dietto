@@ -15,12 +15,23 @@ struct HomeView: View {
         VStack(spacing: 0) {
             HomeHeader()
             ScrollView {
-                WeightTable(
-                    startWeight: $viewModel.userData.startWeight,
-                    targetWeight: $viewModel.userData.targetWeight,
-                    currentWeight: $viewModel.userData.currentWeight,
-                    isTapModify: $isTapModify
-                )
+                if let userData = viewModel.userData {
+                    WeightTable(
+                        startWeight: userData.startWeight,
+                        targetWeight: userData.targetWeight,
+                        currentWeight: userData.currentWeight,
+                        isTapModify: $isTapModify
+                    )
+                }
+                else {
+                    WeightTable(
+                        startWeight: 0,
+                        targetWeight: 0,
+                        currentWeight: 0,
+                        isTapModify: $isTapModify
+                    )
+                }
+                
                 
                 WeightHistoryView()
                     .environment(viewModel)
@@ -29,7 +40,7 @@ struct HomeView: View {
                     ActivityTable(
                         currentSteps: pedometer.steps,
                         currentDistance: pedometer.distance,
-                        targetDistance: viewModel.userData.targetDistance
+                        targetDistance: viewModel.userData?.targetDistance
                     )
                 }
                 else {
@@ -70,8 +81,8 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView(viewModel: HomeViewModel())
-}
+//#Preview {
+//    HomeView(viewModel: HomeViewModel())
+//}
 
 

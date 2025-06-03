@@ -164,6 +164,6 @@ struct ProfileView: View {
 
 
 
-#Preview {
-    ProfileView(viewModel: OnboardingViewModel())
-}
+//#Preview {
+//    ProfileView(viewModel: OnboardingViewModel())
+//}

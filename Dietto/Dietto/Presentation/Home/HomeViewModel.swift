@@ -32,7 +32,7 @@ final class HomeViewModel {
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
     
-    var userData: UserEntity
+    var userData: UserEntity?
     
     
     private let pedometerUsecase: PedometerUsecase
@@ -43,18 +43,24 @@ final class HomeViewModel {
     
     init(
         pedometerUsecase: PedometerUsecase = PedometerUsecaseImpl(pedometer: PedometerRepositoryImpl()),
-        weightHistroyUsecase: WeightHistoryUsecase = WeightHistoryUsecaseImpl(repository: StorageRepositoryImpl<WeightDTO>()),
-        userStorageUsecase: UserStorageUsecase = UserStorageUsecaseImpl(storage: StorageRepositoryImpl<UserDTO>())
+        weightHistroyUsecase: WeightHistoryUsecase,
+        userStorageUsecase: UserStorageUsecase
         
     ) {
         self.pedometerUsecase = pedometerUsecase
         self.weightHistroyUsecase = weightHistroyUsecase
         self.userStorageUsecase = userStorageUsecase
-        if let userData = userStorageUsecase.getUserData() {
-            self.userData = userData
-#warning("데이터 없으면 온보딩으로")
+        
+        Task {
+            do {
+                let userData = try await userStorageUsecase.getUserData()
+                await MainActor.run { self.userData = userData }
+            }
+            catch {
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기 (데이터 없으면 온보딩으로 or fatal..?")
+            }
         }
-        else { fatalError("데이터 없음") }
+        
         bodyScaleHistoryFetch(type: chartTimeType)
     }
     
@@ -74,27 +80,44 @@ final class HomeViewModel {
     }
     
     func updateCurrentBodyScale(_ value: String) {
-        guard let value = Int(value) else {
+        guard let value = Int(value), let id = userData?.id else {
             print("\(#function) : FAILED to update current body scale")
             return
         }
+        Task {
+            do {
+                try await weightHistroyUsecase.addNewWeight(weight: value, date: Date())
+                try await userStorageUsecase.updateCurrentWeight(id: id, currentWeight: value)
+                await MainActor.run {
+                    userData?.currentWeight = value
+                    bodyScaleHistoryFetch(type: chartTimeType)
+                }
+            }
+            catch {
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
+        }
         
-        #warning("업데이트 한 날짜가 같으면 기존 데이터 replace")
-        weightHistroyUsecase.addNewWeight(weight: value, date: Date())
-        userStorageUsecase.updateCurrentWeight(id: userData.id, currentWeight: value)
-        userData.currentWeight = value
-        bodyScaleHistoryFetch(type: chartTimeType)
     }
     
     func bodyScaleHistoryFetch(type: ChartTimeType) {
-        chartTimeType = type
-        let result = weightHistroyUsecase.getWeightHistory(chartRange: type)
-        
-        if result.count >= type.limitDataCount() {
-            bodyScaleHistory = result
-            chartAnimate()
+        Task {
+            do {
+                let result = try await weightHistroyUsecase.getWeightHistory(chartRange: type)
+                await MainActor.run {
+                    chartTimeType = type
+                    guard result.count >= type.limitDataCount() else {
+                        bodyScaleHistory = []
+                        return
+                    }
+                    bodyScaleHistory = result
+                    chartAnimate()
+                }
+            }
+            catch {
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
         }
-        else { bodyScaleHistory = [] }
     }
     
     private func chartAnimate() {
@@ -113,37 +136,3 @@ final class HomeViewModel {
         }
     }
 }
-
-
-//        result.forEach { item in
-//            print(item)
-//        }
-//        print()
-//        if type == .weekly {
-//            result = [
-//                WeightEntity(date: Date()-(86400*3), scale: 70),
-//                WeightEntity(date: Date()-(86400*2), scale: 65),
-//                WeightEntity(date: Date()-86400, scale: 55),
-//                WeightEntity(date: Date(), scale: 50),
-//                WeightEntity(date: Date()+86400, scale: 55)
-//            ]
-//        }
-//        else if type == .monthly {
-//            result = [
-//                WeightEntity(date: Date()-(86400*3), scale: 70),
-//                WeightEntity(date: Date()-(86400*2), scale: 65),
-//                WeightEntity(date: Date()-86400, scale: 55),
-//                WeightEntity(date: Date(), scale: 50),
-//                WeightEntity(date: Date()+86400, scale: 55),
-//                WeightEntity(date: Date()+(86400*2), scale: 63),
-//                WeightEntity(date: Date()+(86400*3), scale: 72),
-//                WeightEntity(date: Date()+(86400*4), scale: 82),
-//                WeightEntity(date: Date()+(86400*5), scale: 72),
-//                WeightEntity(date: Date()+(86400*6), scale: 62),
-//                WeightEntity(date: Date()+(86400*7), scale: 52),
-//                WeightEntity(date: Date()+(86400*8), scale: 52),
-//                WeightEntity(date: Date()+(86400*9), scale: 52),
-//                WeightEntity(date: Date()+(86400*10), scale: 52),
-//                WeightEntity(date: Date()+(86400*11), scale: 58)
-//            ]
-//        }
