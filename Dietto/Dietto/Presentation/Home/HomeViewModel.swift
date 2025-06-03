@@ -27,14 +27,15 @@ enum ChartTimeType: String, CaseIterable {
 
 @Observable
 final class HomeViewModel {
-    var isAnimating: Bool = false
     var chartTimeType: ChartTimeType = .weekly
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
     var currentDistance: Float {
         get {
-            if let distance = pedometerData?.distance {
-                return distance <= Float(userData.targetDistance) ? distance : Float(userData.targetDistance)
+            if let distance = pedometerData?.distance,
+               let targetDistance = userData?.targetDistance
+            {
+                return distance < Float(targetDistance) ? distance : Float(targetDistance)
             }
             else { return 0 }
         }
@@ -59,26 +60,31 @@ final class HomeViewModel {
         self.weightHistroyUsecase = weightHistroyUsecase
         self.userStorageUsecase = userStorageUsecase
         
-        Task {
+//        getUserData()
+        
+        
+        self.userStorageUsecase.changeEvent
+            .sink {[weak self] in
+                self?.getUserData()
+                
+            }
+            .store(in: &bag)
+    }
+    
+    private func getUserData() {
+        Task { [weak self] in
             do {
-                let userData = try await userStorageUsecase.getUserData()
-                await MainActor.run { self.userData = userData }
+                let userData = try await self?.userStorageUsecase.getUserData()
+                await MainActor.run { [weak self] in
+                    self?.userData = userData
+                    self?.bodyScaleHistoryFetch(type: self?.chartTimeType ?? .weekly)
+                    #warning("이벤트 받았을때 차트 업데이트 되게 만들어야함.")
+                }
             }
             catch {
 #warning("여기에 에러핸들링 토스트 팝업 등 넣기 (데이터 없으면 온보딩으로 or fatal..?")
             }
         }
-        
-        bodyScaleHistoryFetch(type: chartTimeType)
-        
-        self.userStorageUsecase.changeEvent
-            .receive(on: DispatchQueue.main)
-            .sink {[weak self] in
-                if let data = self?.userStorageUsecase.getUserData() {
-                    self?.userData = data
-                }
-            }
-            .store(in: &bag)
     }
     
     func fetchPedometer() {
@@ -105,7 +111,7 @@ final class HomeViewModel {
         }
         Task {
             do {
-                try await userStorageUsecase.updateCurrentWeight(id: userData.id, currentWeight: value)
+                try await userStorageUsecase.updateCurrentWeight(id: id, currentWeight: value)
                 if compareDate(Date(), lastModifiedDate) {
                     try await weightHistroyUsecase.updateWeightByDate(weight: value, date: lastModifiedDate)
                 }
@@ -145,15 +151,15 @@ final class HomeViewModel {
     
     private func chartAnimate() {
         guard !bodyScaleHistory.isEmpty else { return }
-        isAnimating = true
+
         for (index, _) in bodyScaleHistory.enumerated() {
             let delay = Double(index) * 0.05
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
                 withAnimation(.bouncy) {
-                    self.bodyScaleHistory[index].isAnimated = true
+                    self?.bodyScaleHistory[index].isAnimated = true
                 }
-                if index >= self.bodyScaleHistory.count - 1 {
-                    self.isAnimating = false
+                if let count = self?.bodyScaleHistory.count,
+                   index >= count - 1 {
                 }
             }
         }

@@ -44,37 +44,33 @@ final class OnboardingViewModel: ObservableObject {
         self.weightHistroyUsecase = weightHistroyUsecase
         self.userStorageUsecase = userStorageUsecase
         
+//        getUserData()
+        
+        self.userStorageUsecase.changeEvent
+            .sink {[weak self] in
+                self?.getUserData()
+            }
+            .store(in: &bag)
+    }
+    
+    private func getUserData() {
         Task {
             do {
-                let user = try await userStorageUsecase.getUserData()
+                let user = try await self.userStorageUsecase.getUserData()
                 await MainActor.run {
-                    currentUserId = user.id
-                    name = user.name
-                    gender = user.gender
-                    height = String(user.height)
-                    weight = String(user.currentWeight)
-                    targetWeight = user.targetWeight
-                    targetDistance = user.targetDistance
+                    self.currentUserId = user.id
+                    self.name = user.name
+                    self.gender = user.gender
+                    self.height = String(user.height)
+                    self.weight = String(user.currentWeight)
+                    self.targetWeight = user.targetWeight
+                    self.targetDistance = user.targetDistance
                 }
             }
             catch {
                 #warning("여기에 에러핸들링 토스트 팝업 등 넣기")
             }
         }
-        self.userStorageUsecase.changeEvent
-            .receive(on: DispatchQueue.main)
-            .sink {[weak self] in
-                if let user = self?.userStorageUsecase.getUserData() {
-                    self?.currentUserId = user.id
-                    self?.name = user.name
-                    self?.gender = user.gender
-                    self?.height = String(user.height)
-                    self?.weight = String(user.currentWeight)
-                    self?.targetWeight = user.targetWeight
-                    self?.targetDistance = user.targetDistance
-                }
-            }
-            .store(in: &bag)
     }
     
     //MARK: - 프로필 설정

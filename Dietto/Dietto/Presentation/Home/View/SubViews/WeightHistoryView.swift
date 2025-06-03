@@ -38,10 +38,7 @@ struct WeightHistoryView: View {
                 Menu {
                     ForEach(ChartTimeType.allCases, id: \.self) { type in
                         Button(type.rawValue) {
-                            if !viewModel.isAnimating {
-                                viewModel.bodyScaleHistoryFetch(type: type)
-//                                viewModel.chartAnimate()
-                            }
+                            viewModel.bodyScaleHistoryFetch(type: type)
                         }
                     }
                 } label: {

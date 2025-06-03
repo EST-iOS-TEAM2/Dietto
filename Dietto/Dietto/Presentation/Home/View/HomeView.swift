@@ -29,7 +29,7 @@ struct HomeView: View {
                     if let pedometer = viewModel.pedometerData {
                         ActivityTable(
                             currentSteps: pedometer.steps,
-                            currentDistance: pedometer.distance,
+                            currentDistance: viewModel.currentDistance,
                             targetDistance: userData.targetDistance
                         )
                     }
