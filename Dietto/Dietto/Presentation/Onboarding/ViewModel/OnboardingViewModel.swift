@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 final class OnboardingViewModel: ObservableObject {
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
@@ -34,6 +35,7 @@ final class OnboardingViewModel: ObservableObject {
     
     private let userStorageUsecase: UserStorageUsecase
     private let weightHistroyUsecase: WeightHistoryUsecase
+    private var bag = Set<AnyCancellable>()
     
     init(
         weightHistroyUsecase: WeightHistoryUsecase,
@@ -59,7 +61,20 @@ final class OnboardingViewModel: ObservableObject {
                 #warning("여기에 에러핸들링 토스트 팝업 등 넣기")
             }
         }
-        
+        self.userStorageUsecase.changeEvent
+            .receive(on: DispatchQueue.main)
+            .sink {[weak self] in
+                if let user = self?.userStorageUsecase.getUserData() {
+                    self?.currentUserId = user.id
+                    self?.name = user.name
+                    self?.gender = user.gender
+                    self?.height = String(user.height)
+                    self?.weight = String(user.currentWeight)
+                    self?.targetWeight = user.targetWeight
+                    self?.targetDistance = user.targetDistance
+                }
+            }
+            .store(in: &bag)
     }
     
     //MARK: - 프로필 설정

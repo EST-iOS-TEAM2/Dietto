@@ -18,18 +18,20 @@ struct ActivityTable: View {
                 .padding([.leading, .trailing], 8)
             
             VStack {
-                Gauge(value: currentDistance, in: 0...Float(targetDistance)) {
-                    Text("Goal")
-                        .font(.pretendardBold12)
-                        .foregroundStyle(.text)
-                }
-                .animation(.easeInOut(duration: 0.25), value: currentDistance)
-                .gaugeStyle(.accessoryCircularCapacity)
-                .tint(.appMain)
-                .scaleEffect(2)
-                .padding()
+                Gauge(
+                    value: currentDistance,
+                    in: 0...Float(targetDistance)) {
+                        Text("Goal")
+                            .font(.pretendardBold12)
+                            .foregroundStyle(.text)
+                    }
+                    .animation(.easeInOut(duration: 0.25), value: currentDistance)
+                    .gaugeStyle(.accessoryCircularCapacity)
+                    .tint(.appMain)
+                    .scaleEffect(2)
+                    .padding()
                 
-//                Divider().padding(0)
+                //                Divider().padding(0)
                 
                 HStack(spacing: 4) {
                     Text("걸음 수").font(.pretendardBold20).foregroundStyle(.text)

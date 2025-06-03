@@ -11,6 +11,7 @@ protocol WeightHistoryUsecase {
     func addNewWeight(weight: Int, date: Date) async throws
     func getWeightHistory(chartRange: ChartTimeType) async throws -> [WeightEntity]
     func deleteAllWeightHistory() async throws
+    func updateWeightByDate(weight: Int, date: Date) async throws
 }
 
 final class WeightHistoryUsecaseImpl<Repository: AnotherStorageRepository>: WeightHistoryUsecase where Repository.T == WeightDTO {
@@ -38,6 +39,18 @@ final class WeightHistoryUsecaseImpl<Repository: AnotherStorageRepository>: Weig
             throw StorageError.fetchError
         }
     }
+  
+  func updateWeightByDate(weight: Int, date: Date) async throws {
+        do {
+            let predicate = #Predicate<WeightDTO> { $0.date == date }
+            try await storage.updateData(predicate: predicate) { dto in
+                dto.scale = weight
+            }
+        }
+        catch {
+            print("\(#function) : \(error.localizedDescription)")
+        }
+    }
     
     func deleteAllWeightHistory() async throws {
         do { try await storage.deleteAll()}
@@ -46,6 +59,7 @@ final class WeightHistoryUsecaseImpl<Repository: AnotherStorageRepository>: Weig
             throw StorageError.deleteError
         }
     }
+      
     
     private func getDateRange(range: ChartTimeType) -> Predicate<WeightDTO> {
         let now = Date()

@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 protocol UserStorageUsecase {
+    var changeEvent: CurrentValueSubject<Void, Never> { get }
+  
     func createUserData(_ user: UserEntity) async throws
     func getUserData() async throws -> UserEntity
     func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int) async throws
@@ -18,6 +21,7 @@ protocol UserStorageUsecase {
 
 final class UserStorageUsecaseImpl<Repository: AnotherStorageRepository>: UserStorageUsecase where Repository.T == UserDTO {
     private let storage: Repository
+    var changeEvent: CurrentValueSubject<Void, Never> = .init(())
     
     init(storage: Repository) {
         self.storage = storage
@@ -71,6 +75,7 @@ final class UserStorageUsecaseImpl<Repository: AnotherStorageRepository>: UserSt
                 dto.gender = gender.rawValue
                 dto.height = height
             }
+            changeEvent.send()
         }
         catch {
             print(#function, error.localizedDescription)
@@ -85,6 +90,7 @@ final class UserStorageUsecaseImpl<Repository: AnotherStorageRepository>: UserSt
                 dto.targetWeight = weight
                 dto.targetDistance = distance
             }
+            changeEvent.send()
         }
         catch {
             print(#function, error.localizedDescription)
@@ -98,6 +104,7 @@ final class UserStorageUsecaseImpl<Repository: AnotherStorageRepository>: UserSt
             try await storage.updateData(predicate: predicate) { dto in
                 dto.currentWeight = currentWeight
             }
+            changeEvent.send()
         }
         catch {
             print(#function, error.localizedDescription)

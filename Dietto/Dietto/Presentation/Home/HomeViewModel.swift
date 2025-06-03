@@ -31,6 +31,14 @@ final class HomeViewModel {
     var chartTimeType: ChartTimeType = .weekly
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
+    var currentDistance: Float {
+        get {
+            if let distance = pedometerData?.distance {
+                return distance <= Float(userData.targetDistance) ? distance : Float(userData.targetDistance)
+            }
+            else { return 0 }
+        }
+    }
     
     var userData: UserEntity?
     
@@ -39,7 +47,7 @@ final class HomeViewModel {
     private let weightHistroyUsecase: WeightHistoryUsecase
     private let userStorageUsecase: UserStorageUsecase
     private var bag = Set<AnyCancellable>()
-        
+    
     
     init(
         pedometerUsecase: PedometerUsecase = PedometerUsecaseImpl(pedometer: PedometerRepositoryImpl()),
@@ -62,10 +70,19 @@ final class HomeViewModel {
         }
         
         bodyScaleHistoryFetch(type: chartTimeType)
+        
+        self.userStorageUsecase.changeEvent
+            .receive(on: DispatchQueue.main)
+            .sink {[weak self] in
+                if let data = self?.userStorageUsecase.getUserData() {
+                    self?.userData = data
+                }
+            }
+            .store(in: &bag)
     }
     
     func fetchPedometer() {
-        guard bag.isEmpty else { return }
+        //        guard bag.isEmpty else { return }
         pedometerUsecase.startLivePedometerData()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] pedometer in
@@ -80,24 +97,30 @@ final class HomeViewModel {
     }
     
     func updateCurrentBodyScale(_ value: String) {
-        guard let value = Int(value), let id = userData?.id else {
+        guard let value = Int(value),
+              let id = userData?.id,
+              let lastModifiedDate = bodyScaleHistory.last?.date else {
             print("\(#function) : FAILED to update current body scale")
             return
         }
         Task {
             do {
-                try await weightHistroyUsecase.addNewWeight(weight: value, date: Date())
-                try await userStorageUsecase.updateCurrentWeight(id: id, currentWeight: value)
-                await MainActor.run {
-                    userData?.currentWeight = value
-                    bodyScaleHistoryFetch(type: chartTimeType)
+                try await userStorageUsecase.updateCurrentWeight(id: userData.id, currentWeight: value)
+                if compareDate(Date(), lastModifiedDate) {
+                    try await weightHistroyUsecase.updateWeightByDate(weight: value, date: lastModifiedDate)
                 }
+                else {
+                    try await weightHistroyUsecase.addNewWeight(weight: value, date: Date())
+                }
+                await MainActor.run {
+                    userData?.currentWeight = value                  
+                }
+                bodyScaleHistoryFetch(type: chartTimeType)
             }
             catch {
 #warning("여기에 에러핸들링 토스트 팝업 등 넣기")
             }
         }
-        
     }
     
     func bodyScaleHistoryFetch(type: ChartTimeType) {
@@ -134,5 +157,12 @@ final class HomeViewModel {
                 }
             }
         }
+    }
+    
+    private func compareDate(_ date1: Date, _ date2: Date) -> Bool {
+        let date1 = Calendar.current.dateComponents([.year, .month, .day], from: date1)
+        let date2 = Calendar.current.dateComponents([.year, .month, .day], from: date2)
+        
+        return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day
     }
 }
