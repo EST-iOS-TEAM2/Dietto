@@ -21,19 +21,21 @@ final class InterestsUsecaseImpl<Repository: AnotherStorageRepository>: Interest
     }
     
     func insertInterests(_ interests: InterestEntity) async throws {
-        try await repository.insertData(data: InterestsDTO(title: interests.title))
+        do { try await repository.insertData(data: InterestsDTO(title: interests.title)) }
+        catch {
+            print(#function, error.localizedDescription)
+            throw StorageError.insertError
+        }
     }
     
     func deleteInterests(_ interests: InterestEntity) async throws {
-        do {
-            let title = interests.title
-            let predicate = #Predicate<InterestsDTO> { $0.title == title }
-            try await repository.deleteData(where: predicate)
-        }
+        let title = interests.title
+        let predicate = #Predicate<InterestsDTO> { $0.title == title }
+        do { try await repository.deleteData(where: predicate) }
         catch {
-            print("\(#function) : \(error.localizedDescription)")
+            print(#function, error.localizedDescription)
+            throw StorageError.deleteError
         }
-        
     }
     
     func fetchInterests() async throws -> [InterestEntity] {
@@ -42,8 +44,8 @@ final class InterestsUsecaseImpl<Repository: AnotherStorageRepository>: Interest
             return result.map{InterestEntity(title: $0.title)}
         }
         catch {
-            print("\(#function) : \(error.localizedDescription)")
-            return []
+            print(#function, error.localizedDescription)
+            throw StorageError.fetchError
         }
     }
 }

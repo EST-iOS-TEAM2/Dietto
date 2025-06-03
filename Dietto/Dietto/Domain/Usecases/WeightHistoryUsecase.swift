@@ -8,40 +8,42 @@
 import Foundation
 
 protocol WeightHistoryUsecase {
-    func addNewWeight(weight: Int, date: Date)
-    func getWeightHistory(chartRange: ChartTimeType) -> [WeightEntity]
-    func deleteAllWeightHistory()
+    func addNewWeight(weight: Int, date: Date) async throws
+    func getWeightHistory(chartRange: ChartTimeType) async throws -> [WeightEntity]
+    func deleteAllWeightHistory() async throws
 }
 
-final class WeightHistoryUsecaseImpl<Repository: StorageRepository>: WeightHistoryUsecase where Repository.T == WeightDTO {
+final class WeightHistoryUsecaseImpl<Repository: AnotherStorageRepository>: WeightHistoryUsecase where Repository.T == WeightDTO {
     private let storage: Repository
     
     init(repository: Repository) {
         self.storage = repository
     }
-    func addNewWeight(weight: Int, date: Date) {
-        storage.insertData(data: WeightDTO(date: date, scale: weight))
+    func addNewWeight(weight: Int, date: Date) async throws {
+        do { try await storage.insertData(data: WeightDTO(date: date, scale: weight)) }
+        catch {
+            print(#function, error.localizedDescription)
+            throw StorageError.insertError
+        }
     }
     
-    func getWeightHistory(chartRange: ChartTimeType) -> [WeightEntity] {
-        let predicate = getDateRange(range: chartRange)
-        
+    func getWeightHistory(chartRange: ChartTimeType) async throws -> [WeightEntity] {
         do {
-            let result = try storage.fetchData(where: predicate, sort: [])
+            let predicate = getDateRange(range: chartRange)
+            let result = try await storage.fetchData(where: predicate, sort: [])
             return result.map{$0.convertEntity()}
         }
         catch {
-            print("\(#function) : \(error.localizedDescription)")
-            return []
+            print(#function, error.localizedDescription)
+            throw StorageError.fetchError
         }
     }
     
-    func deleteAllWeightHistory() {
-        do {
-            try storage.deleteAll()
-        }
+    func deleteAllWeightHistory() async throws {
+        do { try await storage.deleteAll()}
         catch {
-            print("\(#function) : \(error.localizedDescription)")
+            print(#function, error.localizedDescription)
+            throw StorageError.deleteError
         }
     }
     
