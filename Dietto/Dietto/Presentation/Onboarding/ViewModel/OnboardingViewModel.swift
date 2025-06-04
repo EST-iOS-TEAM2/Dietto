@@ -44,8 +44,6 @@ final class OnboardingViewModel: ObservableObject {
         self.weightHistroyUsecase = weightHistroyUsecase
         self.userStorageUsecase = userStorageUsecase
         
-//        getUserData()
-        
         self.userStorageUsecase.changeEvent
             .sink {[weak self] in
                 self?.getUserData()
@@ -97,9 +95,16 @@ final class OnboardingViewModel: ObservableObject {
     private func editProfile(currentUserId: UUID, weight: Int, height: Int) {
         Task {
             do {
+                if let lastModifiedDate = try await weightHistroyUsecase.getWeightHistory(chartRange: .weekly).last?.date,
+                   lastModifiedDate.isSameDateWithoutTime(date: Date())
+                {
+                    try await weightHistroyUsecase.updateWeightByDate(weight: weight, date: lastModifiedDate)
+                }
+                
                 try await userStorageUsecase.updateUserDefaultData(id: currentUserId, name: name, gender: gender, height: height)
                 try await userStorageUsecase.updateGoal(id: currentUserId, weight: targetWeight, distance: targetDistance)
                 try await userStorageUsecase.updateCurrentWeight(id: currentUserId, currentWeight: weight)
+                
                 await MainActor.run { isEditActive = false }
             }
             catch {

@@ -60,13 +60,10 @@ final class HomeViewModel {
         self.weightHistroyUsecase = weightHistroyUsecase
         self.userStorageUsecase = userStorageUsecase
         
-//        getUserData()
-        
-        
         self.userStorageUsecase.changeEvent
             .sink {[weak self] in
                 self?.getUserData()
-                
+                self?.bodyScaleHistoryFetch(type: self?.chartTimeType ?? .weekly)
             }
             .store(in: &bag)
     }
@@ -77,8 +74,6 @@ final class HomeViewModel {
                 let userData = try await self?.userStorageUsecase.getUserData()
                 await MainActor.run { [weak self] in
                     self?.userData = userData
-                    self?.bodyScaleHistoryFetch(type: self?.chartTimeType ?? .weekly)
-                    #warning("이벤트 받았을때 차트 업데이트 되게 만들어야함.")
                 }
             }
             catch {
@@ -112,7 +107,7 @@ final class HomeViewModel {
         Task {
             do {
                 try await userStorageUsecase.updateCurrentWeight(id: id, currentWeight: value)
-                if compareDate(Date(), lastModifiedDate) {
+                if lastModifiedDate.isSameDateWithoutTime(date: Date()) {
                     try await weightHistroyUsecase.updateWeightByDate(weight: value, date: lastModifiedDate)
                 }
                 else {
@@ -163,12 +158,5 @@ final class HomeViewModel {
                 }
             }
         }
-    }
-    
-    private func compareDate(_ date1: Date, _ date2: Date) -> Bool {
-        let date1 = Calendar.current.dateComponents([.year, .month, .day], from: date1)
-        let date2 = Calendar.current.dateComponents([.year, .month, .day], from: date2)
-        
-        return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day
     }
 }
