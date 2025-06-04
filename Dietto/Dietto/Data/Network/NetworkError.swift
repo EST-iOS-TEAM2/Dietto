@@ -46,8 +46,8 @@ public enum NetworkError: LocalizedError {
 }
 
 extension NetworkError {
-    var asToast: Toast {
-        return Toast(
+    var asToast: ToastEntity {
+        return ToastEntity(
             type: .error,
             title: "오류 발생",
             message: self.errorDescription ?? "알 수 없는 오류입니다.",

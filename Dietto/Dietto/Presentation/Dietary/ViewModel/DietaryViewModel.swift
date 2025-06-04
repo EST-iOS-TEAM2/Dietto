@@ -9,7 +9,7 @@ import SwiftUI
 
 class DietaryViewModel: ObservableObject {
     @Published var isPresneted : Bool = false //로딩 여부
-    @Published var toast: Toast? //toast팝업
+    @Published var toast: ToastEntity? //toast팝업
     @Published var presentIngredients: [IngredientEntity] = []     //현재
     @Published var pastIngredients : [IngredientEntity] = [
         IngredientEntity(ingredient: "오징어"),
@@ -82,7 +82,7 @@ class DietaryViewModel: ObservableObject {
                 let result = try await usecase.fetchRecommend(ingredients: ingredients)
                 await MainActor.run {
                     self.recommendList = result
-                    self.toast = Toast(
+                    self.toast = ToastEntity(
                         type: .success,
                         title: "완료",
                         message: "식단 추천을 완료하였습니다.",
@@ -97,7 +97,7 @@ class DietaryViewModel: ObservableObject {
                 }
             }catch {
                 await MainActor.run {
-                    self.toast = Toast(
+                    self.toast = ToastEntity(
                         type: .error,
                         title: "에러",
                         message: error.localizedDescription

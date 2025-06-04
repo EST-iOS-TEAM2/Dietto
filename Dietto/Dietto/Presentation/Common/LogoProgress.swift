@@ -93,33 +93,28 @@ struct LogoProgressModifier: ViewModifier {
     }
 }
 
-extension View {
-    func LogoProgressOverlay(isPresented: Binding<Bool>, message: String = "") -> some View {
-        self.modifier(LogoProgressModifier(isPresented: isPresented, message: message))
-    }
-}
 
-//MARK: - 프리뷰 하려고 임시로 만들어놓은 것.
-
-#Preview {
-    AnimatedLoadingPreview()
-}
-
-struct AnimatedLoadingPreview: View {
-    @State private var isAnimated = false
-    @State var message = "카리나카리나카리나카리나카리나"
-    
-    var body: some View {
-        LogoProgress(isAnimated: $isAnimated, message: message)
-            .onAppear {
-                withAnimation(
-                    .easeInOut
-                        .speed(0.3)
-                        .delay(0.3)
-                        .repeatForever(autoreverses: false)
-                ) {
-                    isAnimated = true
-                }
-            }
-    }
-}
+////MARK: - 프리뷰 하려고 임시로 만들어놓은 것.
+//
+//#Preview {
+//    AnimatedLoadingPreview()
+//}
+//
+//struct AnimatedLoadingPreview: View {
+//    @State private var isAnimated = false
+//    @State var message = "카리나카리나카리나카리나카리나"
+//    
+//    var body: some View {
+//        LogoProgress(isAnimated: $isAnimated, message: message)
+//            .onAppear {
+//                withAnimation(
+//                    .easeInOut
+//                        .speed(0.3)
+//                        .delay(0.3)
+//                        .repeatForever(autoreverses: false)
+//                ) {
+//                    isAnimated = true
+//                }
+//            }
+//    }
+//}

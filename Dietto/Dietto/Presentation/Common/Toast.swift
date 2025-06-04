@@ -34,13 +34,6 @@ extension ToastStyle {
     }
 }
 
-struct Toast: Equatable {
-    var type: ToastStyle
-    var title: String
-    var message: String
-    var duration: Double = 3
-}
-
 struct ToastView: View {
     var type: ToastStyle
     var title: String
@@ -88,7 +81,7 @@ struct ToastView: View {
 }
 
 struct ToastModifier: ViewModifier {
-    @Binding var toast: Toast?
+    @Binding var toast: ToastEntity?
     @State private var workItem: DispatchWorkItem?
     
     func body(content: Content) -> some View {
@@ -144,12 +137,6 @@ struct ToastModifier: ViewModifier {
         
         workItem?.cancel()
         workItem = nil
-    }
-}
-
-extension View {
-    func toastView(toast: Binding<Toast?>) -> some View {
-        self.modifier(ToastModifier(toast: toast))
     }
 }
 
