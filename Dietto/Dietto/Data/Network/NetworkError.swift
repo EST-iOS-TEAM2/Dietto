@@ -33,14 +33,25 @@ public enum NetworkError: LocalizedError {
             return "서버 오류가 발생했습니다. (\(code))"
         case .invalidResponse:
             return "서버 응답이 유효하지 않습니다."
-        case .decodingFailed(let error):
+        case .decodingFailed( _):
             return "잠시 후 다시 시도해주세요."
         case .requestCancelled:
             return "요청이 취소되었습니다."
-        case .unknown(let error):
+        case .unknown(let _):
             return "알 수 없는 에러가 발생했습니다. 관리자에게 문의하세요."
         case .unacceptableStatusCode:
             return "에러가 발생했습니다. 잠시후 다시 시도하세요."
         }
+    }
+}
+
+extension NetworkError {
+    var asToast: ToastEntity {
+        return ToastEntity(
+            type: .error,
+            title: "오류 발생",
+            message: self.errorDescription ?? "알 수 없는 오류입니다.",
+            duration: 3
+        )
     }
 }

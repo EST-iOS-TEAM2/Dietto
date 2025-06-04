@@ -8,11 +8,9 @@
 import SwiftUI
 
 class DietaryViewModel: ObservableObject {
-    
-    //현재
-    @Published var presentIngredients: [IngredientEntity] = []
-    
-    //과거
+    @Published var isPresneted : Bool = false //로딩 여부
+    @Published var toast: ToastEntity? //toast팝업
+    @Published var presentIngredients: [IngredientEntity] = []     //현재
     @Published var pastIngredients : [IngredientEntity] = [
         IngredientEntity(ingredient: "오징어"),
         IngredientEntity(ingredient: "꼴뚜기"),
@@ -76,19 +74,38 @@ class DietaryViewModel: ObservableObject {
     
     //MARK: - 현재 재료를 통해 식단 추천 받기.
     func fetchRecommendations(ingredients: [IngredientEntity]) {
+        
+        isPresneted = true
+        
         Task {
             do {
                 let result = try await usecase.fetchRecommend(ingredients: ingredients)
                 await MainActor.run {
                     self.recommendList = result
+                    self.toast = ToastEntity(
+                        type: .success,
+                        title: "완료",
+                        message: "식단 추천을 완료하였습니다.",
+                        duration: 2
+                    )
+                    isPresneted = false
                 }
-            } catch {
-                print(#file,#function,#line, error.localizedDescription)
+            } catch let error as NetworkError {
+                await MainActor.run {
+                    self.toast = error.asToast
+                    isPresneted = false
+                }
+            }catch {
+                await MainActor.run {
+                    self.toast = ToastEntity(
+                        type: .error,
+                        title: "에러",
+                        message: error.localizedDescription
+                    )
+                    isPresneted = false
+                }
             }
         }
+        
     }
-    
 }
-
-//            Thread.isMainThread
-//            MainActor.preconditionIsolated() //메인엑터 확인.

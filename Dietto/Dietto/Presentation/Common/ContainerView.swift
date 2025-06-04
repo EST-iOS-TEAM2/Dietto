@@ -10,7 +10,7 @@ import SwiftUI
 struct ContainerView<Content: View>: View {
     var paddingSize: CGFloat
     var height: CGFloat
-    let content: () -> Content  // ✅ 변수명은 소문자!
+    let content: () -> Content
     
     init(paddingSize: CGFloat, height: CGFloat, @ViewBuilder content: @escaping () -> Content) {
         self.paddingSize = paddingSize

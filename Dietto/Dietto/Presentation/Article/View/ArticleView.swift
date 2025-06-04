@@ -37,6 +37,7 @@ struct ArticleView: View {
                                 .background(Color.appMain)
                                 .clipShape(Capsule())
                         }
+                        
                     }
                     .padding([.leading, .trailing], 16)
                     Text("내 관심사")

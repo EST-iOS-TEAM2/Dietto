@@ -10,6 +10,7 @@ import SwiftUI
 final class ArticleViewModel: ObservableObject {
     @Published var selectedInterests: [InterestEntity] = []
     @Published var articles: [ArticleEntity] = []
+    @Published var isLoading : Bool = false
     
     private let alanUsecase: AlanUsecase
     private let storageUsecase: InterestsUsecase
@@ -64,6 +65,5 @@ final class ArticleViewModel: ObservableObject {
             addInterest(title)
             storageUsecase.insertInterests(InterestEntity(title: title))
         }
-        print(selectedInterests)
     }
 }

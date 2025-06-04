@@ -13,7 +13,6 @@ struct TutorialView: View {
     @StateObject var viewModel : OnboardingViewModel
     @Environment(\.dismiss) private var dismiss
     
-    
     var body: some View {
         ZStack {
             Color(.backGround).ignoresSafeArea(edges: .all)
