@@ -7,7 +7,7 @@
 
 import Foundation
 
-//MARK: - Usecase
+//MARK: - Interface
 
 protocol AlanUsecase {
     func fetchRecommend(ingredients: [IngredientEntity]) async throws -> [RecommendEntity]

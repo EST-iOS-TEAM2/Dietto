@@ -65,6 +65,5 @@ final class ArticleViewModel: ObservableObject {
             addInterest(title)
             storageUsecase.insertInterests(InterestEntity(title: title))
         }
-        print(selectedInterests)
     }
 }

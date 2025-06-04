@@ -94,6 +94,3 @@ class DietaryViewModel: ObservableObject {
     }
     
 }
-
-//            Thread.isMainThread
-//            MainActor.preconditionIsolated() //메인엑터 확인.

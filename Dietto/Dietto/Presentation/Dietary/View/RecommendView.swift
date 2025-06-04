@@ -80,7 +80,7 @@ struct RecommendView: View {
         .navigationTitle("추천 식사")
         .navigationBarTitleDisplayMode(.inline)
         .font(.pretendardBold16)
-        .LogoProgressOverlay(isPresented: $viewModel.isPresneted)
+        .LogoProgressOverlay(isPresented: $viewModel.isPresneted) //로딩
     }
 }
 

@@ -20,9 +20,6 @@ struct DietaryView: View {
     
     @State private var PushToRecommandView : Bool = false // 화면이동
     
-    
-#warning("상태값 관리.")
-    
     var body: some View {
         NavigationStack{
             ZStack{
@@ -56,7 +53,6 @@ struct DietaryView: View {
                                     dietartViewModel.addpresentIngredients(newfood)
                                     newfood = ""
                                 }
-                                
                             }
                             .font(.pretendardBold12)
                             .foregroundStyle(.white)
@@ -123,7 +119,6 @@ struct DietaryView: View {
                                     
                                     if !isFoldMyRefrigerlator{
                                         FlowLayout(spacing: 4, lineSpacing: 3, contentHeight: $myRefrigerlatorflowlayout) {
-                                            
                                             ForEach(dietartViewModel.pastIngredients) { ingredient in
                                                 PillText(text: ingredient.ingredient,
                                                          onAdd:{
@@ -176,7 +171,7 @@ struct DietaryView: View {
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 40)
-                                        
+                    
                 }
             }
             .navigationDestination(isPresented: $PushToRecommandView) {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-//MARK: - Alan Protocol
+//MARK: - Alan Interface
 protocol NetworkRepository {
     func fetch<T: Decodable>(promptType: PromptType, rawValues: [Any], outputType: T.Type) async throws -> T}
 
