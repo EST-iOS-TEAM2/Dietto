@@ -76,7 +76,7 @@ final class ArticleViewModel: ObservableObject {
         } else {
             addInterest(title)
             Task {
-                do { try await storageUsecase.deleteInterests(InterestEntity(title: title)) }
+                do { try await storageUsecase.insertInterests(InterestEntity(title: title)) }
                 catch {  }
 #warning("여기에 에러핸들링 토스트 팝업 등 넣기")
             }
