@@ -58,6 +58,7 @@ struct HomeView: View {
                             }
                     }
                 }
+                .toastView(toast: $viewModel.toastMessage)
                 .sheet(isPresented: $isTapModify, content: {
                     NavigationView {
                         WeightChangeView(viewModel: viewModel)

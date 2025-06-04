@@ -29,8 +29,9 @@ enum ChartTimeType: String, CaseIterable {
 final class HomeViewModel {
     var isLoading: Bool {
         get { userData == nil }
-        set { isLoading = newValue }
+        set {}
     }
+    var toastMessage: ToastEntity?
     var chartTimeType: ChartTimeType = .weekly
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
@@ -81,13 +82,15 @@ final class HomeViewModel {
                 }
             }
             catch {
+                await MainActor.run { [weak self] in
+                    self?.toastMessage = ToastEntity(type: .error, title: "유저 데이터 로드 에러", message: error.localizedDescription)
+                }
 #warning("여기에 에러핸들링 토스트 팝업 등 넣기 (데이터 없으면 온보딩으로 or fatal..?")
             }
         }
     }
     
     func fetchPedometer() {
-        //        guard bag.isEmpty else { return }
         pedometerUsecase.startLivePedometerData()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] pedometer in
@@ -117,13 +120,16 @@ final class HomeViewModel {
                 else {
                     try await weightHistroyUsecase.addNewWeight(weight: value, date: Date())
                 }
-                await MainActor.run {
-                    userData?.currentWeight = value                  
+                await MainActor.run { [weak self] in
+                    self?.userData?.currentWeight = value
+                    self?.toastMessage = ToastEntity(type: .success, title: "몸무게 업데이트 완료", message: "")
                 }
                 bodyScaleHistoryFetch(type: chartTimeType)
             }
             catch {
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                await MainActor.run { [weak self] in
+                    self?.toastMessage = ToastEntity(type: .error, title: "몸무게 업데이트 실패", message: error.localizedDescription)
+                }
             }
         }
     }
@@ -143,7 +149,9 @@ final class HomeViewModel {
                 }
             }
             catch {
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                await MainActor.run { [weak self] in
+                    self?.toastMessage = ToastEntity(type: .error, title: "차트 데이터 로드 실패", message: error.localizedDescription)
+                }
             }
         }
     }
