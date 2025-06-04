@@ -8,42 +8,44 @@
 import Foundation
 
 protocol InterestsUsecase {
-    func insertInterests(_ interests: InterestEntity)
-    func deleteInterests(_ interests: InterestEntity)
-    func fetchInterests() -> [InterestEntity]
+    func insertInterests(_ interests: InterestEntity) async throws
+    func deleteInterests(_ interests: InterestEntity) async throws
+    func fetchInterests() async throws -> [InterestEntity]
 }
 
-final class InterestsUsecaseImpl<Repository: StorageRepository>: InterestsUsecase where Repository.T == InterestsDTO {
+final class InterestsUsecaseImpl<Repository: AnotherStorageRepository>: InterestsUsecase where Repository.T == InterestsDTO {
     private let repository: Repository
     
     init(repository: Repository) {
         self.repository = repository
     }
     
-    func insertInterests(_ interests: InterestEntity) {
-        repository.insertData(data: InterestsDTO(title: interests.title))
-    }
-    
-    func deleteInterests(_ interests: InterestEntity) {
-        do {
-            let title = interests.title
-            let predicate = #Predicate<InterestsDTO> { $0.title == title }
-            try repository.deleteData(where: predicate)
-        }
+    func insertInterests(_ interests: InterestEntity) async throws {
+        do { try await repository.insertData(data: InterestsDTO(title: interests.title)) }
         catch {
-            print("\(#function) : \(error.localizedDescription)")
+            print(#function, error.localizedDescription)
+            throw StorageError.insertError
         }
-        
     }
     
-    func fetchInterests() -> [InterestEntity] {
+    func deleteInterests(_ interests: InterestEntity) async throws {
+        let title = interests.title
+        let predicate = #Predicate<InterestsDTO> { $0.title == title }
+        do { try await repository.deleteData(where: predicate) }
+        catch {
+            print(#function, error.localizedDescription)
+            throw StorageError.deleteError
+        }
+    }
+    
+    func fetchInterests() async throws -> [InterestEntity] {
         do {
-            let result = try repository.fetchData(where: nil, sort: [])
+            let result = try await repository.fetchData(where: nil, sort: [])
             return result.map{InterestEntity(title: $0.title)}
         }
         catch {
-            print("\(#function) : \(error.localizedDescription)")
-            return []
+            print(#function, error.localizedDescription)
+            throw StorageError.fetchError
         }
     }
 }

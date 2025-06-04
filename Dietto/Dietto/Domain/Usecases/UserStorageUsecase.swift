@@ -10,16 +10,16 @@ import Combine
 
 protocol UserStorageUsecase {
     var changeEvent: CurrentValueSubject<Void, Never> { get }
-    
-    func createUserData(_ user: UserEntity)
-    func getUserData() -> UserEntity?
-    func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int)
-    func updateGoal(id: UUID, weight: Int, distance: Int)
-    func updateCurrentWeight(id: UUID, currentWeight: Int)
-    func deleteUserData()
+  
+    func createUserData(_ user: UserEntity) async throws
+    func getUserData() async throws -> UserEntity
+    func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int) async throws
+    func updateGoal(id: UUID, weight: Int, distance: Int) async throws
+    func updateCurrentWeight(id: UUID, currentWeight: Int) async throws
+    func deleteUserData() async throws
 }
 
-final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUsecase where Repository.T == UserDTO {
+final class UserStorageUsecaseImpl<Repository: AnotherStorageRepository>: UserStorageUsecase where Repository.T == UserDTO {
     private let storage: Repository
     var changeEvent: CurrentValueSubject<Void, Never> = .init(())
     
@@ -27,7 +27,7 @@ final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUs
         self.storage = storage
     }
     
-    func createUserData(_ user: UserEntity) {
+    func createUserData(_ user: UserEntity) async throws {
         let data = UserDTO(
             id: user.id,
             name: user.name,
@@ -38,13 +38,17 @@ final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUs
             targetWeight: user.targetWeight,
             targetDistance: user.targetDistance,
         )
-        storage.insertData(data: data)
+        do { try await storage.insertData(data: data) }
+        catch {
+            print(#function, error.localizedDescription)
+            throw StorageError.insertError
+        }
     }
     
-    func getUserData() -> UserEntity? {
+    func getUserData() async throws -> UserEntity {
         do {
-            let users = try storage.fetchData(where: nil, sort: [])
-            guard let user = users.first else { return nil }
+            let users = try await storage.fetchData(where: nil, sort: [])
+            guard let user = users.first else { throw StorageError.fetchError }
             // UserDTO → UserEntity 변환
             return UserEntity(
                 id: user.id,
@@ -56,16 +60,17 @@ final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUs
                 targetWeight: user.targetWeight,
                 targetDistance: user.targetDistance,
             )
-        } catch {
-            print("\(#function) : \(error.localizedDescription)")
-            return nil
+        }
+        catch {
+            print(#function, error.localizedDescription)
+            throw StorageError.fetchError
         }
     }
     
-    func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int) {
-        let predicate = #Predicate<UserDTO> { $0.id == id }
+    func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int) async throws {
         do {
-            try storage.updateData(predicate: predicate) { dto in
+            let predicate = #Predicate<UserDTO> { $0.id == id }
+            try await storage.updateData(predicate: predicate) { dto in
                 dto.name = name
                 dto.gender = gender.rawValue
                 dto.height = height
@@ -73,46 +78,45 @@ final class UserStorageUsecaseImpl<Repository: StorageRepository>: UserStorageUs
             changeEvent.send()
         }
         catch {
-            print("\(#function) : \(error.localizedDescription)")
+            print(#function, error.localizedDescription)
+            throw StorageError.updateError
         }
     }
     
-    func updateGoal(id: UUID, weight: Int, distance: Int) {
-        let predicate = #Predicate<UserDTO> { $0.id == id }
+    func updateGoal(id: UUID, weight: Int, distance: Int) async throws {
         do {
-            try storage.updateData(predicate: predicate) { dto in
+            let predicate = #Predicate<UserDTO> { $0.id == id }
+            try await storage.updateData(predicate: predicate) { dto in
                 dto.targetWeight = weight
                 dto.targetDistance = distance
             }
             changeEvent.send()
         }
         catch {
-            print("\(#function) : \(error.localizedDescription)")
+            print(#function, error.localizedDescription)
+            throw StorageError.updateError
         }
     }
     
-    func updateCurrentWeight(id: UUID, currentWeight: Int) {
-        let predicate = #Predicate<UserDTO> { $0.id == id }
+    func updateCurrentWeight(id: UUID, currentWeight: Int) async throws {
         do {
-            try storage.updateData(predicate: predicate) { dto in
+            let predicate = #Predicate<UserDTO> { $0.id == id }
+            try await storage.updateData(predicate: predicate) { dto in
                 dto.currentWeight = currentWeight
             }
             changeEvent.send()
         }
         catch {
-            print("\(#function) : \(error.localizedDescription)")
+            print(#function, error.localizedDescription)
+            throw StorageError.deleteError
         }
     }
     
-    func deleteUserData() {
-        do {
-            try storage.deleteAll()
-        }
+    func deleteUserData() async throws {
+        do { try await storage.deleteAll() }
         catch {
-            print("\(#function) : \(error.localizedDescription)")
+            print(#function, error.localizedDescription)
+            throw StorageError.deleteError
         }
-        
     }
-    
-    
 }

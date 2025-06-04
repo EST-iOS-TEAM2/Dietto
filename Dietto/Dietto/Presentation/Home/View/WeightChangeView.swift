@@ -24,8 +24,8 @@ struct WeightChangeView: View {
             Spacer()
             
             HStack(spacing: 2) {
-                ForEach(value, id: \.self) { item in
-                    Text(item)
+                ForEach(value.indices, id: \.self) { index in
+                    Text(value[index])
                         .contentTransition(.interpolate)
                         .transition(
                             .asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top))

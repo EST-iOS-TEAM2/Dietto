@@ -23,11 +23,20 @@ final class ArticleViewModel: ObservableObject {
     
     init(
         alanUsecase: AlanUsecase = AlanUsecaseImpl(repository: NetworkRepositoryImpl()),
-        storageUsecase: InterestsUsecase = InterestsUsecaseImpl(repository: StorageRepositoryImpl<InterestsDTO>())
+        storageUsecase: InterestsUsecase /* = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>() */
     ) {
         self.alanUsecase = alanUsecase
         self.storageUsecase = storageUsecase
-        selectedInterests = storageUsecase.fetchInterests()
+        
+        Task {
+            do {
+                let result = try await storageUsecase.fetchInterests()
+                await MainActor.run { self.selectedInterests = result }
+            }
+            catch {
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
+        }
     }
     
     // MARK: - 아티클 로드
@@ -38,20 +47,20 @@ final class ArticleViewModel: ObservableObject {
                 await MainActor.run{ articles = result }
             }
             catch {
-                
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
             }
         }
         
     }
     
     // MARK: - 관심사 추가 / 삭제
-    func addInterest(_ title: String) {
+    private func addInterest(_ title: String) {
         let entity = InterestEntity(title: title)
         guard !selectedInterests.contains(where: { $0.title == title }) else { return }
         selectedInterests.append(entity)
     }
     
-    func removeInterest(_ title: String) {
+    private func removeInterest(_ title: String) {
         if let index = selectedInterests.firstIndex(where: { $0.title == title }) {
             selectedInterests.remove(at: index)
         }
@@ -60,10 +69,19 @@ final class ArticleViewModel: ObservableObject {
     func toggleInterest(_ title: String) {
         if selectedInterests.contains(where: { $0.title == title }) {
             removeInterest(title)
-            storageUsecase.deleteInterests(InterestEntity(title: title))
+            Task {
+                do { try await storageUsecase.deleteInterests(InterestEntity(title: title))}
+                catch {  }
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
         } else {
             addInterest(title)
-            storageUsecase.insertInterests(InterestEntity(title: title))
+            Task {
+                do { try await storageUsecase.insertInterests(InterestEntity(title: title)) }
+                catch {  }
+#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+            }
+            
         }
     }
 }
