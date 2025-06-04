@@ -11,7 +11,7 @@ import Foundation
 protocol NetworkRepository {
     func fetch<T: Decodable>(promptType: PromptType, rawValues: [Any], outputType: T.Type) async throws -> T}
 
-//MARK: - Alan Protocol Implement
+//MARK: - Alan Implement
 final class NetworkRepositoryImpl: NetworkRepository {
     
     private let promptManager: PromptManager

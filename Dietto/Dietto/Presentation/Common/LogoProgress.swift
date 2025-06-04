@@ -9,7 +9,8 @@ import SwiftUI
 
 struct LogoProgress: View {
     @Binding var isAnimated: Bool
-    var width: CGFloat = 100
+    var width: CGFloat = 190
+    var message : String
     
     var body: some View {
         VStack {
@@ -18,16 +19,30 @@ struct LogoProgress: View {
                 //가려진 뷰
                 VStack(spacing: 3) {
                     Text("Dietto")
-                        .font(.NerkoOne40)
+                        .font(.NerkoOne80)
+                        .frame(width: width)
+                        .scaledToFit()
+                        .foregroundStyle(.black.opacity(0.3))
+                    Text(message)
+                        .font(.pretendardBlack12)
                         .frame(width: width)
                         .scaledToFit()
                         .foregroundStyle(.black.opacity(0.3))
                 }
-                
                 //진행중인 뷰
                 VStack(spacing: 3) {
                     Text("Dietto")
-                        .font(.NerkoOne40)
+                        .font(.NerkoOne80)
+                        .frame(width: width)
+                        .scaledToFit()
+                        .foregroundStyle(.appMain)
+                        .mask {
+                            Rectangle()
+                                .frame(width: isAnimated ? width : 0)
+                                .offset(x: isAnimated ? 0 : -width)
+                        }
+                    Text(message)
+                        .font(.pretendardBlack12)
                         .frame(width: width)
                         .scaledToFit()
                         .foregroundStyle(.appMain)
@@ -41,7 +56,7 @@ struct LogoProgress: View {
             Spacer()
         }
         .frame(maxWidth: .infinity)
-        .background(Color.black.opacity(0.01))
+        .background(Color.black.opacity(0.25))
     }
 }
 //MARK: - ViewModifer
@@ -49,6 +64,7 @@ struct LogoProgress: View {
 struct LogoProgressModifier: ViewModifier {
     @Binding var isPresented: Bool
     @State private var isAnimated = false
+    @State var message: String = "TEST"
     
     var speed: Double = 0.3
     var delayTime: Double = 0.3
@@ -61,7 +77,7 @@ struct LogoProgressModifier: ViewModifier {
                     .fill(Color.black.opacity(0.3))
                     .ignoresSafeArea()
                 
-                LogoProgress(isAnimated: $isAnimated)
+                LogoProgress(isAnimated: $isAnimated, message: message)
                     .onAppear {
                         isAnimated = true
                     }
@@ -78,8 +94,8 @@ struct LogoProgressModifier: ViewModifier {
 }
 
 extension View {
-    func LogoProgressOverlay(isPresented: Binding<Bool>) -> some View {
-        self.modifier(LogoProgressModifier(isPresented: isPresented))
+    func LogoProgressOverlay(isPresented: Binding<Bool>, message: String = "") -> some View {
+        self.modifier(LogoProgressModifier(isPresented: isPresented, message: message))
     }
 }
 
@@ -91,9 +107,10 @@ extension View {
 
 struct AnimatedLoadingPreview: View {
     @State private var isAnimated = false
+    @State var message = "카리나카리나카리나카리나카리나"
     
     var body: some View {
-        LogoProgress(isAnimated: $isAnimated)
+        LogoProgress(isAnimated: $isAnimated, message: message)
             .onAppear {
                 withAnimation(
                     .easeInOut

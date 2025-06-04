@@ -80,12 +80,14 @@ struct RecommendView: View {
         .navigationTitle("추천 식사")
         .navigationBarTitleDisplayMode(.inline)
         .font(.pretendardBold16)
-        .LogoProgressOverlay(isPresented: $viewModel.isPresneted) //로딩
+        .LogoProgressOverlay(isPresented: $viewModel.isPresneted,message: "Alan이 식단을 생성하고 있어요 !") //로딩
+        .toastView(toast: $viewModel.toast)
     }
 }
 
-#Preview {
-    NavigationStack{
-        RecommendView()
-    }
-}
+//디버깅용
+//#Preview {
+//    NavigationStack{
+//        RecommendView()
+//    }
+//}
