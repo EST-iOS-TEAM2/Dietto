@@ -48,7 +48,6 @@ final class HomeViewModel {
     
     var userData: UserEntity?
     
-    
     private let pedometerUsecase: PedometerUsecase
     private let weightHistroyUsecase: WeightHistoryUsecase
     private let userStorageUsecase: UserStorageUsecase
@@ -56,7 +55,7 @@ final class HomeViewModel {
     
     
     init(
-        pedometerUsecase: PedometerUsecase = PedometerUsecaseImpl(pedometer: PedometerRepositoryImpl()),
+        pedometerUsecase: PedometerUsecase,
         weightHistroyUsecase: WeightHistoryUsecase,
         userStorageUsecase: UserStorageUsecase
         
@@ -74,7 +73,7 @@ final class HomeViewModel {
     }
     
     private func getUserData() {
-        Task { [weak self] in
+        Task { [weak self] in // 여러번 불리면서 RC 쌓이고 해제 안되는 문제 생기니 꼭 WEAK SELF
             do {
                 let userData = try await self?.userStorageUsecase.getUserData()
                 await MainActor.run { [weak self] in
@@ -82,9 +81,7 @@ final class HomeViewModel {
                 }
             }
             catch {
-                await MainActor.run { [weak self] in
-                    self?.toastMessage = ToastEntity(type: .error, title: "유저 데이터 로드 에러", message: error.localizedDescription)
-                }
+                await self?.callToastMessage(type: .error, title: "유저 데이터 로드 에러", message: error.localizedDescription)
 #warning("여기에 에러핸들링 토스트 팝업 등 넣기 (데이터 없으면 온보딩으로 or fatal..?")
             }
         }
@@ -122,14 +119,13 @@ final class HomeViewModel {
                 }
                 await MainActor.run { [weak self] in
                     self?.userData?.currentWeight = value
-                    self?.toastMessage = ToastEntity(type: .success, title: "몸무게 업데이트 완료", message: "")
                 }
+                await callToastMessage(type: .success, title: "몸무게 업데이트 완료", message: "")
+                
                 bodyScaleHistoryFetch(type: chartTimeType)
             }
             catch {
-                await MainActor.run { [weak self] in
-                    self?.toastMessage = ToastEntity(type: .error, title: "몸무게 업데이트 실패", message: error.localizedDescription)
-                }
+                    await callToastMessage(type: .error, title: "몸무게 업데이트 실패", message: error.localizedDescription)
             }
         }
     }
@@ -149,9 +145,7 @@ final class HomeViewModel {
                 }
             }
             catch {
-                await MainActor.run { [weak self] in
-                    self?.toastMessage = ToastEntity(type: .error, title: "차트 데이터 로드 실패", message: error.localizedDescription)
-                }
+                await callToastMessage(type: .error, title: "차트 데이터 로드 실패", message: error.localizedDescription)
             }
         }
     }
@@ -169,6 +163,12 @@ final class HomeViewModel {
                    index >= count - 1 {
                 }
             }
+        }
+    }
+    
+    private func callToastMessage(type: ToastStyle, title: String, message: String) async {
+        await MainActor.run { [weak self] in
+            self?.toastMessage = ToastEntity(type: type, title: title, message: message)
         }
     }
 }

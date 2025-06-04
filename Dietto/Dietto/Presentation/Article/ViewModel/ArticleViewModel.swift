@@ -8,6 +8,7 @@
 import SwiftUI
 
 final class ArticleViewModel: ObservableObject {
+    @Published var toastMessage: ToastEntity?
     @Published var selectedInterests: [InterestEntity] = []
     @Published var articles: [ArticleEntity] = []
     @Published var isLoading : Bool = false
@@ -22,8 +23,8 @@ final class ArticleViewModel: ObservableObject {
     ]
     
     init(
-        alanUsecase: AlanUsecase = AlanUsecaseImpl(repository: NetworkRepositoryImpl()),
-        storageUsecase: InterestsUsecase /* = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>() */
+        alanUsecase: AlanUsecase,
+        storageUsecase: InterestsUsecase
     ) {
         self.alanUsecase = alanUsecase
         self.storageUsecase = storageUsecase
@@ -34,7 +35,7 @@ final class ArticleViewModel: ObservableObject {
                 await MainActor.run { self.selectedInterests = result }
             }
             catch {
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                await callToastMessage(type: .error, title: "관심사 로드 실패", message: error.localizedDescription)
             }
         }
     }
@@ -47,7 +48,7 @@ final class ArticleViewModel: ObservableObject {
                 await MainActor.run{ articles = result }
             }
             catch {
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                await callToastMessage(type: .error, title: "아티클 로드 실패", message: error.localizedDescription)
             }
         }
         
@@ -70,18 +71,30 @@ final class ArticleViewModel: ObservableObject {
         if selectedInterests.contains(where: { $0.title == title }) {
             removeInterest(title)
             Task {
-                do { try await storageUsecase.deleteInterests(InterestEntity(title: title))}
-                catch {  }
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                do {
+                    try await storageUsecase.deleteInterests(InterestEntity(title: title))
+                }
+                catch {
+                    await callToastMessage(type: .error, title: "관심사 삭제 실패", message: error.localizedDescription)
+                }
             }
         } else {
             addInterest(title)
             Task {
-                do { try await storageUsecase.insertInterests(InterestEntity(title: title)) }
-                catch {  }
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                do {
+                    try await storageUsecase.insertInterests(InterestEntity(title: title))
+                }
+                catch {
+                    await callToastMessage(type: .error, title: "관심사 추가 실패", message: error.localizedDescription)
+                }
             }
             
+        }
+    }
+    
+    private func callToastMessage(type: ToastStyle, title: String, message: String) async {
+        await MainActor.run { [weak self] in
+            self?.toastMessage = ToastEntity(type: type, title: title, message: message)
         }
     }
 }
