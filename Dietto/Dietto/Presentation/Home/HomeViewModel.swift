@@ -27,6 +27,10 @@ enum ChartTimeType: String, CaseIterable {
 
 @Observable
 final class HomeViewModel {
+    var isLoading: Bool {
+        get { userData == nil }
+        set { isLoading = newValue }
+    }
     var chartTimeType: ChartTimeType = .weekly
     var bodyScaleHistory: [WeightEntity] = []
     var pedometerData: PedometerModel?
