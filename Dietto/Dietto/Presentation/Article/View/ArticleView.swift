@@ -8,12 +8,7 @@
 import SwiftUI
 
 struct ArticleView: View {
-    let articles = [
-        "https://www.youtube.com/watch?v=3p8EBPVZ2Iw",
-        "https://www.news1.kr/articles/?5301234",
-        "https://www.youtube.com/watch?v=FdYIvEc7e-0",
-        "https://www.youtube.com/watch?v=2tM1LFFxeKg"
-    ]
+    
     @StateObject var viewModel: ArticleViewModel
     var body: some View {
         ZStack{
@@ -50,14 +45,28 @@ struct ArticleView: View {
                         isSelected: {_ in true}
                     ).padding(.leading, 16)
                     
-                    List(articles, id: \.self) { item in
-                        LinkRow(previewURL: URL(string: item)!)
-                            .background(Color.backGround).ignoresSafeArea(.all)
+                    if viewModel.articles.isEmpty {
+                        VStack{
+                            HStack {
+                                Spacer()
+                            }
+                            Spacer()
+                        }
+                            .progressOverlay(isPresented: $viewModel.isLoading, message: "아티클 불러오는중..")
                     }
-                    .listStyle(.plain)
+                    else {
+                        List(viewModel.articles, id: \.self) { item in
+                            LinkRow(previewURL: URL(string: item)!)
+                                .background(Color.backGround).ignoresSafeArea(.all)
+                        }
+                        .listStyle(.plain)
+                        .refreshable { viewModel.loadArticles() }
+                        .progressOverlay(isPresented: $viewModel.isLoading, message: "아티클 불러오는중..")
+                    }
+                    
                 }
             }
-            .toolbarVisibility(.hidden, for: .navigationBar)
+            .toastView(toast: $viewModel.toastMessage)
         }
     }
 }
