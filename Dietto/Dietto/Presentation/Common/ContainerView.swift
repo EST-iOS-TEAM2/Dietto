@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ContainerView<Content: View>: View {
     var paddingSize: CGFloat
-    var height: CGFloat
+    var height: CGFloat? = nil
     let content: () -> Content
     
-    init(paddingSize: CGFloat, height: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+    init(paddingSize: CGFloat, height: CGFloat? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.paddingSize = paddingSize
         self.height = height
         self.content = content
@@ -22,7 +22,6 @@ struct ContainerView<Content: View>: View {
         GeometryReader { geometry in
             if geometry.size.width > paddingSize * 2 {
                 let width = geometry.size.width - (paddingSize * 2)
-                
                 ZStack {
                     RoundedRectangle(cornerRadius: 21)
                         .fill(Color.white)

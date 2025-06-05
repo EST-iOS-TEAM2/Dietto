@@ -17,4 +17,13 @@ extension View {
     func toastView(toast: Binding<ToastEntity?>) -> some View {
         self.modifier(ToastModifier(toast: toast))
     }
+    //MARK: - 높이를 동적, 정적으로 모두 사용하기 위한 .iflet
+    func iflet<T>(_ value: T?, apply: (Self, T) -> some View) -> some View{
+        if let value = value{
+            return AnyView(apply(self, value))
+        }else{
+            return AnyView(self)
+        }
+    }
 }
+
