@@ -81,29 +81,37 @@ final class OnboardingViewModel: ObservableObject {
             return
         }
         
+        let userEntity = UserEntity(
+            id: UUID(),
+            name: name,
+            gender: gender,
+            height: height,
+            startWeight: weight,
+            currentWeight: weight,
+            targetWeight: targetWeight,
+            targetDistance: targetDistance
+        )
+        
         //MARK: - 최초 진입
         if isFirstLaunch {
-            createNewProfile(weight: weight, height: height)
+            createNewProfile(userEntity: userEntity)
         } else {
             guard let currentUserId = currentUserId else {
                 fatalError("CurrentUser is nil") //없으면 말도 안되고 완전 꼬여버리기 때문에 일단 조치해둠
             }
-            editProfile(currentUserId: currentUserId, weight: weight, height: height)
+            editProfile(currentUserId: currentUserId, userEntity: userEntity)
         }
     }
     
-    private func editProfile(currentUserId: UUID, weight: Int, height: Int) {
+    private func editProfile(currentUserId: UUID, userEntity: UserEntity) {
         Task {
             do {
                 if let lastModifiedDate = try await weightHistroyUsecase.getWeightHistory(chartRange: .weekly).last?.date,
                    lastModifiedDate.isSameDateWithoutTime(date: Date())
                 {
-                    try await weightHistroyUsecase.updateWeightByDate(weight: weight, date: lastModifiedDate)
+                    try await weightHistroyUsecase.updateWeightByDate(weight: userEntity.currentWeight, date: lastModifiedDate)
                 }
-                
-                try await userStorageUsecase.updateUserDefaultData(id: currentUserId, name: name, gender: gender, height: height)
-                try await userStorageUsecase.updateGoal(id: currentUserId, weight: targetWeight, distance: targetDistance)
-                try await userStorageUsecase.updateCurrentWeight(id: currentUserId, currentWeight: weight)
+                try await userStorageUsecase.updateUserDefaultData(id: currentUserId, userEntity: userEntity)
                 
                 await MainActor.run { isEditActive = false }
             }
@@ -113,21 +121,11 @@ final class OnboardingViewModel: ObservableObject {
         }
     }
     
-    private func createNewProfile(weight: Int, height: Int) {
+    private func createNewProfile(userEntity: UserEntity) {
         Task {
             do {
-                let userEntity = UserEntity(
-                    id: UUID(),
-                    name: name,
-                    gender: gender,
-                    height: height,
-                    startWeight: weight,
-                    currentWeight: weight,
-                    targetWeight: targetWeight,
-                    targetDistance: targetDistance
-                )
                 try await userStorageUsecase.createUserData(userEntity)
-                try await weightHistroyUsecase.addNewWeight(weight: weight, date: Date())
+                try await weightHistroyUsecase.addNewWeight(weight: userEntity.currentWeight, date: Date())
                 await MainActor.run {
                     isProfileSaved = true
                 }
