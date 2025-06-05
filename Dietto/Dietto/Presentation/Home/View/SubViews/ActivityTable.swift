@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct ActivityTable: View {
-    let currentSteps: Int
+    let pedometer: PedometerModel
     let currentDistance: Float
     let targetDistance: Int
     
@@ -31,21 +31,19 @@ struct ActivityTable: View {
                     .scaleEffect(2)
                     .padding()
                 
-                //                Divider().padding(0)
-                
                 HStack(spacing: 4) {
                     Text("걸음 수").font(.pretendardBold20).foregroundStyle(.text)
                     Spacer()
-                    Text("\(currentSteps)").font(.pretendardBold24).foregroundStyle(.text)
-                        .animation(.spring(duration: 0.25), value: currentSteps)
+                    Text("\(pedometer.steps)").font(.pretendardBold24).foregroundStyle(.text)
+                        .animation(.spring(duration: 0.25), value: pedometer.steps)
                     Text("Steps").font(.pretendardBold16).foregroundStyle(.text)
                 }
                 .padding(8)
                 HStack(spacing: 4) {
                     Text("움직인 거리").font(.pretendardBold20).foregroundStyle(.text)
                     Spacer()
-                    Text(String(format: "%.2f", currentDistance)).font(.pretendardBold24).foregroundStyle(.text)
-                        .animation(.spring(duration: 0.25), value: currentDistance)
+                    Text(String(format: "%.2f", pedometer.distance)).font(.pretendardBold24).foregroundStyle(.text)
+                        .animation(.spring(duration: 0.25), value: pedometer.distance)
                     Text("km").font(.pretendardBold16).foregroundStyle(.text)
                 }
                 .padding([.leading, .trailing], 8)

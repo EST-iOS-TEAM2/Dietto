@@ -28,13 +28,13 @@ struct HomeView: View {
                     
                     if let pedometer = viewModel.pedometerData {
                         ActivityTable(
-                            currentSteps: pedometer.steps,
+                            pedometer: pedometer,
                             currentDistance: viewModel.currentDistance,
                             targetDistance: userData.targetDistance
                         )
                     }
                     else {
-                        ActivityTable(currentSteps: 10, currentDistance: 10, targetDistance: 20)
+                        ActivityTable(pedometer: PedometerModel(steps: 50, distance: 1), currentDistance: 1, targetDistance: 20)
                             .overlay {
                                 RoundedRectangle(cornerRadius: 21)
                                     .fill(.ultraThinMaterial)
@@ -58,6 +58,7 @@ struct HomeView: View {
                             }
                     }
                 }
+                .toastView(toast: $viewModel.toastMessage)
                 .sheet(isPresented: $isTapModify, content: {
                     NavigationView {
                         WeightChangeView(viewModel: viewModel)
@@ -70,9 +71,8 @@ struct HomeView: View {
             }
         }
         else {
-            VStack {
-                Text("Please Wait...")
-            }
+            EmptyView()
+                .progressOverlay(isPresented: $viewModel.isLoading, message: "잠시만 기다려주세요...")
         }
         
         

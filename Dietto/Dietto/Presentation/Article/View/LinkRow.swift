@@ -16,7 +16,7 @@ struct LinkRow : UIViewRepresentable {
     func makeUIView(context: Context) -> LPLinkView {
         let view = LPLinkView(url: previewURL)
         
-        let provider = LPMetadataProvider()
+        let provider = LPMetadataProvider() // Provider Fetch작업을 VM에서 미리하는 방식이 더 좋을거 같음 경고가 엄청뜬다 (nil경고, 주소유효성 경고 등등)
         provider.startFetchingMetadata(for: previewURL) { (metadata, error) in
             if let md = metadata {
                 DispatchQueue.main.async {

@@ -13,8 +13,7 @@ protocol UserStorageUsecase {
   
     func createUserData(_ user: UserEntity) async throws
     func getUserData() async throws -> UserEntity
-    func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int) async throws
-    func updateGoal(id: UUID, weight: Int, distance: Int) async throws
+    func updateUserDefaultData(id: UUID, userEntity: UserEntity) async throws
     func updateCurrentWeight(id: UUID, currentWeight: Int) async throws
     func deleteUserData() async throws
 }
@@ -67,28 +66,17 @@ final class UserStorageUsecaseImpl<Repository: AnotherStorageRepository>: UserSt
         }
     }
     
-    func updateUserDefaultData(id: UUID, name: String, gender: Gender, height: Int) async throws {
+    func updateUserDefaultData(id: UUID, userEntity: UserEntity) async throws {
         do {
             let predicate = #Predicate<UserDTO> { $0.id == id }
             try await storage.updateData(predicate: predicate) { dto in
-                dto.name = name
-                dto.gender = gender.rawValue
-                dto.height = height
-            }
-            changeEvent.send()
-        }
-        catch {
-            print(#function, error.localizedDescription)
-            throw StorageError.updateError
-        }
-    }
-    
-    func updateGoal(id: UUID, weight: Int, distance: Int) async throws {
-        do {
-            let predicate = #Predicate<UserDTO> { $0.id == id }
-            try await storage.updateData(predicate: predicate) { dto in
-                dto.targetWeight = weight
-                dto.targetDistance = distance
+                dto.name = userEntity.name
+                dto.gender = userEntity.gender.rawValue
+                dto.height = userEntity.height
+//                dto.startWeight = userEntity.startWeight
+                dto.currentWeight = userEntity.currentWeight
+                dto.targetWeight = userEntity.targetWeight
+                dto.targetDistance = userEntity.targetDistance
             }
             changeEvent.send()
         }

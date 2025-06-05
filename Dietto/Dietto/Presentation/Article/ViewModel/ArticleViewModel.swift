@@ -8,9 +8,10 @@
 import SwiftUI
 
 final class ArticleViewModel: ObservableObject {
+    @Published var toastMessage: ToastEntity?
     @Published var selectedInterests: [InterestEntity] = []
-    @Published var articles: [ArticleEntity] = []
-    @Published var isLoading : Bool = false
+    @Published var articles: [String] = []
+    @Published var isLoading : Bool = true
     
     private let alanUsecase: AlanUsecase
     private let storageUsecase: InterestsUsecase
@@ -22,8 +23,8 @@ final class ArticleViewModel: ObservableObject {
     ]
     
     init(
-        alanUsecase: AlanUsecase = AlanUsecaseImpl(repository: NetworkRepositoryImpl()),
-        storageUsecase: InterestsUsecase /* = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>() */
+        alanUsecase: AlanUsecase,
+        storageUsecase: InterestsUsecase
     ) {
         self.alanUsecase = alanUsecase
         self.storageUsecase = storageUsecase
@@ -31,23 +32,34 @@ final class ArticleViewModel: ObservableObject {
         Task {
             do {
                 let result = try await storageUsecase.fetchInterests()
-                await MainActor.run { self.selectedInterests = result }
+                await MainActor.run {
+                    self.selectedInterests = result
+                    loadArticles()
+                }
             }
             catch {
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                await callToastMessage(type: .error, title: "관심사 로드 실패", message: error.localizedDescription)
             }
         }
     }
     
     // MARK: - 아티클 로드
     func loadArticles() {
+        isLoading = true
         Task {
             do {
-                let result = try await alanUsecase.fetchArticle(topics: selectedInterests)
-                await MainActor.run{ articles = result }
+//                let result = try await alanUsecase.fetchArticle(topics: selectedInterests)
+//                await MainActor.run{ articles = result }
+                // MARK: 임시 로직
+                try await Task.sleep(for: .seconds(5))
+                await MainActor.run { [weak self] in
+                    self?.articles = Array((self?.dummyData.shuffled().prefix(5))!)
+                    self?.isLoading = false
+                    self?.toastMessage = ToastEntity(type: .success, title: "아티클 업데이트 완료", message: "")
+                }
             }
             catch {
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                await callToastMessage(type: .error, title: "아티클 로드 실패", message: error.localizedDescription)
             }
         }
         
@@ -70,18 +82,53 @@ final class ArticleViewModel: ObservableObject {
         if selectedInterests.contains(where: { $0.title == title }) {
             removeInterest(title)
             Task {
-                do { try await storageUsecase.deleteInterests(InterestEntity(title: title))}
-                catch {  }
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                do {
+                    try await storageUsecase.deleteInterests(InterestEntity(title: title))
+                }
+                catch {
+                    await callToastMessage(type: .error, title: "관심사 삭제 실패", message: error.localizedDescription)
+                }
             }
         } else {
             addInterest(title)
             Task {
-                do { try await storageUsecase.insertInterests(InterestEntity(title: title)) }
-                catch {  }
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                do {
+                    try await storageUsecase.insertInterests(InterestEntity(title: title))
+                }
+                catch {
+                    await callToastMessage(type: .error, title: "관심사 추가 실패", message: error.localizedDescription)
+                }
             }
             
         }
     }
+    
+    private func callToastMessage(type: ToastStyle, title: String, message: String) async {
+        await MainActor.run { [weak self] in
+            self?.toastMessage = ToastEntity(type: type, title: title, message: message)
+        }
+    }
+    
+    let dummyData = [
+        "https://www.youtube.com/watch?v=jSuxMiRxnZg",
+        "https://www.youtube.com/watch?v=2lDheJzSYeo",
+        "https://www.youtube.com/watch?v=TEHS9dzSTZY",
+        "https://www.youtube.com/watch?v=MjMkBaqimFo",
+        "https://www.youtube.com/watch?v=Obu25eMlr4A",
+        "https://www.youtube.com/watch?v=KFbeFLLJbWo",
+        "https://www.youtube.com/watch?v=BHY0FxzoKZE",
+        "https://www.youtube.com/watch?v=8so1WZ4j1oQ",
+        "https://www.youtube.com/watch?v=zlaZGuXvL04",
+        "https://www.youtube.com/watch?v=1D9ASR6gSc0",
+        "https://www.youtube.com/watch?v=Cg_GW7yhq20",
+        "https://www.youtube.com/watch?v=QWF9mGtjju4",
+        "https://www.youtube.com/watch?v=YMnIhyWjrb4",
+        "https://www.youtube.com/watch?v=FoRku07ShZM",
+        "https://www.youtube.com/watch?v=YNsuneGBsMY",
+        "https://www.youtube.com/watch?v=3DZqX_2YLiw",
+        "https://www.youtube.com/watch?v=CSjRBBqfhko",
+        "https://www.youtube.com/watch?v=wWGulLAa0O0",
+        "https://www.youtube.com/watch?v=4WV7kAUGrgI",
+        "https://www.youtube.com/watch?v=8so1WZ4j1oQ"
+      ]
 }
