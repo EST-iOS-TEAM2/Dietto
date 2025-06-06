@@ -50,7 +50,7 @@ extension NetworkError {
         return ToastEntity(
             type: .error,
             title: "오류 발생",
-            message: self.errorDescription ?? "알 수 없는 오류입니다.",
+            message: self.errorDescription ?? "알 수 없는 에러가 발생했습니다.",
             duration: 3
         )
     }

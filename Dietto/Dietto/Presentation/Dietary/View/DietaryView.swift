@@ -18,8 +18,6 @@ struct DietaryView: View {
     @State private var myRefrigerlatorflowlayout : CGFloat = 0 //마이냉장고
     @State private var isFoldMyRefrigerlator : Bool = false //마이냉장고 펼쳤다 접었다.
     
-    @State private var PushToRecommandView : Bool = false // 화면이동
-    
     var body: some View {
         NavigationStack{
             ZStack{
@@ -136,16 +134,20 @@ struct DietaryView: View {
                                     
                                     Spacer()
                                     
-                                    Button{
-                                        withAnimation(.bouncy) {
-                                            isFoldMyRefrigerlator.toggle()
+                                    if !dietartViewModel.pastIngredients.isEmpty{
+                                        Button{
+                                            withAnimation(.bouncy) {
+                                                isFoldMyRefrigerlator.toggle()
+                                            }
+                                        }label: {
+                                            Image(systemName: isFoldMyRefrigerlator ? "chevron.down" : "chevron.up")
+                                                .frame(width: 10, height: 10)
+                                                .font(.pretendardBold20)
                                         }
-                                    }label: {
-                                        Image(systemName: isFoldMyRefrigerlator ? "chevron.down" : "chevron.up")
-                                            .frame(width: 10, height: 10)
-                                            .font(.pretendardBold20)
+                                        .foregroundStyle(.appMain)
+                                        .padding(.bottom, 8)
                                     }
-                                    .padding(.bottom, 8)
+                                    
                                 }
                             }
                             .padding()
@@ -154,13 +156,8 @@ struct DietaryView: View {
                     }
                     HStack {
                         Button("식단 추천받기") {
-                            print("식단 추천 받기 버튼이 클릭댐")
-                            if !dietartViewModel.presentIngredients.isEmpty {
-                                dietartViewModel.fetchRecommendations(ingredients: dietartViewModel.presentIngredients)
-                                PushToRecommandView = true
-                            }else{
-                                print("비어있음 현재 식재료가 ")
-                            }
+                            dietartViewModel.fetchRecommendations(ingredients: dietartViewModel.presentIngredients)
+                            
                         }
                         .font(.pretendardBold16)
                         .foregroundStyle(.white)
@@ -174,7 +171,7 @@ struct DietaryView: View {
                     
                 }
             }
-            .navigationDestination(isPresented: $PushToRecommandView) {
+            .navigationDestination(isPresented: $dietartViewModel.pushToRecommend) {
                 RecommendView().environmentObject(dietartViewModel)
             }
         }
