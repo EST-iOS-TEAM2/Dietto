@@ -20,42 +20,39 @@ struct RecommendView: View {
         ZStack {
             Color(.backGround).ignoresSafeArea(edges: .all)
             VStack {
-                if !viewModel.recommendList.isEmpty{
-                    ContainerView(paddingSize: 16) {
-                        HStack {
-                            VStack {
-                                Text("추천 레시피에 등록된 재료를 이용해 식사를 추천합니다.")
-                                    .font(.pretendardSemiBold10)
-                                    .foregroundStyle(.textFieldGray)
-                                
-                                ScrollView {
-                                    LazyVStack(alignment: .leading, spacing: 16) {
-                                        ForEach(viewModel.recommendList, id: \.title) { item in
-                                            VStack(alignment: .leading, spacing: 8) {
-                                                Text(item.title)
-                                                    .font(.pretendardBold24)
-                                                Text(item.description)
-                                                    .font(.pretendardSemiBold16)
-                                            }
-                                            .padding()
-                                            .backgroundStyle(Color.textFieldGray)
-                                            .border(Color.appMain)
-                                            Divider()
+                ContainerView(paddingSize: 16) {
+                    HStack {
+                        VStack {
+                            Text("추천 레시피에 등록된 재료를 이용해 식사를 추천합니다.")
+                                .font(.pretendardSemiBold10)
+                                .foregroundStyle(.textFieldGray)
+                            
+                            ScrollView {
+                                LazyVStack(alignment: .leading, spacing: 16) {
+                                    ForEach(viewModel.recommendList, id: \.title) { item in
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            Text(item.title)
+                                                .font(.pretendardBold24)
+                                            Text(item.description)
+                                                .font(.pretendardSemiBold16)
                                         }
+                                        .padding()
+                                        .backgroundStyle(Color.textFieldGray)
+                                        .border(Color.appMain)
+                                        Divider()
                                     }
-                                    .padding(.horizontal)
                                 }
-                                .clipped()
+                                .padding(.horizontal)
                             }
+                            .clipped()
                         }
-                        .padding()
                     }
-                    .padding(.bottom, 10)
+                    .padding()
                 }
-                
+                .padding(.bottom, 10)
             }
             .padding(.top, 16)
-            
+            .opacity(viewModel.recommendList.isEmpty ? 0 : 1)
         }
         .navigationTitle("추천 식사")
         .navigationBarTitleDisplayMode(.inline)
