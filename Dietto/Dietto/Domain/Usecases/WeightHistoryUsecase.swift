@@ -32,6 +32,21 @@ final class WeightHistoryUsecaseImpl<Repository: AnotherStorageRepository>: Weig
         do {
             let predicate = getDateRange(range: chartRange)
             let result = try await storage.fetchData(where: predicate, sort: [])
+            
+            if chartRange == .weekly {
+                return [
+                    WeightEntity(date: Date()-(86400*8), scale: 20),
+                    WeightEntity(date: Date()-(86400*7), scale: 30),
+                    WeightEntity(date: Date()-(86400*6), scale: 40),
+                    WeightEntity(date: Date()-(86400*5), scale: 55),
+                    WeightEntity(date: Date()-(86400*4), scale: 63),
+                    WeightEntity(date: Date()-(86400*3), scale: 70),
+                    WeightEntity(date: Date()-(86400*2), scale: 65),
+                    WeightEntity(date: Date()-86400, scale: 55),
+                    WeightEntity(date: Date(), scale: 50)
+                ]
+            }
+            
             return result.map{$0.convertEntity()}
         }
         catch {

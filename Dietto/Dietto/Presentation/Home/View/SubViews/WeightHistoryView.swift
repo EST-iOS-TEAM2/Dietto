@@ -13,21 +13,12 @@ struct WeightHistoryView: View {
     @State private var trigger: Bool = false
     @State private var isAnimated: Bool = false
     private let weightHistory: [WeightEntity] = [
+        WeightEntity(date: Date()-(86400*5), scale: 55),
+        WeightEntity(date: Date()-(86400*4), scale: 63),
         WeightEntity(date: Date()-(86400*3), scale: 70),
         WeightEntity(date: Date()-(86400*2), scale: 65),
         WeightEntity(date: Date()-86400, scale: 55),
-        WeightEntity(date: Date(), scale: 50),
-        WeightEntity(date: Date()+86400, scale: 55),
-        WeightEntity(date: Date()+(86400*2), scale: 63),
-        WeightEntity(date: Date()+(86400*3), scale: 72),
-        WeightEntity(date: Date()+(86400*4), scale: 82),
-        WeightEntity(date: Date()+(86400*5), scale: 72),
-        WeightEntity(date: Date()+(86400*6), scale: 62),
-        WeightEntity(date: Date()+(86400*7), scale: 52),
-        WeightEntity(date: Date()+(86400*8), scale: 52),
-        WeightEntity(date: Date()+(86400*9), scale: 52),
-        WeightEntity(date: Date()+(86400*10), scale: 52),
-        WeightEntity(date: Date()+(86400*11), scale: 52)
+        WeightEntity(date: Date(), scale: 50)
     ]
     
     var body: some View {

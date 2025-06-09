@@ -157,7 +157,7 @@ final class HomeViewModel {
         guard !bodyScaleHistory.isEmpty else { return }
 
         for (index, _) in bodyScaleHistory.enumerated() {
-            let delay = Double(index) * 0.05
+            let delay = Double(index) * 0.08
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
                 withAnimation(.bouncy) {
                     self?.bodyScaleHistory[index].isAnimated = true
