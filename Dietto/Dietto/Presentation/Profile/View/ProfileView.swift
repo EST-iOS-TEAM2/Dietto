@@ -136,21 +136,21 @@ struct ProfileView: View {
                         }) {
                             Text("모든 데이터 삭제하기")
                                 .font(.pretendardBold16)
-                                .foregroundColor(.white)
+                                .foregroundStyle(.white)
                                 .frame(maxWidth: .infinity)
-                                .padding(.vertical, 15)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .fill(Color.red)
-                                )
+                                .padding(.vertical, 16)
+                                .background(Color.red)
+                                .cornerRadius(12)
                         }
                         .padding(.horizontal, 24)
                         .alert("모든 데이터를 삭제하시겠습니까?", isPresented: $viewModel.isDeleteAlert) {
                             Button("삭제", role: .destructive) {viewModel.deleteAllUserData()}
                             Button("취소", role: .cancel) {}
                         }
-                        .padding(.horizontal)
-                        .padding(.vertical)
+//                        .padding(.horizontal)
+//                        .padding(.vertical)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 40)
                         //MARK: - edit 누르면 ProfileEditView로 이동
                         .navigationDestination(isPresented: $viewModel.isEditActive) {
                             TutorialView(viewModel: viewModel)
