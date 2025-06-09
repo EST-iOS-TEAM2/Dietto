@@ -75,7 +75,7 @@ struct LogoProgressModifier: ViewModifier {
             if isPresented {
                 Rectangle()
                     .fill(Color.black.opacity(0.3))
-//                    .ignoresSafeArea()
+                    .ignoresSafeArea()
                 
                 LogoProgress(isAnimated: $isAnimated, message: message)
                     .onAppear {

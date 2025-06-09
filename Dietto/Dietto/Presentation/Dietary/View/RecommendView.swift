@@ -14,12 +14,11 @@ struct RecommendView: View {
     //    @StateObject private var viewModel = DietaryViewModel() //디버깅용
     
     @State private var isFoldRecommand : Bool = false  // true : 펼친상태로 시작 , false: 가려진 채로 시작.
-//    @State private var contentHeight : CGFloat = 0
+    //    @State private var contentHeight : CGFloat = 0
     
     var body: some View {
         ZStack {
             Color(.backGround).ignoresSafeArea(edges: .all)
-            
             VStack {
                 ContainerView(paddingSize: 16) {
                     HStack {
@@ -27,7 +26,7 @@ struct RecommendView: View {
                             Text("추천 레시피에 등록된 재료를 이용해 식사를 추천합니다.")
                                 .font(.pretendardSemiBold10)
                                 .foregroundStyle(.textFieldGray)
-
+                            
                             ScrollView {
                                 LazyVStack(alignment: .leading, spacing: 16) {
                                     ForEach(viewModel.recommendList, id: \.title) { item in
@@ -46,20 +45,6 @@ struct RecommendView: View {
                                 .padding(.horizontal)
                             }
                             .clipped()
-                            
-//                            Spacer()
-//
-//                            Button {
-//                                withAnimation(.bouncy) {
-//                                    isFoldRecommand.toggle()
-//                                }
-//                            } label: {
-//                                Image(systemName: isFoldRecommand ? "chevron.up" : "chevron.down")
-//                                    .frame(width: 10, height: 10)
-//                                    .font(.pretendardBold20)
-//                            }
-//                            .padding(.bottom, 8)
-//                            .border(.black)
                         }
                     }
                     .padding()
@@ -67,15 +52,13 @@ struct RecommendView: View {
                 .padding(.bottom, 10)
             }
             .padding(.top, 16)
-            
-            
+            .opacity(viewModel.recommendList.isEmpty ? 0 : 1)
         }
         .navigationTitle("추천 식사")
         .navigationBarTitleDisplayMode(.inline)
         .font(.pretendardBold16)
-        .progressOverlay(isPresented: $viewModel.isPresneted, message: "Alan이 식단을 생성하고 있어요 !")
         .toastView(toast: $viewModel.toast)
-        
+        .progressOverlay(isPresented: $viewModel.isPresneted, message: "Alan이 식단을 생성하고 있어요 !")
     }
 }
 ////디버깅용
