@@ -64,11 +64,11 @@ struct HomeView: View {
                         WeightChangeView(viewModel: viewModel)
                     }
                 })
-                .background(Color.backGround)
                 .onAppear {
                     viewModel.fetchPedometer()
                 }
             }
+            .background(Color.backGround)
         }
         else {
             EmptyView()
