@@ -37,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		226BD7112DF18A330050D33B /* PedometerWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PedometerWidgetExtension.entitlements; sourceTree = "<group>"; };
 		228B4CA22DEB17D30095BDC3 /* PedometerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PedometerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		228B4CA42DEB17D30095BDC3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		228B4CA62DEB17D40095BDC3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -50,6 +51,16 @@
 				Info.plist,
 			);
 			target = 22C73C312DD1968A001EDF35 /* Dietto */;
+		};
+		226BD7172DF18CCD0050D33B /* Exceptions for "Dietto" folder in "PedometerWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/DTO/UserDTO.swift,
+				Data/Repository/StorageRepository.swift,
+				Domain/Entities/UserEntity.swift,
+				Domain/Usecases/UserStorageUsecase.swift,
+			);
+			target = 228B4CA12DEB17D30095BDC3 /* PedometerWidgetExtension */;
 		};
 		228B4CB92DEB17D50095BDC3 /* Exceptions for "PedometerWidget" folder in "PedometerWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -73,6 +84,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				2203D0AC2DD32098000EA331 /* Exceptions for "Dietto" folder in "Dietto" target */,
+				226BD7172DF18CCD0050D33B /* Exceptions for "Dietto" folder in "PedometerWidgetExtension" target */,
 			);
 			path = Dietto;
 			sourceTree = "<group>";
@@ -111,6 +123,7 @@
 		22C73C292DD1968A001EDF35 = {
 			isa = PBXGroup;
 			children = (
+				226BD7112DF18A330050D33B /* PedometerWidgetExtension.entitlements */,
 				22C73C342DD1968A001EDF35 /* Dietto */,
 				228B4CA82DEB17D40095BDC3 /* PedometerWidget */,
 				228B4CA32DEB17D30095BDC3 /* Frameworks */,
@@ -264,6 +277,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PedometerWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UUYBHY988H;
@@ -291,6 +305,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PedometerWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UUYBHY988H;
@@ -439,6 +454,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dietto/Dietto.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UUYBHY988H;
@@ -472,6 +488,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Dietto/Dietto.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UUYBHY988H;

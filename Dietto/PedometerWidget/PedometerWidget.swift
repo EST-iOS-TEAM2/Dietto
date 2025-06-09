@@ -43,16 +43,36 @@ struct SimpleEntry: TimelineEntry {
     let emoji: String
 }
 
+//struct DiettoProvider
+
 struct PedometerWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
+        VStack(alignment: .trailing) {
+            HStack {
+                Gauge(value: 10, in: 0...100) {
+                    Text("Goal")
+                }
+                .gaugeStyle(.accessoryCircularCapacity)
+                .tint(Color.orange)
+                Spacer()
+                VStack(alignment: .center) {
+                    Image(systemName: "flame")
+                        .foregroundStyle(Color.orange)
+                    Text("99999")//5자리 들어감
+                }
+            }
+            VStack(alignment: .trailing) {
+                Text("10km")
+                Text("100Steps")
+            }
+            .font(.body).bold()
+//            Text("Time:")
+//            Text(entry.date, style: .time)
+//
+//            Text("Emoji:")
+//            Text(entry.emoji)
         }
     }
 }
