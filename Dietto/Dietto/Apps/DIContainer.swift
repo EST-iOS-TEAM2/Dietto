@@ -11,21 +11,19 @@ import Observation
 final class DIContainer {
     private let alanUsecase: AlanUsecase
     private let pedometerUsecase: PedometerUsecase
-    private var interestsUsecase: InterestsUsecase
-    private var userStorageUsecase: UserStorageUsecase
-    private var weightHistoryUsecase: WeightHistoryUsecase
+    private let interestsUsecase: InterestsUsecase
+    private let userStorageUsecase: UserStorageUsecase
+    private let weightHistoryUsecase: WeightHistoryUsecase
+    private let ingredientUsecase: IngredientUsecase
     
     init() {
         self.alanUsecase = AlanUsecaseImpl(repository: NetworkRepositoryImpl())
         self.pedometerUsecase = PedometerUsecaseImpl(pedometer: PedometerRepositoryImpl())
         
-//        self.interestsUsecase = InterestsUsecaseImpl(repository: StorageRepositoryImpl<InterestsDTO>())
-//        self.userStorageUsecase = UserStorageUsecaseImpl(storage: StorageRepositoryImpl<UserDTO>())
-//        self.weightHistoryUsecase = WeightHistoryUsecaseImpl(repository: StorageRepositoryImpl<WeightDTO>())
-        
         self.interestsUsecase = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>())
         self.userStorageUsecase = UserStorageUsecaseImpl(storage: AnotherStorageRepositoryImpl<UserDTO>())
         self.weightHistoryUsecase = WeightHistoryUsecaseImpl(repository: AnotherStorageRepositoryImpl<WeightDTO>())
+        self.ingredientUsecase = IngredientUsecaseImpl(repository: AnotherStorageRepositoryImpl<IngredientDTO>())
         
 //        Task.detached(priority: .background) { [weak self] in
 //            self?.interestsUsecase = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>())
@@ -52,6 +50,8 @@ final class DIContainer {
     
     func getDietaryViewModel() -> DietaryViewModel {
         DietaryViewModel(usecase: alanUsecase)
+        #warning("이렇게 주입만 하면 됌")
+//        DietaryViewModel(usecase: alanUsecase, ingredientUsecase: ingredientUsecase)
     }
     
     func getOnboardingViewModel() -> OnboardingViewModel {
