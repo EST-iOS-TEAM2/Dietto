@@ -58,15 +58,12 @@ class DietaryViewModel: ObservableObject {
     
     //MARK: - 현재 식재료를 삭제하고 현재 식재료를 과거 식재료로 추가
     func addpastIngredients() {
-        
         for ingredient in self.presentIngredients {
             if !self.pastIngredients.contains(where: { $0.ingredient == ingredient.ingredient }) {
                 self.pastIngredients.append(ingredient)
             }
         }
-        
         self.presentIngredients.removeAll()
-        
     }
     
     //MARK: - 과거 식단에 있던거 삭제
@@ -76,15 +73,6 @@ class DietaryViewModel: ObservableObject {
     
     //MARK: - 현재 재료를 통해 식단 추천 받기.
     func fetchRecommendations(ingredients: [IngredientEntity]) {
-        
-//        guard !presentIngredients.isEmpty else {
-//            self.toast = ToastEntity(
-//                type: .error,
-//                title: "에러",
-//                message: "현재 식재료가 비어있습니다."
-//            )
-//            return
-//        }
         
         self.recommendList.removeAll()
         
@@ -107,9 +95,7 @@ class DietaryViewModel: ObservableObject {
                         message: "식단 추천을 완료하였습니다.",
                         duration: 2
                     )
-                    
                     isPresneted = false
-                    
                 }
             } catch let error as NetworkError {
                 await MainActor.run {
