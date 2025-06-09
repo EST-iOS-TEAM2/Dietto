@@ -31,6 +31,7 @@ final class HomeViewModel {
         get { userData == nil }
         set {}
     }
+    var isHistoryEnough: Bool = false
     var toastMessage: ToastEntity?
     var chartTimeType: ChartTimeType = .weekly
     var bodyScaleHistory: [WeightEntity] = []
@@ -138,10 +139,10 @@ final class HomeViewModel {
                 let result = try await weightHistroyUsecase.getWeightHistory(chartRange: type)
                 await MainActor.run {
                     chartTimeType = type
-                    guard result.count >= type.limitDataCount() else {
-                        bodyScaleHistory = []
-                        return
-                    }
+                    
+                    if result.count >= type.limitDataCount() { isHistoryEnough = true }
+                    else { isHistoryEnough = false }
+                    
                     bodyScaleHistory = result
                     chartAnimate()
                 }

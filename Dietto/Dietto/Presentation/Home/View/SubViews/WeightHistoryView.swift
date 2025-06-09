@@ -51,7 +51,7 @@ struct WeightHistoryView: View {
                 }
             }
             ZStack {
-                if viewModel.bodyScaleHistory.isEmpty {
+                if !viewModel.isHistoryEnough {
                     Chart(weightHistory, id: \.date) { item in
                         LineMark(
                             x: .value("Date", item.date, unit: .day),
