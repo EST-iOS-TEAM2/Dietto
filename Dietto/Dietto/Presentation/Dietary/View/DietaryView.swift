@@ -178,6 +178,6 @@ struct DietaryView: View {
     }
 }
 
-#Preview {
-    DietaryView(dietartViewModel: DietaryViewModel())
-}
+//#Preview {
+//    DietaryView(dietartViewModel: DietaryViewModel())
+//}

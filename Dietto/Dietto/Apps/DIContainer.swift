@@ -25,12 +25,12 @@ final class DIContainer {
         self.weightHistoryUsecase = WeightHistoryUsecaseImpl(repository: AnotherStorageRepositoryImpl<WeightDTO>())
         self.ingredientUsecase = IngredientUsecaseImpl(repository: AnotherStorageRepositoryImpl<IngredientDTO>())
         
-//        Task.detached(priority: .background) { [weak self] in
-//            self?.interestsUsecase = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>())
-//            self?.userStorageUsecase = UserStorageUsecaseImpl(storage: AnotherStorageRepositoryImpl<UserDTO>())
-//            self?.weightHistoryUsecase = WeightHistoryUsecaseImpl(repository: AnotherStorageRepositoryImpl<WeightDTO>())
-//        }
-
+        //        Task.detached(priority: .background) { [weak self] in
+        //            self?.interestsUsecase = InterestsUsecaseImpl(repository: AnotherStorageRepositoryImpl<InterestsDTO>())
+        //            self?.userStorageUsecase = UserStorageUsecaseImpl(storage: AnotherStorageRepositoryImpl<UserDTO>())
+        //            self?.weightHistoryUsecase = WeightHistoryUsecaseImpl(repository: AnotherStorageRepositoryImpl<WeightDTO>())
+        //        }
+        
     }
     
     func getHomeViewModel() -> HomeViewModel {
@@ -49,9 +49,10 @@ final class DIContainer {
     }
     
     func getDietaryViewModel() -> DietaryViewModel {
-        DietaryViewModel(usecase: alanUsecase)
-        #warning("이렇게 주입만 하면 됌")
-//        DietaryViewModel(usecase: alanUsecase, ingredientUsecase: ingredientUsecase)
+        DietaryViewModel(
+            alanUsecase: alanUsecase,
+            ingredientUsecase: ingredientUsecase
+        )
     }
     
     func getOnboardingViewModel() -> OnboardingViewModel {
