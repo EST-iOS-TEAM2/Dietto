@@ -28,7 +28,6 @@ final class PedometerRepositoryImpl: PedometerRepository {
     }
     
     func startPedometer() -> AnyPublisher<CMPedometerData, any Error> {
-        guard !isRunning else { return liveSubject.eraseToAnyPublisher() }
         pedometer.startUpdates(from: Calendar.current.startOfDay(for: Date())) { [weak self] data, error in
             if let data { self?.liveSubject.send(data) }
             else if let error { self?.liveSubject.send(completion: .failure(error)) }
@@ -38,6 +37,5 @@ final class PedometerRepositoryImpl: PedometerRepository {
     
     func stopPedometer() {
         pedometer.stopUpdates()
-        isRunning = false
     }
 }

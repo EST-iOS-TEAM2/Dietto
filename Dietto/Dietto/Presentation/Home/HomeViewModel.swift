@@ -91,11 +91,12 @@ final class HomeViewModel {
         pedometerUsecase.startLivePedometerData()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] pedometer in
-                withAnimation(.easeInOut(duration: 0.25)) {
-                    if let pedometer {
-                        self?.pedometerData = PedometerModel(steps: pedometer.steps, distance: pedometer.distance)
-                    }
-                    else { self?.pedometerData = nil }
+                if let pedometer {
+                    self?.pedometerData = PedometerModel(steps: pedometer.steps, distance: pedometer.distance)
+                }
+                else {
+                    self?.pedometerData = nil
+                    print("WHHHHYYY")
                 }
             }
             .store(in: &bag)
@@ -103,15 +104,16 @@ final class HomeViewModel {
     
     func updateCurrentBodyScale(_ value: String) {
         guard let value = Int(value),
-              let id = userData?.id,
-              let lastModifiedDate = bodyScaleHistory.last?.date else {
+              let id = userData?.id else {
             print("\(#function) : FAILED to update current body scale")
             return
         }
+        let lastModifiedDate = bodyScaleHistory.last?.date
         Task {
             do {
                 try await userStorageUsecase.updateCurrentWeight(id: id, currentWeight: value)
-                if lastModifiedDate.isSameDateWithoutTime(date: Date()) {
+                if let lastModifiedDate,
+                   lastModifiedDate.isSameDateWithoutTime(date: Date()) {
                     try await weightHistroyUsecase.updateWeightByDate(weight: value, date: lastModifiedDate)
                 }
                 else {
