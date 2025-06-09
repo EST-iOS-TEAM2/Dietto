@@ -57,6 +57,7 @@ struct ProfileEditView: View {
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color.appMain, lineWidth: 2)
+                                    .padding(2)
                             )
                     }
                     
@@ -68,6 +69,7 @@ struct ProfileEditView: View {
                             RoundedRectangle(cornerRadius: 20)
                                 .stroke(Color.appMain, lineWidth: 2)
                                 .frame(height: 54)
+                                .padding(2)
                             
                             HStack {
                                 Text(viewModel.gender.rawValue)
@@ -98,7 +100,7 @@ struct ProfileEditView: View {
                 }
             }
             .padding(.top, 48)
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 16)
             .confirmationDialog(
                 "프로필 사진 선택",
                 isPresented: $viewModel.showPhotoSheet,
@@ -146,6 +148,7 @@ struct InputFieldForNumbers: View {
                     .background(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color.appMain, lineWidth: 2)
+                            .padding(2)
                     )
                     
                 //
