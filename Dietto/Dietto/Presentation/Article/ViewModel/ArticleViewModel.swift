@@ -38,7 +38,7 @@ final class ArticleViewModel: ObservableObject {
                 }
             }
             catch {
-                await callToastMessage(type: .error, title: "관심사 로드 실패", message: error.localizedDescription)
+                await callToastMessage(type: .error, title: "조회 실패", message: "관심사 조회에 실패하였습니다.")
             }
         }
     }
@@ -55,11 +55,11 @@ final class ArticleViewModel: ObservableObject {
                 await MainActor.run { [weak self] in
                     self?.articles = Array((self?.dummyData.shuffled().prefix(5))!)
                     self?.isLoading = false
-                    self?.toastMessage = ToastEntity(type: .success, title: "아티클 업데이트 완료", message: "")
+                    self?.toastMessage = ToastEntity(type: .success, title: "업데이트 완료", message: "아티클 업데이트에 성공하였습니다.")
                 }
             }
             catch {
-                await callToastMessage(type: .error, title: "아티클 로드 실패", message: error.localizedDescription)
+                await callToastMessage(type: .error, title: "조회 실패", message: error.localizedDescription)
             }
         }
         

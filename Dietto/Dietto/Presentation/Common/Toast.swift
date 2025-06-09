@@ -140,18 +140,3 @@ struct ToastModifier: ViewModifier {
     }
 }
 
-
-#Preview {
-    ToastView(type: .error, title: "에러", message: "에러 메세지") {
-        print("취소")
-    }
-    ToastView(type: .info, title: "정보표시", message: "정보표시 메세지") {
-        print("취소")
-    }
-    ToastView(type: .success, title: "성공", message: "성공 메세지") {
-        print("취소")
-    }
-    ToastView(type: .warning, title: "경고", message: "경고 메세지") {
-        print("취소")
-    }
-}
