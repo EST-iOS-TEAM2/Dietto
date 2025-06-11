@@ -11,18 +11,25 @@ struct MainTabView: View {
     @Environment(DIContainer.self) private var diContainer
     var body: some View {
         TabView {
-            Tab("홈", systemImage: "house.fill") {
-                HomeView(viewModel: diContainer.getHomeViewModel())
-            }
-            Tab("식단", systemImage: "leaf.fill") {
-                DietaryView(dietartViewModel: diContainer.getDietaryViewModel())
-            }
-            Tab("아티클", systemImage: "newspaper") {
-                ArticleView(viewModel: diContainer.getArticleViewModel())
-            }
-            Tab("프로필", systemImage: "person.circle.fill") {
-                ProfileView(viewModel : diContainer.getOnboardingViewModel())
-            }
+            HomeView(viewModel: diContainer.getHomeViewModel())
+                .tabItem {
+                    Label("홈", systemImage: "house.fill")
+                }
+            
+            DietaryView(dietartViewModel: diContainer.getDietaryViewModel())
+                .tabItem {
+                    Label("식단", systemImage: "leaf.fill")
+                }
+            
+            ArticleView(viewModel: diContainer.getArticleViewModel())
+                .tabItem {
+                    Label("아티클", systemImage: "newspaper")
+                }
+            
+            ProfileView(viewModel: diContainer.getOnboardingViewModel())
+                .tabItem {
+                    Label("프로필", systemImage: "person.circle.fill")
+                }
         }
     }
 }

@@ -59,7 +59,6 @@ struct WeightHistoryView: View {
                         )
                         .symbol(.circle)
                         .foregroundStyle(.red)
-                        #warning("색이 안먹힘")
                     }
                     
                     RoundedRectangle(cornerRadius: 21)

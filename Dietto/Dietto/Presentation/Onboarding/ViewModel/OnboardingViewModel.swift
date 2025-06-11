@@ -66,7 +66,7 @@ final class OnboardingViewModel: ObservableObject {
                 }
             }
             catch {
-                #warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                print(#function, error.localizedDescription)
             }
         }
     }
@@ -116,7 +116,7 @@ final class OnboardingViewModel: ObservableObject {
                 await MainActor.run { isEditActive = false }
             }
             catch {
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                print(#function, error.localizedDescription)
             }
         }
     }
@@ -136,7 +136,7 @@ final class OnboardingViewModel: ObservableObject {
                 }
             }
             catch {
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                print(#function, error.localizedDescription)
             }
         }
         
@@ -160,7 +160,7 @@ final class OnboardingViewModel: ObservableObject {
                 isFirstLaunch = true
             }
             catch {
-#warning("여기에 에러핸들링 토스트 팝업 등 넣기")
+                print(#function, error.localizedDescription)
             }
         }
     }
