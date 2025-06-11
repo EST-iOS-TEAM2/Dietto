@@ -16,11 +16,15 @@ final class NetworkRepositoryImpl: NetworkRepository {
     
     private let promptManager: PromptManager
     private let networkManager: NetworkManager
-    private let parsingManager: ParsingManager = ParsingManagerImpl()
+    private let parsingManager: ParsingManager
     
-    init(promptManager: PromptManager = PromptManagerImpl(),networkManager: NetworkManager = NetworkManagerImpl()) {
+    init(promptManager: PromptManager = PromptManagerImpl(),
+         networkManager: NetworkManager = NetworkManagerImpl(),
+         parsingManager : ParsingManager  = ParsingManagerImpl()
+    ) {
         self.promptManager = promptManager
         self.networkManager = networkManager
+        self.parsingManager = parsingManager
     }
     
     func fetch<T>(promptType: PromptType, rawValues: [Any], outputType: T.Type) async throws -> T where T: Decodable {
