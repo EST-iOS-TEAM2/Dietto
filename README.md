@@ -16,7 +16,7 @@
 </h2>
 
 <div align="center" style="color: gray;">
-  다이어트를 위한 한 걸음을 도와주는 <b>AI 기반 다이어트 보조 앱</b><br/><b>Dietto</b>
+  다이어트를 위한 한 걸음을 도와주는 <b><a href="https://alan.est.ai">Alan<a/> AI 기반 다이어트 보조 앱</b><br/><b>Dietto</b>
 </div>
 
 <br/>
