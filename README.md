@@ -103,4 +103,4 @@
 
 | 기획/디자인  | 기능명세서 | 발표자료 | 회의록 |
 | :-: | :-: | :-: | :-: |
-| 🎨 [기획/디자인](https://www.figma.com/design/HMXqCMrfN0DFHTcBTPhpPl/Dietto?node-id=0-1&t=FmY3LOuie6iLoQkf-1) | 📝 [기능명세서](https://docs.google.com/spreadsheets/d/1b8Q_aPhm9nkvZl_dtJo7BEbei6CLn2bmj_GDMTif_HY/edit?gid=0#gid=0) | 👨‍🏫[발표자료 PDF](https://github.com/user-attachments/files/20719808/Dietto.pdf) | 📝 [회의록]() |
+| 🎨 [기획/디자인](https://www.figma.com/design/HMXqCMrfN0DFHTcBTPhpPl/Dietto?node-id=0-1&t=FmY3LOuie6iLoQkf-1) | 📝 [기능명세서](https://docs.google.com/spreadsheets/d/1b8Q_aPhm9nkvZl_dtJo7BEbei6CLn2bmj_GDMTif_HY/edit?gid=0#gid=0) | 👨‍🏫[발표자료 PDF](https://github.com/user-attachments/files/20721629/Dietto.pdf) | 📝 [회의록]() |
