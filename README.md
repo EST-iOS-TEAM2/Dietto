@@ -65,7 +65,7 @@
   <tr>
     <td><strong>🍎 SwiftUI</strong></td>
     <td>
-      선언형 UI, MVVM 디자인 패턴 적용
+      선언형 UI, Clean Architecture, MVVM 디자인 패턴 적용
     </td>
   </tr>
   <tr>
