@@ -97,7 +97,7 @@
 ### 🍎 iOS
 | 키워드 | 제목 |
 | :- | :- |
-| 작성예정 | 링크 |
+| SwiftData | [🎫 SwiftData 도입기 비동기로 사용해보기](https://github.com/EST-iOS-TEAM2/Dietto/wiki/🎫-SwiftData-도입기---비동기로-사용해보기) |
 
 ## 📔 문서
 
